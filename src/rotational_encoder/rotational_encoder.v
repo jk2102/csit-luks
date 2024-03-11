@@ -22,7 +22,7 @@
 
 module rotational_encoder (
     input clk,                      // Clock input
-    input reset_n,                  // Active low reset input
+    input rstn,                  // Active low reset input
     input A,                        // Encoder input A
     input B,                        // Encoder input B
     input PB,                       // Pushbutton  
@@ -30,13 +30,13 @@ module rotational_encoder (
     output reg [11:0] pb_cnt;       // 12-bit pushbutton counter  
 );
 
-    reg lastA, lastB; // Registers to store the last state of A and B
+reg lastA, lastB; // Registers to store the last state of A and B
 reg lastPB;       // Registers to store the last PB state 
  
 
 // Initialize or update the last state of A and B
 always @(posedge clk) begin
-    if (!reset_n) begin
+    if (!rstn) begin
         lastA <= 0;
         lastB <= 0;
         enc_counter <= 4'b1000;         // Reset counter to 8
