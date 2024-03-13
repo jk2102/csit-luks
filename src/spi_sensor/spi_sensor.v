@@ -22,7 +22,9 @@
 
 module spi_sensor (
     input   clk,
-    input   rstn
+    input   rstn,
+
+    output sclk
 );
 
 
