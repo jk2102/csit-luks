@@ -5,6 +5,7 @@
 * This module [briefly describe the module's purpose and functionality].
 * [Optional: Additional notes on functionality, special cases, or constraints.]
 * Datasheet ADC: https://www.ti.com/lit/ds/symlink/adc081s021.pdf
+* Memory interface: https://github.com/YosysHQ/picorv32?tab=readme-ov-file#picorv32-native-memory-interface
 *
 * Inputs:
 * clk - 1-bit clock input signal for synchronizing the module's operations.
