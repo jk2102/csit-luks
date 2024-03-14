@@ -8,11 +8,16 @@
 * Inputs:
 * clk - 1-bit clock input signal for synchronizing the module's operations.
 * rstn - 1-bit active low reset signal for initializing or resetting the module's internal state.
-* [Document other inputs here if applicable...]
-*
+* isoValue - 4-bit camera ISO value 
+* shutterSpeedValue - 4-bit camera shutter speed value 
+* focalLenghtValue - 4-bit camera focal lenght value
+* brightnessIndicatorValue - 3-bit camera brihtness indicator value
+* selectInput - 2-bit input value for choosing and displaying desired camera value
 * Outputs:
-* [Document outputs here if applicable...]
-*
+* seven_seg_1 - 8-bit valued output that represents one of four seven-segment displays with decimal point
+* seven_seg_2 - 8-bit valued output that represents one of four seven-segment displays with decimal point
+* seven_seg_3 - 8-bit valued output that represents one of four seven-segment displays with decimal point
+* seven_seg_4 - 8-bit valued output that represents one of four seven-segment displays with decimal point
 * Author: Dino Terman
 * Date: [Date, e.g., "YYYY-MM-DD"]
 *******************************************************************/
