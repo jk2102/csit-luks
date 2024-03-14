@@ -14,10 +14,10 @@
 * brightnessIndicatorValue - 3-bit camera brihtness indicator value
 * selectInput - 2-bit input value for choosing and displaying desired camera value
 * Outputs:
-* seven_seg_1 - 8-bit valued output that represents one of four seven-segment displays with decimal point
-* seven_seg_2 - 8-bit valued output that represents one of four seven-segment displays with decimal point
-* seven_seg_3 - 8-bit valued output that represents one of four seven-segment displays with decimal point
-* seven_seg_4 - 8-bit valued output that represents one of four seven-segment displays with decimal point
+* seven_seg_1 - 8-bit valued output that represents one of four seven-segment displays in which most significant bit is decimal point
+* seven_seg_2 - 8-bit valued output that represents one of four seven-segment displays in which most significant bit is decimal point
+* seven_seg_3 - 8-bit valued output that represents one of four seven-segment displays in which most significant bit is decimal point
+* seven_seg_4 - 8-bit valued output that represents one of four seven-segment displays in which most significant bit is decimal point
 * Author: Dino Terman
 * Date: [Date, e.g., "YYYY-MM-DD"]
 *******************************************************************/
