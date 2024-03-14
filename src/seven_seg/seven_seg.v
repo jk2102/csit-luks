@@ -40,7 +40,7 @@ module seven_seg (
 always @(posedge clk) begin
     
     case (selectInput)
-        2'b00:seven_seg_1=decodeISO(isoValue);
+        2'b00:out=decodeISO(isoValue);
         2'b01:out=decodeshutter(shutterSpeedValue);
         2'b10:out=decodefocal(focalLenghtValue);
         2'b11:out=decodeindicator(brightnessIndicatorValue); 
