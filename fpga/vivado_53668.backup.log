@@ -1,0 +1,35 @@
+#-----------------------------------------------------------
+# Vivado v2020.2 (64-bit)
+# SW Build 3064766 on Wed Nov 18 09:12:45 MST 2020
+# IP Build 3064653 on Wed Nov 18 14:17:31 MST 2020
+# Start of session at: Thu Mar 14 11:09:32 2024
+# Process ID: 53668
+# Current directory: C:/Users/juric/OneDrive/Dokumenti/tt06-csit-luks/fpga
+# Command line: vivado.exe -mode batch -source fpga.tcl
+# Log file: C:/Users/juric/OneDrive/Dokumenti/tt06-csit-luks/fpga/vivado.log
+# Journal file: C:/Users/juric/OneDrive/Dokumenti/tt06-csit-luks/fpga\vivado.jou
+#-----------------------------------------------------------
+source fpga.tcl
+# set_param general.maxThreads 8
+# set outputDir ./fpga_output             
+# file mkdir $outputDir
+# read_verilog  [ glob ../src/rotational_encoder/rotational_encoder.v ]
+# read_verilog  [ glob ../src/tt_um_csit_luks.v ]
+# read_verilog  [ glob ../src/fpga/fpga_top_lvl.v ]
+# read_xdc ./fpga.xdc
+# synth_design -top fpga_top_lvl -part xc7a35tcpg236-1 -flatten rebuilt
+Command: synth_design -top fpga_top_lvl -part xc7a35tcpg236-1 -flatten rebuilt
+Starting synth_design
+Attempting to get a license for feature 'Synthesis' and/or device 'xc7a35t'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7a35t'
+INFO: [Device 21-403] Loading part xc7a35tcpg236-1
+INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 4 processes.
+INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
+INFO: [Synth 8-7075] Helper process launched with PID 40200
+ERROR: [Synth 8-2715] syntax error near ; [C:/Users/juric/OneDrive/Dokumenti/tt06-csit-luks/src/rotational_encoder/rotational_encoder.v:30]
+Failed to read verilog 'C:/Users/juric/OneDrive/Dokumenti/tt06-csit-luks/src/rotational_encoder/rotational_encoder.v'
+INFO: [Common 17-83] Releasing license: Synthesis
+6 Infos, 0 Warnings, 0 Critical Warnings and 2 Errors encountered.
+synth_design failed
+ERROR: [Common 17-69] Command failed: Synthesis failed - please see the console or run log file for details
+INFO: [Common 17-206] Exiting Vivado at Thu Mar 14 11:09:58 2024...

@@ -1,68 +1,65 @@
 
 
 module fpga_top_lvl (
-    input   clk,        // board clock
-    input   btnC,       // reset
+    input           clk,        // board clock
+    input           btnC,       // reset
 
-    input   scl,
-    inout   sda,
-    output reg clk_32768Hz,
-    output pulse_out,
+    output reg      clk_10kHz,
 
-    output [6:0]       seg,
-    input [8:0]         sw,
-    output              dp,
-    output [3:0]        an
+    // 7 seg display
+    output [6:0]    seg,
+    output          dp,
+    output [3:0]    an,
+
+    // rot encoder PMOD
+    input           A,
+    input           B,
+    input           PB
 
 );
 
-    // wires
-    wire sda_signal, sda_out_signal;
-
-    assign sda = !sda_out_signal ? 1'b0 : 1'bZ;
-    assign sda_signal = sda;
-
     // 7-seg 
     wire [7:0] uo_out_w;
-    assign seg = ~uo_out_w[6:0];
-    assign an = 4'b0000;
+    assign seg = 7'b0;
+    assign an = ~uo_out_w[3:0];
     assign dp = 1'b1;
+
+    // rot encoder PMOD
+    wire [7:0] ui_in_w;
+    assign ui_in_w[0] = A;
+    assign ui_in_w[1] = B;
+    assign ui_in_w[2] = PB;
+    assign ui_in_w[7:3] = 5'b0;
 
     // IO port
     wire [7:0] uio_in_w, uio_out_w, uio_oe_w;
 
-    assign uio_in_w = {6'b0, sda_signal, scl};
-    assign sda_out_signal = uio_out_w[1];
-    assign pulse_out = uo_out_w[0];
+    assign uio_in_w = 8'b0;    
 
-    tt_um_jk2102 instance_name (
-        .ui_in      (sw[7:0]),   // Dedicated inputs
+    tt_um_csit_luks u_tt_um_csit_luks (
+        .ui_in      (ui_in_w),          // Dedicated inputs
 
-        .uo_out     (uo_out_w), // Dedicated outputs
+        .uo_out     (uo_out_w),         // Dedicated outputs
 
-        .uio_in     (uio_in_w),        // IOs: Bidirectional Input path
+        .uio_in     (uio_in_w),       // IOs: Bidirectional Input path
         .uio_out    (uio_out_w),      // IOs: Bidirectional Output path
         .uio_oe     (uio_oe_w),       // IOs: Bidirectional Enable path
 
-        .ena        (sw[8]),         // enable signal
-        .clk        (clk_32768Hz),          // clock signal
-        .rst_n      (!btnC)         // reset signal (active low)
+        .ena        (1'b1),         // enable signal - always enable on FPGA prototype
+        .clk        (clk_10kHz),     // clock signal
+        .rst_n      (!btnC)          // reset signal (active low)
     );
 
-    // clock divider from 100 MHz to 32k768
-    // Use 12-bit counter for up to 4096, but we'll only count up to 3051
-    reg [11:0] counter = 12'd0;
+    // clock divider from 100 MHz to 10kHz
+    reg [15:0] counter = 16'd0;
 
-    always @(posedge clk or posedge btnC) begin
-        if (btnC) begin
-            counter <= 12'd0;
-            clk_32768Hz <= 0;
-        end else begin
-            if (counter == 12'd1525) begin // We're using 3051 as our divisor (off by 1 due to 0 count)
-                counter <= 12'd0;
-                clk_32768Hz <= ~clk_32768Hz;  // Toggle the clock
+    always @(posedge clk) begin
+        begin
+            if (counter == 16'd4999) begin // We're using 3051 as our divisor (off by 1 due to 0 count)
+                counter     <= 16'd0;
+                clk_10kHz   <= ~clk_10kHz;  // Toggle the clock
             end else begin
-                counter <= counter + 12'd1;
+                counter     <= counter + 16'd1;
             end
         end
     end

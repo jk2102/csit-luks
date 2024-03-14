@@ -14,13 +14,9 @@ file mkdir $outputDir
 # STEP#1: setup design sources and constraints
 #
 
-read_verilog  [ glob ../src/clock_divider.v ]
-read_verilog  [ glob ../src/i2c_slave.v ]
-read_verilog  [ glob ../src/pulse_generator.v ]
-read_verilog  [ glob ../src/pulse_counter.v ]
-read_verilog  [ glob ../src/register_map.v ]
-read_verilog  [ glob ../src/tt_um_jk2102.v ]
-read_verilog  [ glob ../src/fpga_top_lvl.v ]
+read_verilog  [ glob ../src/rotational_encoder/rotational_encoder.v ]
+read_verilog  [ glob ../src/tt_um_csit_luks.v ]
+read_verilog  [ glob ../src/fpga/fpga_top_lvl.v ]
 
 read_xdc ./fpga.xdc
 

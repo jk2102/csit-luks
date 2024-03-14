@@ -1,0 +1,50 @@
+Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+--------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2020.2 (win64) Build 3064766 Wed Nov 18 09:12:45 MST 2020
+| Date         : Thu Mar 14 11:53:04 2024
+| Host         : radna_stanica running 64-bit major release  (build 9200)
+| Command      : report_timing -sort_by group -max_paths 100 -path_type summary -file ./fpga_output/post_route_timing.rpt
+| Design       : fpga_top_lvl
+| Device       : 7a35t-cpg236
+| Speed File   : -1  PRODUCTION 1.23 2018-06-13
+--------------------------------------------------------------------------------------------------------------------------
+
+Timing Report
+
+Startpoint                     Endpoint                       Slack(ns)     
+----------------------------------------------------------------------------
+counter_reg[12]/C              counter_reg[13]/R              6.148         
+counter_reg[12]/C              counter_reg[14]/R              6.148         
+counter_reg[12]/C              counter_reg[15]/R              6.148         
+counter_reg[12]/C              counter_reg[10]/R              6.350         
+counter_reg[12]/C              counter_reg[11]/R              6.350         
+counter_reg[12]/C              counter_reg[12]/R              6.350         
+counter_reg[12]/C              counter_reg[9]/R               6.350         
+counter_reg[12]/C              counter_reg[5]/R               6.478         
+counter_reg[12]/C              counter_reg[6]/R               6.478         
+counter_reg[12]/C              counter_reg[7]/R               6.478         
+counter_reg[12]/C              counter_reg[8]/R               6.478         
+counter_reg[12]/C              counter_reg[1]/R               6.754         
+counter_reg[12]/C              counter_reg[2]/R               6.754         
+counter_reg[12]/C              counter_reg[3]/R               6.754         
+counter_reg[12]/C              counter_reg[4]/R               6.754         
+counter_reg[0]/C               counter_reg[14]/D              7.538         
+counter_reg[12]/C              clk_10kHz_reg/D                7.611         
+counter_reg[0]/C               counter_reg[15]/D              7.633         
+counter_reg[0]/C               counter_reg[13]/D              7.649         
+counter_reg[0]/C               counter_reg[10]/D              7.675         
+counter_reg[0]/C               counter_reg[12]/D              7.696         
+counter_reg[0]/C               counter_reg[11]/D              7.770         
+counter_reg[0]/C               counter_reg[9]/D               7.786         
+counter_reg[0]/C               counter_reg[6]/D               7.791         
+counter_reg[0]/C               counter_reg[8]/D               7.812         
+counter_reg[0]/C               counter_reg[7]/D               7.886         
+counter_reg[0]/C               counter_reg[5]/D               7.902         
+counter_reg[0]/C               counter_reg[4]/D               8.064         
+counter_reg[0]/C               counter_reg[2]/D               8.108         
+counter_reg[0]/C               counter_reg[3]/D               8.122         
+counter_reg[0]/C               counter_reg[1]/D               8.224         
+counter_reg[0]/C               counter_reg[0]/D               8.857         
+
+
+

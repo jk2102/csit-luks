@@ -27,7 +27,7 @@ module rotational_encoder (
     input B,                        // Encoder input B
     input PB,                       // Pushbutton  
     output reg [3:0] enc_counter,   // 4-bit encoder counter 
-    output reg [11:0] pb_cnt;       // 12-bit pushbutton counter  
+    output reg [11:0] pb_cnt       // 12-bit pushbutton counter  
 );
 
 reg lastA, lastB; // Registers to store the last state of A and B
@@ -57,17 +57,15 @@ always @(posedge clk) begin
         lastB <= B;
         
         // Pushbutton released / not pressed  
-        if(PB)
-        {  
+        if(PB) begin  
           lastPB <= 1;   
           pb_cnt <=  12'b000000000000;             
-        }
+        end
         // Pushbutton pressed 
-        else 
-        {
+        else begin
           lastPB <= 0;
           pb_cnt <=  pb_cnt + 12'b000000000001;   // 4095 is max
-        }
+        end
          
     end
 end
