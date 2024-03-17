@@ -1,12 +1,14 @@
 #-----------------------------------------------------------
-# Vivado v2020.2 (64-bit)
-# SW Build 3064766 on Wed Nov 18 09:12:45 MST 2020
-# IP Build 3064653 on Wed Nov 18 14:17:31 MST 2020
-# Start of session at: Thu Mar 14 11:52:04 2024
-# Process ID: 51164
-# Current directory: C:/Users/juric/OneDrive/Dokumenti/tt06-csit-luks/fpga
+# Vivado v2023.2 (64-bit)
+# SW Build 4029153 on Fri Oct 13 20:14:34 MDT 2023
+# IP Build 4028589 on Sat Oct 14 00:45:43 MDT 2023
+# SharedData Build 4025554 on Tue Oct 10 17:18:54 MDT 2023
+# Start of session at: Sat Mar 16 19:07:29 2024
+# Process ID: 22480
+# Current directory: C:/Users/juric/OneDrive/Dokumenti/csit-luks/tt06-csit-luks/fpga
 # Command line: vivado.exe -mode batch -source fpga.tcl
-# Log file: C:/Users/juric/OneDrive/Dokumenti/tt06-csit-luks/fpga/vivado.log
-# Journal file: C:/Users/juric/OneDrive/Dokumenti/tt06-csit-luks/fpga\vivado.jou
+# Log file: C:/Users/juric/OneDrive/Dokumenti/csit-luks/tt06-csit-luks/fpga/vivado.log
+# Journal file: C:/Users/juric/OneDrive/Dokumenti/csit-luks/tt06-csit-luks/fpga\vivado.jou
+# Running On: JKUNDRATALAPTOP, OS: Windows, CPU Frequency: 2304 MHz, CPU Physical cores: 2, Host memory: 12728 MB
 #-----------------------------------------------------------
 source fpga.tcl

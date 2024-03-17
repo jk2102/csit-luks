@@ -1,8 +1,9 @@
-// Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+// Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+// Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
-// Tool Version: Vivado v.2020.2 (win64) Build 3064766 Wed Nov 18 09:12:45 MST 2020
-// Date        : Thu Mar 14 11:53:06 2024
-// Host        : radna_stanica running 64-bit major release  (build 9200)
+// Tool Version: Vivado v.2023.2 (win64) Build 4029153 Fri Oct 13 20:14:34 MDT 2023
+// Date        : Sat Mar 16 19:12:55 2024
+// Host        : JKUNDRATALAPTOP running 64-bit major release  (build 9200)
 // Command     : write_verilog -force ./fpga_output/fpga_netlist.v
 // Design      : fpga_top_lvl
 // Purpose     : This is a Verilog netlist of the current design or from a specific cell of the design. The output is an
@@ -12,7 +13,7 @@
 // --------------------------------------------------------------------------------
 `timescale 1 ps / 1 ps
 
-(* ECO_CHECKSUM = "3cb9f031" *) 
+(* ECO_CHECKSUM = "3b621c04" *) 
 (* STRUCTURAL_NETLIST = "yes" *)
 module fpga_top_lvl
    (clk,
@@ -50,33 +51,15 @@ module fpga_top_lvl
   wire clk_10kHz_i_1_n_0;
   wire clk_IBUF;
   wire clk_IBUF_BUFG;
-  wire [0:0]counter;
-  wire \counter[15]_i_1_n_0 ;
+  wire [15:0]counter;
   wire \counter[15]_i_3_n_0 ;
   wire \counter[15]_i_4_n_0 ;
-  wire \counter[15]_i_5_n_0 ;
-  wire \counter[15]_i_6_n_0 ;
   wire \counter_reg[12]_i_1_n_0 ;
   wire \counter_reg[4]_i_1_n_0 ;
   wire \counter_reg[8]_i_1_n_0 ;
-  wire \counter_reg_n_0_[0] ;
-  wire \counter_reg_n_0_[10] ;
-  wire \counter_reg_n_0_[11] ;
-  wire \counter_reg_n_0_[12] ;
-  wire \counter_reg_n_0_[13] ;
-  wire \counter_reg_n_0_[14] ;
-  wire \counter_reg_n_0_[15] ;
-  wire \counter_reg_n_0_[1] ;
-  wire \counter_reg_n_0_[2] ;
-  wire \counter_reg_n_0_[3] ;
-  wire \counter_reg_n_0_[4] ;
-  wire \counter_reg_n_0_[5] ;
-  wire \counter_reg_n_0_[6] ;
-  wire \counter_reg_n_0_[7] ;
-  wire \counter_reg_n_0_[8] ;
-  wire \counter_reg_n_0_[9] ;
-  wire [15:1]data0;
   wire dp;
+  wire p_0_in;
+  wire [15:0]p_1_in;
   wire [6:0]seg;
   wire [3:0]\NLW_counter_reg[12]_i_1_CO_UNCONNECTED ;
   wire [3:0]\NLW_counter_reg[4]_i_1_CO_UNCONNECTED ;
@@ -110,14 +93,11 @@ module fpga_top_lvl
   OBUF clk_10kHz_OBUF_inst
        (.I(clk_10kHz_OBUF),
         .O(clk_10kHz));
-  LUT5 #(
-    .INIT(32'hFFFE0001)) 
+  LUT2 #(
+    .INIT(4'h6)) 
     clk_10kHz_i_1
-       (.I0(\counter[15]_i_3_n_0 ),
-        .I1(\counter[15]_i_4_n_0 ),
-        .I2(\counter[15]_i_5_n_0 ),
-        .I3(\counter[15]_i_6_n_0 ),
-        .I4(clk_10kHz_OBUF),
+       (.I0(p_0_in),
+        .I1(clk_10kHz_OBUF),
         .O(clk_10kHz_i_1_n_0));
   FDRE clk_10kHz_reg
        (.C(clk_IBUF_BUFG),
@@ -134,211 +114,197 @@ module fpga_top_lvl
   LUT1 #(
     .INIT(2'h1)) 
     \counter[0]_i_1 
-       (.I0(\counter_reg_n_0_[0] ),
-        .O(counter));
-  LUT4 #(
-    .INIT(16'h0001)) 
+       (.I0(counter[0]),
+        .O(p_1_in[0]));
+  LUT6 #(
+    .INIT(64'h0000000000000040)) 
     \counter[15]_i_1 
-       (.I0(\counter[15]_i_3_n_0 ),
-        .I1(\counter[15]_i_4_n_0 ),
-        .I2(\counter[15]_i_5_n_0 ),
-        .I3(\counter[15]_i_6_n_0 ),
-        .O(\counter[15]_i_1_n_0 ));
-  LUT4 #(
-    .INIT(16'hFFF7)) 
+       (.I0(counter[14]),
+        .I1(counter[12]),
+        .I2(\counter[15]_i_3_n_0 ),
+        .I3(counter[11]),
+        .I4(counter[13]),
+        .I5(counter[15]),
+        .O(p_0_in));
+  LUT6 #(
+    .INIT(64'h0000000020000000)) 
     \counter[15]_i_3 
-       (.I0(\counter_reg_n_0_[9] ),
-        .I1(\counter_reg_n_0_[8] ),
-        .I2(\counter_reg_n_0_[11] ),
-        .I3(\counter_reg_n_0_[10] ),
+       (.I0(counter[9]),
+        .I1(counter[6]),
+        .I2(\counter[15]_i_4_n_0 ),
+        .I3(counter[8]),
+        .I4(counter[7]),
+        .I5(counter[10]),
         .O(\counter[15]_i_3_n_0 ));
-  LUT4 #(
-    .INIT(16'hFFFD)) 
+  LUT6 #(
+    .INIT(64'h0000000000004000)) 
     \counter[15]_i_4 
-       (.I0(\counter_reg_n_0_[12] ),
-        .I1(\counter_reg_n_0_[13] ),
-        .I2(\counter_reg_n_0_[15] ),
-        .I3(\counter_reg_n_0_[14] ),
+       (.I0(counter[4]),
+        .I1(counter[2]),
+        .I2(counter[1]),
+        .I3(counter[0]),
+        .I4(counter[3]),
+        .I5(counter[5]),
         .O(\counter[15]_i_4_n_0 ));
-  LUT4 #(
-    .INIT(16'hFF7F)) 
-    \counter[15]_i_5 
-       (.I0(\counter_reg_n_0_[1] ),
-        .I1(\counter_reg_n_0_[0] ),
-        .I2(\counter_reg_n_0_[2] ),
-        .I3(\counter_reg_n_0_[3] ),
-        .O(\counter[15]_i_5_n_0 ));
-  LUT4 #(
-    .INIT(16'hFFEF)) 
-    \counter[15]_i_6 
-       (.I0(\counter_reg_n_0_[5] ),
-        .I1(\counter_reg_n_0_[4] ),
-        .I2(\counter_reg_n_0_[7] ),
-        .I3(\counter_reg_n_0_[6] ),
-        .O(\counter[15]_i_6_n_0 ));
   FDRE #(
     .INIT(1'b0)) 
     \counter_reg[0] 
        (.C(clk_IBUF_BUFG),
         .CE(\<const1> ),
-        .D(counter),
-        .Q(\counter_reg_n_0_[0] ),
-        .R(\<const0> ));
+        .D(p_1_in[0]),
+        .Q(counter[0]),
+        .R(p_0_in));
   FDRE #(
     .INIT(1'b0)) 
     \counter_reg[10] 
        (.C(clk_IBUF_BUFG),
         .CE(\<const1> ),
-        .D(data0[10]),
-        .Q(\counter_reg_n_0_[10] ),
-        .R(\counter[15]_i_1_n_0 ));
+        .D(p_1_in[10]),
+        .Q(counter[10]),
+        .R(p_0_in));
   FDRE #(
     .INIT(1'b0)) 
     \counter_reg[11] 
        (.C(clk_IBUF_BUFG),
         .CE(\<const1> ),
-        .D(data0[11]),
-        .Q(\counter_reg_n_0_[11] ),
-        .R(\counter[15]_i_1_n_0 ));
+        .D(p_1_in[11]),
+        .Q(counter[11]),
+        .R(p_0_in));
   FDRE #(
     .INIT(1'b0)) 
     \counter_reg[12] 
        (.C(clk_IBUF_BUFG),
         .CE(\<const1> ),
-        .D(data0[12]),
-        .Q(\counter_reg_n_0_[12] ),
-        .R(\counter[15]_i_1_n_0 ));
+        .D(p_1_in[12]),
+        .Q(counter[12]),
+        .R(p_0_in));
   (* ADDER_THRESHOLD = "35" *) 
-  (* OPT_MODIFIED = "SWEEP" *) 
   CARRY4 \counter_reg[12]_i_1 
        (.CI(\counter_reg[8]_i_1_n_0 ),
         .CO({\counter_reg[12]_i_1_n_0 ,\NLW_counter_reg[12]_i_1_CO_UNCONNECTED [2:0]}),
         .CYINIT(\<const0> ),
         .DI({\<const0> ,\<const0> ,\<const0> ,\<const0> }),
-        .O(data0[12:9]),
-        .S({\counter_reg_n_0_[12] ,\counter_reg_n_0_[11] ,\counter_reg_n_0_[10] ,\counter_reg_n_0_[9] }));
+        .O(p_1_in[12:9]),
+        .S(counter[12:9]));
   FDRE #(
     .INIT(1'b0)) 
     \counter_reg[13] 
        (.C(clk_IBUF_BUFG),
         .CE(\<const1> ),
-        .D(data0[13]),
-        .Q(\counter_reg_n_0_[13] ),
-        .R(\counter[15]_i_1_n_0 ));
+        .D(p_1_in[13]),
+        .Q(counter[13]),
+        .R(p_0_in));
   FDRE #(
     .INIT(1'b0)) 
     \counter_reg[14] 
        (.C(clk_IBUF_BUFG),
         .CE(\<const1> ),
-        .D(data0[14]),
-        .Q(\counter_reg_n_0_[14] ),
-        .R(\counter[15]_i_1_n_0 ));
+        .D(p_1_in[14]),
+        .Q(counter[14]),
+        .R(p_0_in));
   FDRE #(
     .INIT(1'b0)) 
     \counter_reg[15] 
        (.C(clk_IBUF_BUFG),
         .CE(\<const1> ),
-        .D(data0[15]),
-        .Q(\counter_reg_n_0_[15] ),
-        .R(\counter[15]_i_1_n_0 ));
+        .D(p_1_in[15]),
+        .Q(counter[15]),
+        .R(p_0_in));
   (* ADDER_THRESHOLD = "35" *) 
-  (* OPT_MODIFIED = "SWEEP" *) 
   CARRY4 \counter_reg[15]_i_2 
        (.CI(\counter_reg[12]_i_1_n_0 ),
         .CYINIT(\<const0> ),
         .DI({\<const0> ,\<const0> ,\<const0> ,\<const0> }),
-        .O(data0[15:13]),
-        .S({\<const0> ,\counter_reg_n_0_[15] ,\counter_reg_n_0_[14] ,\counter_reg_n_0_[13] }));
+        .O(p_1_in[15:13]),
+        .S({\<const0> ,counter[15:13]}));
   FDRE #(
     .INIT(1'b0)) 
     \counter_reg[1] 
        (.C(clk_IBUF_BUFG),
         .CE(\<const1> ),
-        .D(data0[1]),
-        .Q(\counter_reg_n_0_[1] ),
-        .R(\counter[15]_i_1_n_0 ));
+        .D(p_1_in[1]),
+        .Q(counter[1]),
+        .R(p_0_in));
   FDRE #(
     .INIT(1'b0)) 
     \counter_reg[2] 
        (.C(clk_IBUF_BUFG),
         .CE(\<const1> ),
-        .D(data0[2]),
-        .Q(\counter_reg_n_0_[2] ),
-        .R(\counter[15]_i_1_n_0 ));
+        .D(p_1_in[2]),
+        .Q(counter[2]),
+        .R(p_0_in));
   FDRE #(
     .INIT(1'b0)) 
     \counter_reg[3] 
        (.C(clk_IBUF_BUFG),
         .CE(\<const1> ),
-        .D(data0[3]),
-        .Q(\counter_reg_n_0_[3] ),
-        .R(\counter[15]_i_1_n_0 ));
+        .D(p_1_in[3]),
+        .Q(counter[3]),
+        .R(p_0_in));
   FDRE #(
     .INIT(1'b0)) 
     \counter_reg[4] 
        (.C(clk_IBUF_BUFG),
         .CE(\<const1> ),
-        .D(data0[4]),
-        .Q(\counter_reg_n_0_[4] ),
-        .R(\counter[15]_i_1_n_0 ));
+        .D(p_1_in[4]),
+        .Q(counter[4]),
+        .R(p_0_in));
   (* ADDER_THRESHOLD = "35" *) 
-  (* OPT_MODIFIED = "SWEEP" *) 
   CARRY4 \counter_reg[4]_i_1 
        (.CI(\<const0> ),
         .CO({\counter_reg[4]_i_1_n_0 ,\NLW_counter_reg[4]_i_1_CO_UNCONNECTED [2:0]}),
-        .CYINIT(\counter_reg_n_0_[0] ),
+        .CYINIT(counter[0]),
         .DI({\<const0> ,\<const0> ,\<const0> ,\<const0> }),
-        .O(data0[4:1]),
-        .S({\counter_reg_n_0_[4] ,\counter_reg_n_0_[3] ,\counter_reg_n_0_[2] ,\counter_reg_n_0_[1] }));
+        .O(p_1_in[4:1]),
+        .S(counter[4:1]));
   FDRE #(
     .INIT(1'b0)) 
     \counter_reg[5] 
        (.C(clk_IBUF_BUFG),
         .CE(\<const1> ),
-        .D(data0[5]),
-        .Q(\counter_reg_n_0_[5] ),
-        .R(\counter[15]_i_1_n_0 ));
+        .D(p_1_in[5]),
+        .Q(counter[5]),
+        .R(p_0_in));
   FDRE #(
     .INIT(1'b0)) 
     \counter_reg[6] 
        (.C(clk_IBUF_BUFG),
         .CE(\<const1> ),
-        .D(data0[6]),
-        .Q(\counter_reg_n_0_[6] ),
-        .R(\counter[15]_i_1_n_0 ));
+        .D(p_1_in[6]),
+        .Q(counter[6]),
+        .R(p_0_in));
   FDRE #(
     .INIT(1'b0)) 
     \counter_reg[7] 
        (.C(clk_IBUF_BUFG),
         .CE(\<const1> ),
-        .D(data0[7]),
-        .Q(\counter_reg_n_0_[7] ),
-        .R(\counter[15]_i_1_n_0 ));
+        .D(p_1_in[7]),
+        .Q(counter[7]),
+        .R(p_0_in));
   FDRE #(
     .INIT(1'b0)) 
     \counter_reg[8] 
        (.C(clk_IBUF_BUFG),
         .CE(\<const1> ),
-        .D(data0[8]),
-        .Q(\counter_reg_n_0_[8] ),
-        .R(\counter[15]_i_1_n_0 ));
+        .D(p_1_in[8]),
+        .Q(counter[8]),
+        .R(p_0_in));
   (* ADDER_THRESHOLD = "35" *) 
-  (* OPT_MODIFIED = "SWEEP" *) 
   CARRY4 \counter_reg[8]_i_1 
        (.CI(\counter_reg[4]_i_1_n_0 ),
         .CO({\counter_reg[8]_i_1_n_0 ,\NLW_counter_reg[8]_i_1_CO_UNCONNECTED [2:0]}),
         .CYINIT(\<const0> ),
         .DI({\<const0> ,\<const0> ,\<const0> ,\<const0> }),
-        .O(data0[8:5]),
-        .S({\counter_reg_n_0_[8] ,\counter_reg_n_0_[7] ,\counter_reg_n_0_[6] ,\counter_reg_n_0_[5] }));
+        .O(p_1_in[8:5]),
+        .S(counter[8:5]));
   FDRE #(
     .INIT(1'b0)) 
     \counter_reg[9] 
        (.C(clk_IBUF_BUFG),
         .CE(\<const1> ),
-        .D(data0[9]),
-        .Q(\counter_reg_n_0_[9] ),
-        .R(\counter[15]_i_1_n_0 ));
+        .D(p_1_in[9]),
+        .Q(counter[9]),
+        .R(p_0_in));
   OBUF dp_OBUF_inst
        (.I(\<const1> ),
         .O(dp));

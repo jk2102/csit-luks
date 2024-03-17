@@ -1,8 +1,8 @@
-Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
-----------------------------------------------------------------------------------------
-| Tool Version     : Vivado v.2020.2 (win64) Build 3064766 Wed Nov 18 09:12:45 MST 2020
-| Date             : Thu Mar 14 11:52:40 2024
-| Host             : radna_stanica running 64-bit major release  (build 9200)
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
+-------------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version     : Vivado v.2023.2 (win64) Build 4029153 Fri Oct 13 20:14:34 MDT 2023
+| Date             : Sat Mar 16 19:10:49 2024
+| Host             : JKUNDRATALAPTOP running 64-bit major release  (build 9200)
 | Command          : report_power -file ./fpga_output/post_synth_power.rpt
 | Design           : fpga_top_lvl
 | Device           : xc7a35tcpg236-1
@@ -10,7 +10,7 @@ Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 | Grade            : commercial
 | Process          : typical
 | Characterization : Production
-----------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------
 
 Power Report
 
@@ -53,12 +53,12 @@ Table of Contents
 | On-Chip        | Power (W) | Used     | Available | Utilization (%) |
 +----------------+-----------+----------+-----------+-----------------+
 | Clocks         |    <0.001 |        3 |       --- |             --- |
-| Slice Logic    |    <0.001 |       46 |       --- |             --- |
-|   LUT as Logic |    <0.001 |       13 |     20800 |            0.06 |
+| Slice Logic    |    <0.001 |       44 |       --- |             --- |
+|   LUT as Logic |    <0.001 |       12 |     20800 |            0.06 |
 |   CARRY4       |    <0.001 |        4 |      8150 |            0.05 |
 |   Register     |    <0.001 |       23 |     41600 |            0.06 |
 |   Others       |     0.000 |        3 |       --- |             --- |
-| Signals        |    <0.001 |       45 |       --- |             --- |
+| Signals        |    <0.001 |       43 |       --- |             --- |
 | I/O            |     0.006 |       17 |       106 |           16.04 |
 | Static Power   |     0.072 |          |           |                 |
 | Total          |     0.078 |          |           |                 |
