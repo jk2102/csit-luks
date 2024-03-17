@@ -40,7 +40,7 @@ module spiflash (
 	input csb,
 	input clk,
 	inout io0, // MOSI
-	output io1, // MISO
+	inout io1, // MISO
 	inout io2,
 	inout io3
 );
@@ -99,7 +99,7 @@ module spiflash (
 	assign #1 io3_delayed = io3;
 
 	// 16 MB (128Mb) Flash
-	reg [7:0] memory [0:15]; //16*1024*1024-1
+	reg [7:0] memory [0:1023]; //16*1024*1024-1
 
 	reg [1023:0] firmware_file;
 	initial begin

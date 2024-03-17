@@ -27,7 +27,6 @@ spi_wrapper UUT(
 initial begin
 
 $dumpfile("sim/dump.vcd");$dumpvars;
-    
     #10000; // delay
     $finish;
 
@@ -38,8 +37,8 @@ initial begin
 
     clock = 1'b0;
     reset_n = 1'b1;
-    valid = 1'b0;
-//    addr = 24'd0;
+    valid = 1'b1;
+    addr = 24'd0;
 
 end
 
@@ -52,28 +51,37 @@ initial begin
 	reset_n = 1'b1;
 	#60;
 	reset_n = 1'b0;
-	#120;
+	#1000;
 	reset_n = 1'b1;
 end
 
- initial begin
+always @(posedge clock or negedge reset_n) begin
 
-    valid = 1;
-
- end
-
-initial begin
-   for (i = 0; i < 256; i = i +1)
-   begin
-	#200;
-	addr = i;
-   end
+	if (reset_n == 0) begin
+		valid = 1'b0;
+	end else if(ready & valid) begin
+		addr = addr + 4;
+		valid = 1'b0;
+	end else begin
+		valid = 1'b1;
+	end
 end
+
+
+//initial begin
+//   for (i = 0; i < 256; i = i +1)
+//   begin
+//	#200;
+//	addr = i;
+//   end
+//end
 
 
 initial begin
 	cfgreg_we =4'b0000;
-	wrdata_i = 32'h80000000;
+	wrdata_i = 32'h00000000;
 end
 
 endmodule
+
+
