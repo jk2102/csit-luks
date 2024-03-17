@@ -26,7 +26,7 @@
 module seven_seg (
     input   clk,
     input   rstn,
-    input [3:0] isoValue,
+   input [3:0] isoValue,
     input [3:0] shutterSpeedValue,
     input [3:0] focalLenghtValue,
     input [2:0] brightnessIndicatorValue,
@@ -39,20 +39,24 @@ module seven_seg (
 
 always @(posedge clk) begin
     
+    
     case (selectInput)
-        2'b00: begin {seven_seg_4,seven_seg_3,seven_seg_2,seven_seg_1}=decodeISO(isoValue); end
-        2'b01: begin {seven_seg_4,seven_seg_3,seven_seg_2,seven_seg_1}=decodeshutter(shutterSpeedValue); end
-        2'b10: begin {seven_seg_4,seven_seg_3,seven_seg_2,seven_seg_1}=decodefocal(focalLenghtValue); end
-        2'b11: begin {seven_seg_4,seven_seg_3,seven_seg_2,seven_seg_1}=decodeindicator(brightnessIndicatorValue); end
+        2'b00: begin decodeISO(isoValue); end
+        2'b01: begin decodeshutter(shutterSpeedValue); end
+        2'b10: begin decodefocal(focalLenghtValue); end
+        2'b11: begin decodeindicator(brightnessIndicatorValue); end
         default: 
         begin
-       {seven_seg_1,seven_seg_2,seven_seg_3,seven_seg_4}=8'b11111111;
+        seven_seg_4=8'b11111111;
+        seven_seg_3=8'b11111111;
+        seven_seg_2=8'b11111111;
+        seven_seg_1=8'b11111111;
         end
     endcase
 end
 
 // ISO values decoding
-function [7:0] decodeISO; 
+task decodeISO; 
     input[3:0] value;
     begin
     case (value)
@@ -72,12 +76,13 @@ function [7:0] decodeISO;
         4'b1101: begin seven_seg_4=8'b10000010; seven_seg_3=8'b10011001; seven_seg_2=8'b11000000; seven_seg_1=8'b11000000; end //6400
         4'b1110: begin seven_seg_4=8'b11111001; seven_seg_3=8'b10100100; seven_seg_2=8'b10000000; seven_seg_1=8'b01000000; end //1280.
 
-        default: decodeISO=8'b11111111;
+       
     endcase
     end
+endtask
     
-endfunction
-function [7:0] decodeshutter;
+
+task decodeshutter;
 
   input [3:0] value;
   begin 
@@ -98,13 +103,13 @@ function [7:0] decodeshutter;
         4'b1101: begin seven_seg_4=8'b01111111; seven_seg_3=8'b10100100; seven_seg_2=8'b10010010; seven_seg_1=8'b11000000; end // 1/250 (.250)
         4'b1110: begin seven_seg_4=8'b01111111; seven_seg_3=8'b10010010; seven_seg_2=8'b11000000; seven_seg_1=8'b11000000; end // 1/500 (.500)
         4'b1111: begin seven_seg_4=8'b11111001; seven_seg_3=8'b11000000; seven_seg_2=8'b11000000; seven_seg_1=8'b01000000; end // 1/1000(1000.)
-        default: decodeshutter=8'b11111111;
+        
     endcase
   end
     
-endfunction
+endtask
 
-function [7:0] decodefocal;
+task decodefocal;
    input[3:0] value;
    begin 
     case (value)
@@ -122,27 +127,28 @@ function [7:0] decodefocal;
         4'b1010: begin seven_seg_4=8'b11111111; seven_seg_3=8'b11111111; seven_seg_2=8'b11111001; seven_seg_1=8'b10000010; end // 16,0
         4'b1011: begin seven_seg_4=8'b11111111; seven_seg_3=8'b11111111; seven_seg_2=8'b10100100; seven_seg_1=8'b10100100; end // 22,0
       
-        default: decodefocal =8'b11111111;
+        
     endcase
    end
     
-endfunction
+endtask
 
-function [7:0] decodeindicator;
+task decodeindicator;
    input [2:0] value;
    begin
     case (value)
     
-        3'b000 begin seven_seg_4=8'b10100100; seven_seg_3=8'b11111111; seven_seg_2=8'b11111111; seven_seg_1=8'b11111111; end //-2 stop
-        3'b001 begin seven_seg_4=8'b11111001; seven_seg_3=8'b11111111; seven_seg_2=8'b11111111; seven_seg_1=8'b11111111; end //-1 stop
-        3'b010 begin seven_seg_4=8'b11111111; seven_seg_3=8'b11111111; seven_seg_2=8'b11111111; seven_seg_1=8'b11000000; end // 0 stop
-        3'b011 begin seven_seg_4=8'b11111111; seven_seg_3=8'b11111111; seven_seg_2=8'b11111111; seven_seg_1=8'b11111001; end //+1 stop
-        3'b100 begin seven_seg_4=8'b11111111; seven_seg_3=8'b11111111; seven_seg_2=8'b11111111; seven_seg_1=8'b10100100; end //+2 stop
+        3'b000: begin seven_seg_4=8'b10100100; seven_seg_3=8'b11111111; seven_seg_2=8'b11111111; seven_seg_1=8'b11111111; end //-2 stop
+        3'b001: begin seven_seg_4=8'b11111001; seven_seg_3=8'b11111111; seven_seg_2=8'b11111111; seven_seg_1=8'b11111111; end //-1 stop
+        3'b010: begin seven_seg_4=8'b11111111; seven_seg_3=8'b11111111; seven_seg_2=8'b11111111; seven_seg_1=8'b11000000; end // 0 stop
+        3'b011: begin seven_seg_4=8'b11111111; seven_seg_3=8'b11111111; seven_seg_2=8'b11111111; seven_seg_1=8'b11111001; end //+1 stop
+        3'b100: begin seven_seg_4=8'b11111111; seven_seg_3=8'b11111111; seven_seg_2=8'b11111111; seven_seg_1=8'b10100100; end //+2 stop
+        3'b101: begin seven_seg_4=8'b10001000; seven_seg_3=8'b11100011; seven_seg_2=8'b10000111; seven_seg_1=8'b10100011; end //Auto
        
-        default: decodeindicator =8'b11111111;
+       
     endcase
    end
     
-endfunction
+endtask
 
 endmodule

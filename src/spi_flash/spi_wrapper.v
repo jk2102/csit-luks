@@ -35,6 +35,8 @@ wire cfgreg_we;
 reg [31:0] cfgreg_di;
 
 
+
+
 spiflash spiflash_inst_0 (
 	.csb(csb),
 	.clk(clock), //clock
@@ -67,8 +69,8 @@ spimemio spimemio_inst_0 (
 	.flash_io2_do(flash_io2_do),
 	.flash_io3_do(flash_io3_do),
 
-	.flash_io0_di(flash_io1),
-	.flash_io1_di(flash_io0),
+	.flash_io0_di(flash_io0),
+	.flash_io1_di(flash_io1),
 	.flash_io2_di(flash_io2),
 	.flash_io3_di(flash_io3),
 
@@ -76,5 +78,10 @@ spimemio spimemio_inst_0 (
 	.cfgreg_di(wrdata_i),
 	.cfgreg_do()
 );
+
+assign flash_io0 = flash_io0_oe ? flash_io0_do : 1'bz;
+assign flash_io1 = flash_io1_oe ? flash_io1_do : 1'bz;
+assign flash_io2 = flash_io2_oe ? flash_io2_do : 1'bz;
+assign flash_io3 = flash_io3_oe ? flash_io3_do : 1'bz;
 
 endmodule
