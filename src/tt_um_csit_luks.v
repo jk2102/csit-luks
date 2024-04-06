@@ -21,6 +21,9 @@ module tt_um_csit_luks (
   assign uio_out = 0;
   assign uio_oe  = 0;
 
+  wire [3:0] enc_w;
+  wire [2:0] pb_press_type_w;
+
   // Rotational encoder
   rotational_encoder rotational_encoder_instance (
     .clk            (clk),          // Clock input
@@ -28,8 +31,8 @@ module tt_um_csit_luks (
     .A              (ui_in[0]),     // Encoder input A
     .B              (ui_in[1]),     // Encoder input B
     .PB             (ui_in[2]),     // Pushbutton
-    .enc            (enc),          // 4-bit encoder counter
-    .pb_press_type  (pb_press_type) // 2-bit pushbutton press type
+    .enc            (enc_w),          // 4-bit encoder counter
+    .pb_press_type  (pb_press_type_w) // 2-bit pushbutton press type
 );
 
  // Seven segment 
