@@ -9,6 +9,18 @@
 * clk - 1-bit clock input signal for synchronizing the module's operations.
 * rstn - 1-bit active low reset signal for initializing or resetting the module's internal state.
 * [Document other inputs here if applicable...]
+* pb_press - 2-bit push button register, differentiates between short, long and extra long press
+* enc_count - 4-bit encoder counter register
+* LUX_val - 8-bit luxmeter value
+* lux_ready - 1-bit input indicating that luxmeter is ready to be read
+* fd - 8-bit flash data memory
+* 
+* Outputs:
+* lux_valid - 1-bit to request read from luxmeter
+* fd_address - 24-bit flash memory address
+* fd_valid - 1-bit to request read from flash memory
+* display_out - 4-bit output to 7 segment display
+* display_sel - 2-bit output mode select
 *
 * Outputs:
 * [Document outputs here if applicable...]
@@ -97,8 +109,8 @@ module fsm (
                else
                   current_state <= ISO_SEL;
                ISO_val <= enc_count;
-               display_out <= enc_count;
                display_sel <= 2'b00;
+               display_out <= enc_count;
             end
 
             SS_SEL: begin
@@ -113,7 +125,7 @@ module fsm (
                previous_state <= SS_SEL;
                SS_val <= enc_count;
                display_sel <= 2'b01;
-               display_out <= SS_val;
+               display_out <= enc_count;
 
             end
 
@@ -129,6 +141,8 @@ module fsm (
                F_set_flag = 1'b1;
                previous_state <= F_SEL;
                F_val <= enc_count;
+               display_sel <= 2'b10;
+               display_out <= enc_count;
             end
 
             EXP_METER: begin
@@ -164,9 +178,9 @@ module fsm (
                   current_state <= ISO_SEL;
                else
                   current_state <= EXP_DISP;
+               EXP_val <= fd[2:0];
                display_sel <= 2'b11;
-               EXP_val <= fd [2:0];
-               display_out <= EXP_val;
+               display_out <= fd[2:0];
             end
 
             default : begin  // Fault Recovery
