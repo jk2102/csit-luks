@@ -17,9 +17,8 @@ module tt_um_csit_luks (
 );
 
   // All output pins must be assigned. If not used, assign to 0.
-  assign uo_out[7:4]  = 4'b1010;  // Example: ou_out is the sum of ui_in and uio_in
-  assign uio_out = 0;
-  assign uio_oe  = 0;
+  assign uio_out[7:4] = 0;
+  assign uio_oe  = 8'b11111111;
 
   wire [3:0] enc_w;
   wire [1:0] pb_press_type_w;
@@ -39,8 +38,8 @@ module tt_um_csit_luks (
  seven_seg seven_segment_instance(
     .clk            (clk),            // Clock input
     .rstn           (rst_n),          // Active low reset input 
-    .seven_seg      (uio_out[7:0]),   // Single segment output 
-    .anode          (uio_oe[3:0]),    // Segment select 
+    .seven_seg      (uo_out[7:0]),   // Single segment output 
+    .anode          (uio_out[3:0]),    // Segment select 
     .display_value  (enc_w),
     .display_select (pb_press_type_w)
  );
