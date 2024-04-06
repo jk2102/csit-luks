@@ -39,30 +39,26 @@ module rotational_encoder (
     output reg [1:0] pb_press_type  // Pushbutton press type (2-bit) 
  );   
                                         
-reg lastA, lastB;                   // Registers to store the last state of A and B
-reg [3:0]  tmp_enc;                    
+reg lastA, lastB;                   // Registers to store the last state of A and B 
 reg [11:0] pb_cnt;          
-reg [1:0]  tmp_press; 
-        
+     
 // Initialize or update the last state of A and B
-always @(posedge clk) begin
+always @(posedge clk or negedge rstn) begin
     if (!rstn) begin
         lastA <= 0;
         lastB <= 0;
         // Default encoder      
-        tmp_enc <= 4'b0000; 
-        enc <= 4'b0000;         
+        enc <= 4'b1000;   
         // Default pushbutton 
         pb_cnt <=  12'b000000000000;
-        tmp_press <= 2'b00; 
         pb_press_type <= 2'b00;        
     end 
 
     else begin
         // Check for CW movement (A rising edge before B)
-        if (A && !lastA && !B) tmp_enc <= tmp_enc + 4'b0001;
+        if (A && !lastA && !B) enc <= enc + 4'b0001;
         // Check for CCW movement (B rising edge before A)
-        else if (B && !lastB && !A) tmp_enc <= tmp_enc - 4'b0001;
+        else if (B && !lastB && !A) enc <= enc - 4'b0001;
         // Update last state
         lastA <= A;
         lastB <= B;
@@ -75,21 +71,16 @@ always @(posedge clk) begin
 
         // Pushbutton released / not pressed  
         if(PB) begin 
-            if(pb_cnt<12'd50) tmp_press <= 2'b00;                       // not pressed/filtered bad press  
-            if(pb_cnt>=12'd50 && pb_cnt<12'd400) tmp_press <= 2'b01;    // short press 
-            if(pb_cnt>=12'd400 && pb_cnt<12'd1200) tmp_press <= 2'b10;  // normal press 
-            if(pb_cnt>=12'd1200) tmp_press <= 2'b11;                    // long press   
-             pb_cnt <=  12'b000000000000;
-
-            // if proper press accured 
-            if(tmp_press)begin 
-                if((tmp_press != pb_press_type) || (tmp_enc != enc)) begin
-                enc <= tmp_enc;
-                tmp_enc <= 4'b0000; 
-                pb_press_type <= tmp_press;
-                tmp_press <= 2'b00;
-                end        
-            end    
+            if(pb_cnt<12'd50) pb_press_type <= 2'b00;                       // not pressed/filtered bad press  
+            if(pb_cnt>=12'd50 && pb_cnt<12'd400) pb_press_type <= 2'b01;    // short press 
+            if(pb_cnt>=12'd400 && pb_cnt<12'd1200) pb_press_type <= 2'b10;  // normal press 
+            if(pb_cnt>=12'd1200) pb_press_type <= 2'b11;                    // long press   
+            
+            if(pb_press_type!=2'b00) begin 
+                pb_press_type <= 2'b00;
+                pb_cnt <=  12'b000000000000;
+                enc <= 4'b1000;  
+            end       
         end
     end
 end

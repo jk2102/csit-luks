@@ -14,7 +14,11 @@ module fpga_top_lvl (
     // rot encoder PMOD
     input           A,
     input           B,
-    input           PB
+    input           PB,
+
+    // test
+    input  [1:0]        sw,
+    output [3:0]        led
 
 );
 
@@ -65,12 +69,14 @@ module fpga_top_lvl (
         .pb_press_type (pb_press_type_w)       // 2-bit pushbutton press type
     );
 
+    assign led = enc_w;
+
     // Seven seg display
     seven_seg seven_seg_instance (
         .clk            (clk_10kHz),          // Clock input
         .rstn           (!btnC),         // Active low reset input
         .display_value  (enc_w),   // 4-bit value to display
-        .display_select (pb_press_type_w),  // 2-bit select
+        .display_select (sw),  // 2-bit select
         .seven_seg      ({dp, seg}),  // 4-bit seven segment display
         .anode          (an)   // 4-bit anode
     );
