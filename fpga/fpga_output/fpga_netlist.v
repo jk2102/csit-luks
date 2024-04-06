@@ -2,7 +2,7 @@
 // Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2023.2 (win64) Build 4029153 Fri Oct 13 20:14:34 MDT 2023
-// Date        : Sat Apr  6 10:53:35 2024
+// Date        : Sat Apr  6 11:04:54 2024
 // Host        : JKUNDRATALAPTOP running 64-bit major release  (build 9200)
 // Command     : write_verilog -force ./fpga_output/fpga_netlist.v
 // Design      : fpga_top_lvl
@@ -13,7 +13,7 @@
 // --------------------------------------------------------------------------------
 `timescale 1 ps / 1 ps
 
-(* ECO_CHECKSUM = "d50aaccb" *) 
+(* ECO_CHECKSUM = "3f91f269" *) 
 (* STRUCTURAL_NETLIST = "yes" *)
 module fpga_top_lvl
    (clk,
@@ -24,7 +24,9 @@ module fpga_top_lvl
     an,
     A,
     B,
-    PB);
+    PB,
+    sw,
+    led);
   input clk;
   input btnC;
   output clk_10kHz;
@@ -34,6 +36,8 @@ module fpga_top_lvl
   input A;
   input B;
   input PB;
+  input [1:0]sw;
+  output [3:0]led;
 
   wire \<const0> ;
   wire \<const1> ;
@@ -62,9 +66,9 @@ module fpga_top_lvl
   wire \counter_reg[8]_i_1_n_0 ;
   wire dp;
   wire dp_OBUF;
+  wire [3:0]led;
+  wire [3:0]led_OBUF;
   wire [15:0]p_1_in;
-  wire rotational_encoder_instance_n_0;
-  wire rotational_encoder_instance_n_1;
   wire rotational_encoder_instance_n_10;
   wire rotational_encoder_instance_n_11;
   wire rotational_encoder_instance_n_12;
@@ -75,7 +79,6 @@ module fpga_top_lvl
   wire rotational_encoder_instance_n_17;
   wire rotational_encoder_instance_n_18;
   wire rotational_encoder_instance_n_19;
-  wire rotational_encoder_instance_n_2;
   wire rotational_encoder_instance_n_20;
   wire rotational_encoder_instance_n_21;
   wire rotational_encoder_instance_n_22;
@@ -86,9 +89,12 @@ module fpga_top_lvl
   wire rotational_encoder_instance_n_27;
   wire rotational_encoder_instance_n_28;
   wire rotational_encoder_instance_n_29;
-  wire rotational_encoder_instance_n_3;
   wire rotational_encoder_instance_n_30;
   wire rotational_encoder_instance_n_31;
+  wire rotational_encoder_instance_n_32;
+  wire rotational_encoder_instance_n_33;
+  wire rotational_encoder_instance_n_34;
+  wire rotational_encoder_instance_n_35;
   wire rotational_encoder_instance_n_4;
   wire rotational_encoder_instance_n_5;
   wire rotational_encoder_instance_n_6;
@@ -97,6 +103,8 @@ module fpga_top_lvl
   wire rotational_encoder_instance_n_9;
   wire [6:0]seg;
   wire [6:0]seg_OBUF;
+  wire [1:0]sw;
+  wire [1:0]sw_IBUF;
   wire [3:0]\NLW_counter_reg[12]_i_1_CO_UNCONNECTED ;
   wire [3:0]\NLW_counter_reg[4]_i_1_CO_UNCONNECTED ;
   wire [3:0]\NLW_counter_reg[8]_i_1_CO_UNCONNECTED ;
@@ -347,17 +355,31 @@ module fpga_top_lvl
   OBUF dp_OBUF_inst
        (.I(dp_OBUF),
         .O(dp));
+  OBUF \led_OBUF[0]_inst 
+       (.I(led_OBUF[0]),
+        .O(led[0]));
+  OBUF \led_OBUF[1]_inst 
+       (.I(led_OBUF[1]),
+        .O(led[1]));
+  OBUF \led_OBUF[2]_inst 
+       (.I(led_OBUF[2]),
+        .O(led[2]));
+  OBUF \led_OBUF[3]_inst 
+       (.I(led_OBUF[3]),
+        .O(led[3]));
   rotational_encoder rotational_encoder_instance
        (.A_IBUF(A_IBUF),
         .B_IBUF(B_IBUF),
         .CLK(clk_10kHz_OBUF),
-        .D({rotational_encoder_instance_n_0,rotational_encoder_instance_n_1,rotational_encoder_instance_n_2,rotational_encoder_instance_n_3,rotational_encoder_instance_n_4,rotational_encoder_instance_n_5,rotational_encoder_instance_n_6,rotational_encoder_instance_n_7}),
-        .E(rotational_encoder_instance_n_31),
+        .D({rotational_encoder_instance_n_4,rotational_encoder_instance_n_5,rotational_encoder_instance_n_6,rotational_encoder_instance_n_7,rotational_encoder_instance_n_8,rotational_encoder_instance_n_9,rotational_encoder_instance_n_10,rotational_encoder_instance_n_11}),
+        .E(rotational_encoder_instance_n_35),
         .PB_IBUF(PB_IBUF),
+        .Q(led_OBUF),
         .btnC_IBUF(btnC_IBUF),
-        .\enc_reg[0]_0 ({rotational_encoder_instance_n_8,rotational_encoder_instance_n_9,rotational_encoder_instance_n_10,rotational_encoder_instance_n_11,rotational_encoder_instance_n_12,rotational_encoder_instance_n_13,rotational_encoder_instance_n_14}),
-        .\pb_press_type_reg[0]_0 ({rotational_encoder_instance_n_15,rotational_encoder_instance_n_16,rotational_encoder_instance_n_17,rotational_encoder_instance_n_18,rotational_encoder_instance_n_19,rotational_encoder_instance_n_20,rotational_encoder_instance_n_21,rotational_encoder_instance_n_22}),
-        .\pb_press_type_reg[1]_0 ({rotational_encoder_instance_n_23,rotational_encoder_instance_n_24,rotational_encoder_instance_n_25,rotational_encoder_instance_n_26,rotational_encoder_instance_n_27,rotational_encoder_instance_n_28,rotational_encoder_instance_n_29,rotational_encoder_instance_n_30}));
+        .\enc_reg[0]_0 ({rotational_encoder_instance_n_12,rotational_encoder_instance_n_13,rotational_encoder_instance_n_14,rotational_encoder_instance_n_15,rotational_encoder_instance_n_16,rotational_encoder_instance_n_17,rotational_encoder_instance_n_18}),
+        .\enc_reg[2]_0 ({rotational_encoder_instance_n_19,rotational_encoder_instance_n_20,rotational_encoder_instance_n_21,rotational_encoder_instance_n_22,rotational_encoder_instance_n_23,rotational_encoder_instance_n_24,rotational_encoder_instance_n_25,rotational_encoder_instance_n_26}),
+        .\enc_reg[3]_0 ({rotational_encoder_instance_n_27,rotational_encoder_instance_n_28,rotational_encoder_instance_n_29,rotational_encoder_instance_n_30,rotational_encoder_instance_n_31,rotational_encoder_instance_n_32,rotational_encoder_instance_n_33,rotational_encoder_instance_n_34}),
+        .sw_IBUF(sw_IBUF));
   OBUF \seg_OBUF[0]_inst 
        (.I(seg_OBUF[0]),
         .O(seg[0]));
@@ -381,37 +403,47 @@ module fpga_top_lvl
         .O(seg[6]));
   seven_seg seven_seg_instance
        (.CLK(clk_10kHz_OBUF),
-        .D({rotational_encoder_instance_n_8,rotational_encoder_instance_n_9,rotational_encoder_instance_n_10,rotational_encoder_instance_n_11,rotational_encoder_instance_n_12,rotational_encoder_instance_n_13,rotational_encoder_instance_n_14}),
-        .E(rotational_encoder_instance_n_31),
+        .D({rotational_encoder_instance_n_12,rotational_encoder_instance_n_13,rotational_encoder_instance_n_14,rotational_encoder_instance_n_15,rotational_encoder_instance_n_16,rotational_encoder_instance_n_17,rotational_encoder_instance_n_18}),
+        .E(rotational_encoder_instance_n_35),
         .an_OBUF(an_OBUF),
         .btnC_IBUF(btnC_IBUF),
         .dp_OBUF(dp_OBUF),
-        .dp_OBUF_inst_i_1_0({rotational_encoder_instance_n_23,rotational_encoder_instance_n_24,rotational_encoder_instance_n_25,rotational_encoder_instance_n_26,rotational_encoder_instance_n_27,rotational_encoder_instance_n_28,rotational_encoder_instance_n_29,rotational_encoder_instance_n_30}),
-        .dp_OBUF_inst_i_1_1({rotational_encoder_instance_n_15,rotational_encoder_instance_n_16,rotational_encoder_instance_n_17,rotational_encoder_instance_n_18,rotational_encoder_instance_n_19,rotational_encoder_instance_n_20,rotational_encoder_instance_n_21,rotational_encoder_instance_n_22}),
-        .dp_OBUF_inst_i_1_2({rotational_encoder_instance_n_0,rotational_encoder_instance_n_1,rotational_encoder_instance_n_2,rotational_encoder_instance_n_3,rotational_encoder_instance_n_4,rotational_encoder_instance_n_5,rotational_encoder_instance_n_6,rotational_encoder_instance_n_7}),
+        .dp_OBUF_inst_i_1_0({rotational_encoder_instance_n_27,rotational_encoder_instance_n_28,rotational_encoder_instance_n_29,rotational_encoder_instance_n_30,rotational_encoder_instance_n_31,rotational_encoder_instance_n_32,rotational_encoder_instance_n_33,rotational_encoder_instance_n_34}),
+        .dp_OBUF_inst_i_1_1({rotational_encoder_instance_n_19,rotational_encoder_instance_n_20,rotational_encoder_instance_n_21,rotational_encoder_instance_n_22,rotational_encoder_instance_n_23,rotational_encoder_instance_n_24,rotational_encoder_instance_n_25,rotational_encoder_instance_n_26}),
+        .dp_OBUF_inst_i_1_2({rotational_encoder_instance_n_4,rotational_encoder_instance_n_5,rotational_encoder_instance_n_6,rotational_encoder_instance_n_7,rotational_encoder_instance_n_8,rotational_encoder_instance_n_9,rotational_encoder_instance_n_10,rotational_encoder_instance_n_11}),
         .seg_OBUF(seg_OBUF));
+  IBUF \sw_IBUF[0]_inst 
+       (.I(sw[0]),
+        .O(sw_IBUF[0]));
+  IBUF \sw_IBUF[1]_inst 
+       (.I(sw[1]),
+        .O(sw_IBUF[1]));
 endmodule
 
 module rotational_encoder
-   (D,
+   (Q,
+    D,
     \enc_reg[0]_0 ,
-    \pb_press_type_reg[0]_0 ,
-    \pb_press_type_reg[1]_0 ,
+    \enc_reg[2]_0 ,
+    \enc_reg[3]_0 ,
     .E(E_BUFG),
     btnC_IBUF,
     A_IBUF,
     CLK,
     B_IBUF,
-    PB_IBUF);
+    PB_IBUF,
+    sw_IBUF);
+  output [3:0]Q;
   output [7:0]D;
   output [6:0]\enc_reg[0]_0 ;
-  output [7:0]\pb_press_type_reg[0]_0 ;
-  output [7:0]\pb_press_type_reg[1]_0 ;
+  output [7:0]\enc_reg[2]_0 ;
+  output [7:0]\enc_reg[3]_0 ;
   input btnC_IBUF;
   input A_IBUF;
   input CLK;
   input B_IBUF;
   input PB_IBUF;
+  input [1:0]sw_IBUF;
      output [0:0]E_BUFG;
 
   wire \<const0> ;
@@ -423,11 +455,13 @@ module rotational_encoder
   wire \E[0] ;
   wire [0:0]E_BUFG;
   wire PB_IBUF;
+  wire [3:0]Q;
   wire btnC_IBUF;
   wire \enc[3]_i_2_n_0 ;
   wire \enc[3]_i_3_n_0 ;
   wire [6:0]\enc_reg[0]_0 ;
-  wire \enc_reg_n_0_[3] ;
+  wire [7:0]\enc_reg[2]_0 ;
+  wire [7:0]\enc_reg[3]_0 ;
   wire lastA;
   wire lastB;
   wire [11:1]p_2_in;
@@ -460,9 +494,8 @@ module rotational_encoder
   wire \pb_cnt_reg_n_0_[7] ;
   wire \pb_cnt_reg_n_0_[8] ;
   wire \pb_cnt_reg_n_0_[9] ;
-  wire [7:0]\pb_press_type_reg[0]_0 ;
-  wire [7:0]\pb_press_type_reg[1]_0 ;
-  wire [4:0]sel0;
+  wire [1:0]pb_press_type;
+  wire [1:0]sw_IBUF;
   wire tmp_enc;
   wire \tmp_enc[0]_i_1_n_0 ;
   wire \tmp_enc[1]_i_1_n_0 ;
@@ -500,16 +533,16 @@ module rotational_encoder
        (.I0(\enc[3]_i_2_n_0 ),
         .I1(PB_IBUF),
         .I2(\tmp_press_reg_n_0_[1] ),
-        .I3(sel0[4]),
+        .I3(pb_press_type[1]),
         .I4(\tmp_press_reg_n_0_[0] ),
-        .I5(sel0[3]),
+        .I5(pb_press_type[0]),
         .O(tmp_enc));
   LUT5 #(
     .INIT(32'hFFFF6FF6)) 
     \enc[3]_i_2 
-       (.I0(sel0[1]),
+       (.I0(Q[1]),
         .I1(tmp_enc_reg[1]),
-        .I2(sel0[0]),
+        .I2(Q[0]),
         .I3(tmp_enc_reg[0]),
         .I4(\enc[3]_i_3_n_0 ),
         .O(\enc[3]_i_2_n_0 ));
@@ -517,33 +550,33 @@ module rotational_encoder
     .INIT(16'h6FF6)) 
     \enc[3]_i_3 
        (.I0(tmp_enc_reg[2]),
-        .I1(sel0[2]),
+        .I1(Q[2]),
         .I2(tmp_enc_reg[3]),
-        .I3(\enc_reg_n_0_[3] ),
+        .I3(Q[3]),
         .O(\enc[3]_i_3_n_0 ));
   FDRE \enc_reg[0] 
        (.C(CLK),
         .CE(tmp_enc),
         .D(tmp_enc_reg[0]),
-        .Q(sel0[0]),
+        .Q(Q[0]),
         .R(btnC_IBUF));
   FDRE \enc_reg[1] 
        (.C(CLK),
         .CE(tmp_enc),
         .D(tmp_enc_reg[1]),
-        .Q(sel0[1]),
+        .Q(Q[1]),
         .R(btnC_IBUF));
   FDRE \enc_reg[2] 
        (.C(CLK),
         .CE(tmp_enc),
         .D(tmp_enc_reg[2]),
-        .Q(sel0[2]),
+        .Q(Q[2]),
         .R(btnC_IBUF));
   FDRE \enc_reg[3] 
        (.C(CLK),
         .CE(tmp_enc),
         .D(tmp_enc_reg[3]),
-        .Q(\enc_reg_n_0_[3] ),
+        .Q(Q[3]),
         .R(btnC_IBUF));
   FDRE lastA_reg
        (.C(CLK),
@@ -789,333 +822,333 @@ module rotational_encoder
        (.C(CLK),
         .CE(tmp_enc),
         .D(\tmp_press_reg_n_0_[0] ),
-        .Q(sel0[3]),
+        .Q(pb_press_type[0]),
         .R(btnC_IBUF));
   FDRE \pb_press_type_reg[1] 
        (.C(CLK),
         .CE(tmp_enc),
         .D(\tmp_press_reg_n_0_[1] ),
-        .Q(sel0[4]),
+        .Q(pb_press_type[1]),
         .R(btnC_IBUF));
   LUT6 #(
     .INIT(64'hFF03540003000000)) 
     \seven_seg_1_reg[0]_i_1 
-       (.I0(\enc_reg_n_0_[3] ),
-        .I1(sel0[1]),
-        .I2(sel0[2]),
-        .I3(sel0[0]),
-        .I4(sel0[4]),
-        .I5(sel0[3]),
+       (.I0(Q[3]),
+        .I1(Q[1]),
+        .I2(Q[2]),
+        .I3(Q[0]),
+        .I4(sw_IBUF[1]),
+        .I5(sw_IBUF[0]),
         .O(D[0]));
   LUT6 #(
     .INIT(64'h20AC20BC22480109)) 
     \seven_seg_1_reg[1]_i_1 
-       (.I0(sel0[4]),
-        .I1(sel0[3]),
-        .I2(sel0[2]),
-        .I3(sel0[1]),
-        .I4(\enc_reg_n_0_[3] ),
-        .I5(sel0[0]),
+       (.I0(sw_IBUF[1]),
+        .I1(sw_IBUF[0]),
+        .I2(Q[2]),
+        .I3(Q[1]),
+        .I4(Q[3]),
+        .I5(Q[0]),
         .O(D[1]));
   LUT6 #(
     .INIT(64'h0707004420010002)) 
     \seven_seg_1_reg[2]_i_1 
-       (.I0(sel0[0]),
-        .I1(sel0[2]),
-        .I2(sel0[1]),
-        .I3(\enc_reg_n_0_[3] ),
-        .I4(sel0[4]),
-        .I5(sel0[3]),
+       (.I0(Q[0]),
+        .I1(Q[2]),
+        .I2(Q[1]),
+        .I3(Q[3]),
+        .I4(sw_IBUF[1]),
+        .I5(sw_IBUF[0]),
         .O(D[2]));
   LUT6 #(
     .INIT(64'h0F03540003000000)) 
     \seven_seg_1_reg[3]_i_1 
-       (.I0(\enc_reg_n_0_[3] ),
-        .I1(sel0[1]),
-        .I2(sel0[2]),
-        .I3(sel0[0]),
-        .I4(sel0[4]),
-        .I5(sel0[3]),
+       (.I0(Q[3]),
+        .I1(Q[1]),
+        .I2(Q[2]),
+        .I3(Q[0]),
+        .I4(sw_IBUF[1]),
+        .I5(sw_IBUF[0]),
         .O(D[3]));
   LUT6 #(
     .INIT(64'h0410D44004C4D4C2)) 
     \seven_seg_1_reg[4]_i_1 
-       (.I0(sel0[1]),
-        .I1(sel0[0]),
-        .I2(sel0[3]),
-        .I3(sel0[4]),
-        .I4(sel0[2]),
-        .I5(\enc_reg_n_0_[3] ),
+       (.I0(Q[1]),
+        .I1(Q[0]),
+        .I2(sw_IBUF[0]),
+        .I3(sw_IBUF[1]),
+        .I4(Q[2]),
+        .I5(Q[3]),
         .O(D[4]));
   LUT6 #(
     .INIT(64'hFA000040FA41F140)) 
     \seven_seg_1_reg[5]_i_1 
-       (.I0(\enc_reg_n_0_[3] ),
-        .I1(sel0[2]),
-        .I2(sel0[3]),
-        .I3(sel0[4]),
-        .I4(sel0[0]),
-        .I5(sel0[1]),
+       (.I0(Q[3]),
+        .I1(Q[2]),
+        .I2(sw_IBUF[0]),
+        .I3(sw_IBUF[1]),
+        .I4(Q[0]),
+        .I5(Q[1]),
         .O(D[5]));
   LUT6 #(
     .INIT(64'h0206F6F2BE8F8E9A)) 
     \seven_seg_1_reg[6]_i_1 
-       (.I0(\enc_reg_n_0_[3] ),
-        .I1(sel0[1]),
-        .I2(sel0[3]),
-        .I3(sel0[0]),
-        .I4(sel0[2]),
-        .I5(sel0[4]),
+       (.I0(Q[3]),
+        .I1(Q[1]),
+        .I2(sw_IBUF[0]),
+        .I3(Q[0]),
+        .I4(Q[2]),
+        .I5(sw_IBUF[1]),
         .O(D[6]));
   LUT6 #(
     .INIT(64'hFFFF5DFFFFFFFFFF)) 
     \seven_seg_1_reg[7]_i_1 
-       (.I0(sel0[1]),
-        .I1(sel0[3]),
-        .I2(sel0[0]),
-        .I3(sel0[2]),
-        .I4(sel0[4]),
-        .I5(\enc_reg_n_0_[3] ),
+       (.I0(Q[1]),
+        .I1(sw_IBUF[0]),
+        .I2(Q[0]),
+        .I3(Q[2]),
+        .I4(sw_IBUF[1]),
+        .I5(Q[3]),
         .O(D[7]));
   LUT6 #(
     .INIT(64'h8ACE8ACE8A8AEFAD)) 
     \seven_seg_2_reg[0]_i_1 
-       (.I0(sel0[3]),
-        .I1(sel0[4]),
-        .I2(\enc_reg_n_0_[3] ),
-        .I3(sel0[0]),
-        .I4(sel0[2]),
-        .I5(sel0[1]),
-        .O(\pb_press_type_reg[0]_0 [0]));
+       (.I0(sw_IBUF[0]),
+        .I1(sw_IBUF[1]),
+        .I2(Q[3]),
+        .I3(Q[0]),
+        .I4(Q[2]),
+        .I5(Q[1]),
+        .O(\enc_reg[2]_0 [0]));
   LUT6 #(
     .INIT(64'hFF7CC004FF560041)) 
     \seven_seg_2_reg[1]_i_1 
-       (.I0(\enc_reg_n_0_[3] ),
-        .I1(sel0[1]),
-        .I2(sel0[2]),
-        .I3(sel0[4]),
-        .I4(sel0[3]),
-        .I5(sel0[0]),
-        .O(\pb_press_type_reg[0]_0 [1]));
+       (.I0(Q[3]),
+        .I1(Q[1]),
+        .I2(Q[2]),
+        .I3(sw_IBUF[1]),
+        .I4(sw_IBUF[0]),
+        .I5(Q[0]),
+        .O(\enc_reg[2]_0 [1]));
   LUT6 #(
     .INIT(64'hFFFF181811FC0125)) 
     \seven_seg_2_reg[2]_i_1 
-       (.I0(sel0[0]),
-        .I1(sel0[1]),
-        .I2(sel0[2]),
-        .I3(\enc_reg_n_0_[3] ),
-        .I4(sel0[3]),
-        .I5(sel0[4]),
-        .O(\pb_press_type_reg[0]_0 [2]));
+       (.I0(Q[0]),
+        .I1(Q[1]),
+        .I2(Q[2]),
+        .I3(Q[3]),
+        .I4(sw_IBUF[0]),
+        .I5(sw_IBUF[1]),
+        .O(\enc_reg[2]_0 [2]));
   LUT6 #(
     .INIT(64'h0300CF88DF45DE8D)) 
     \seven_seg_2_reg[3]_i_1 
-       (.I0(sel0[1]),
-        .I1(sel0[4]),
-        .I2(\enc_reg_n_0_[3] ),
-        .I3(sel0[3]),
-        .I4(sel0[0]),
-        .I5(sel0[2]),
-        .O(\pb_press_type_reg[0]_0 [3]));
+       (.I0(Q[1]),
+        .I1(sw_IBUF[1]),
+        .I2(Q[3]),
+        .I3(sw_IBUF[0]),
+        .I4(Q[0]),
+        .I5(Q[2]),
+        .O(\enc_reg[2]_0 [3]));
   LUT6 #(
     .INIT(64'h0770FA30F573FBF1)) 
     \seven_seg_2_reg[4]_i_1 
-       (.I0(sel0[1]),
-        .I1(\enc_reg_n_0_[3] ),
-        .I2(sel0[3]),
-        .I3(sel0[4]),
-        .I4(sel0[0]),
-        .I5(sel0[2]),
-        .O(\pb_press_type_reg[0]_0 [4]));
+       (.I0(Q[1]),
+        .I1(Q[3]),
+        .I2(sw_IBUF[0]),
+        .I3(sw_IBUF[1]),
+        .I4(Q[0]),
+        .I5(Q[2]),
+        .O(\enc_reg[2]_0 [4]));
   LUT6 #(
     .INIT(64'h1D1FDFFF0CDD0D47)) 
     \seven_seg_2_reg[5]_i_1 
-       (.I0(\enc_reg_n_0_[3] ),
-        .I1(sel0[4]),
-        .I2(sel0[2]),
-        .I3(sel0[1]),
-        .I4(sel0[0]),
-        .I5(sel0[3]),
-        .O(\pb_press_type_reg[0]_0 [5]));
+       (.I0(Q[3]),
+        .I1(sw_IBUF[1]),
+        .I2(Q[2]),
+        .I3(Q[1]),
+        .I4(Q[0]),
+        .I5(sw_IBUF[0]),
+        .O(\enc_reg[2]_0 [5]));
   LUT6 #(
     .INIT(64'h5514F0B5B4FFBEE3)) 
     \seven_seg_2_reg[6]_i_1 
-       (.I0(sel0[4]),
-        .I1(\enc_reg_n_0_[3] ),
-        .I2(sel0[3]),
-        .I3(sel0[1]),
-        .I4(sel0[0]),
-        .I5(sel0[2]),
-        .O(\pb_press_type_reg[0]_0 [6]));
+       (.I0(sw_IBUF[1]),
+        .I1(Q[3]),
+        .I2(sw_IBUF[0]),
+        .I3(Q[1]),
+        .I4(Q[0]),
+        .I5(Q[2]),
+        .O(\enc_reg[2]_0 [6]));
   LUT6 #(
     .INIT(64'hFFFFAA7FFAFDAA7F)) 
     \seven_seg_2_reg[7]_i_1 
-       (.I0(sel0[3]),
-        .I1(sel0[2]),
-        .I2(sel0[1]),
-        .I3(sel0[4]),
-        .I4(\enc_reg_n_0_[3] ),
-        .I5(sel0[0]),
-        .O(\pb_press_type_reg[0]_0 [7]));
+       (.I0(sw_IBUF[0]),
+        .I1(Q[2]),
+        .I2(Q[1]),
+        .I3(sw_IBUF[1]),
+        .I4(Q[3]),
+        .I5(Q[0]),
+        .O(\enc_reg[2]_0 [7]));
   LUT6 #(
     .INIT(64'hFFFFFFFF1F22FF7F)) 
     \seven_seg_3_reg[0]_i_1 
-       (.I0(sel0[0]),
-        .I1(sel0[1]),
-        .I2(sel0[2]),
-        .I3(sel0[3]),
-        .I4(\enc_reg_n_0_[3] ),
-        .I5(sel0[4]),
-        .O(\pb_press_type_reg[1]_0 [0]));
+       (.I0(Q[0]),
+        .I1(Q[1]),
+        .I2(Q[2]),
+        .I3(sw_IBUF[0]),
+        .I4(Q[3]),
+        .I5(sw_IBUF[1]),
+        .O(\enc_reg[3]_0 [0]));
   LUT6 #(
     .INIT(64'hFF2FFF08FFFFFF0F)) 
     \seven_seg_3_reg[1]_i_1 
-       (.I0(sel0[1]),
-        .I1(sel0[0]),
-        .I2(sel0[2]),
-        .I3(sel0[4]),
-        .I4(sel0[3]),
-        .I5(\enc_reg_n_0_[3] ),
-        .O(\pb_press_type_reg[1]_0 [1]));
+       (.I0(Q[1]),
+        .I1(Q[0]),
+        .I2(Q[2]),
+        .I3(sw_IBUF[1]),
+        .I4(sw_IBUF[0]),
+        .I5(Q[3]),
+        .O(\enc_reg[3]_0 [1]));
   LUT6 #(
     .INIT(64'h2F7FFAEF6F7FBAAF)) 
     \seven_seg_3_reg[2]_i_1 
-       (.I0(sel0[4]),
-        .I1(sel0[0]),
-        .I2(sel0[2]),
-        .I3(\enc_reg_n_0_[3] ),
-        .I4(sel0[3]),
-        .I5(sel0[1]),
-        .O(\pb_press_type_reg[1]_0 [2]));
+       (.I0(sw_IBUF[1]),
+        .I1(Q[0]),
+        .I2(Q[2]),
+        .I3(Q[3]),
+        .I4(sw_IBUF[0]),
+        .I5(Q[1]),
+        .O(\enc_reg[3]_0 [2]));
   LUT6 #(
     .INIT(64'h5FFF5FFF1F22FF7F)) 
     \seven_seg_3_reg[3]_i_1 
-       (.I0(sel0[0]),
-        .I1(sel0[1]),
-        .I2(sel0[2]),
-        .I3(sel0[3]),
-        .I4(\enc_reg_n_0_[3] ),
-        .I5(sel0[4]),
-        .O(\pb_press_type_reg[1]_0 [3]));
+       (.I0(Q[0]),
+        .I1(Q[1]),
+        .I2(Q[2]),
+        .I3(sw_IBUF[0]),
+        .I4(Q[3]),
+        .I5(sw_IBUF[1]),
+        .O(\enc_reg[3]_0 [3]));
   LUT6 #(
     .INIT(64'h5FFF5FFF5F23FF7F)) 
     \seven_seg_3_reg[4]_i_1 
-       (.I0(sel0[0]),
-        .I1(sel0[1]),
-        .I2(sel0[2]),
-        .I3(sel0[3]),
-        .I4(\enc_reg_n_0_[3] ),
-        .I5(sel0[4]),
-        .O(\pb_press_type_reg[1]_0 [4]));
+       (.I0(Q[0]),
+        .I1(Q[1]),
+        .I2(Q[2]),
+        .I3(sw_IBUF[0]),
+        .I4(Q[3]),
+        .I5(sw_IBUF[1]),
+        .O(\enc_reg[3]_0 [4]));
   LUT6 #(
     .INIT(64'hFF3FFFDFFFFFFF1F)) 
     \seven_seg_3_reg[5]_i_1 
-       (.I0(sel0[0]),
-        .I1(sel0[1]),
-        .I2(\enc_reg_n_0_[3] ),
-        .I3(sel0[4]),
-        .I4(sel0[3]),
-        .I5(sel0[2]),
-        .O(\pb_press_type_reg[1]_0 [5]));
+       (.I0(Q[0]),
+        .I1(Q[1]),
+        .I2(Q[3]),
+        .I3(sw_IBUF[1]),
+        .I4(sw_IBUF[0]),
+        .I5(Q[2]),
+        .O(\enc_reg[3]_0 [5]));
   LUT6 #(
     .INIT(64'hFFFFFFFF9F00FF7F)) 
     \seven_seg_3_reg[6]_i_1 
-       (.I0(sel0[0]),
-        .I1(sel0[1]),
-        .I2(sel0[2]),
-        .I3(sel0[3]),
-        .I4(\enc_reg_n_0_[3] ),
-        .I5(sel0[4]),
-        .O(\pb_press_type_reg[1]_0 [6]));
+       (.I0(Q[0]),
+        .I1(Q[1]),
+        .I2(Q[2]),
+        .I3(sw_IBUF[0]),
+        .I4(Q[3]),
+        .I5(sw_IBUF[1]),
+        .O(\enc_reg[3]_0 [6]));
   LUT6 #(
     .INIT(64'hFBFFFBFFFBFFFFFF)) 
     \seven_seg_3_reg[7]_i_1 
-       (.I0(sel0[4]),
-        .I1(\enc_reg_n_0_[3] ),
-        .I2(sel0[2]),
-        .I3(sel0[3]),
-        .I4(sel0[1]),
-        .I5(sel0[0]),
-        .O(\pb_press_type_reg[1]_0 [7]));
+       (.I0(sw_IBUF[1]),
+        .I1(Q[3]),
+        .I2(Q[2]),
+        .I3(sw_IBUF[0]),
+        .I4(Q[1]),
+        .I5(Q[0]),
+        .O(\enc_reg[3]_0 [7]));
   LUT6 #(
     .INIT(64'hAFEFEFFF77EF7777)) 
     \seven_seg_4_reg[1]_i_1 
-       (.I0(sel0[4]),
-        .I1(sel0[3]),
-        .I2(\enc_reg_n_0_[3] ),
-        .I3(sel0[0]),
-        .I4(sel0[2]),
-        .I5(sel0[1]),
+       (.I0(sw_IBUF[1]),
+        .I1(sw_IBUF[0]),
+        .I2(Q[3]),
+        .I3(Q[0]),
+        .I4(Q[2]),
+        .I5(Q[1]),
         .O(\enc_reg[0]_0 [0]));
   LUT6 #(
     .INIT(64'hDDDD7FFFFFFF07FF)) 
     \seven_seg_4_reg[2]_i_1 
-       (.I0(sel0[0]),
-        .I1(sel0[1]),
-        .I2(sel0[2]),
-        .I3(\enc_reg_n_0_[3] ),
-        .I4(sel0[4]),
-        .I5(sel0[3]),
+       (.I0(Q[0]),
+        .I1(Q[1]),
+        .I2(Q[2]),
+        .I3(Q[3]),
+        .I4(sw_IBUF[1]),
+        .I5(sw_IBUF[0]),
         .O(\enc_reg[0]_0 [1]));
   LUT6 #(
     .INIT(64'hFEFEFFFFFFFFAFFF)) 
     \seven_seg_4_reg[3]_i_1 
-       (.I0(sel0[1]),
-        .I1(sel0[0]),
-        .I2(sel0[2]),
-        .I3(\enc_reg_n_0_[3] ),
-        .I4(sel0[3]),
-        .I5(sel0[4]),
+       (.I0(Q[1]),
+        .I1(Q[0]),
+        .I2(Q[2]),
+        .I3(Q[3]),
+        .I4(sw_IBUF[0]),
+        .I5(sw_IBUF[1]),
         .O(\enc_reg[0]_0 [2]));
   LUT6 #(
     .INIT(64'hBBCFFFFFFFFFBBFF)) 
     \seven_seg_4_reg[4]_i_1 
-       (.I0(sel0[1]),
-        .I1(sel0[4]),
-        .I2(\enc_reg_n_0_[3] ),
-        .I3(sel0[3]),
-        .I4(sel0[0]),
-        .I5(sel0[2]),
+       (.I0(Q[1]),
+        .I1(sw_IBUF[1]),
+        .I2(Q[3]),
+        .I3(sw_IBUF[0]),
+        .I4(Q[0]),
+        .I5(Q[2]),
         .O(\enc_reg[0]_0 [3]));
   LUT5 #(
     .INIT(32'h3FFFFF7F)) 
     \seven_seg_4_reg[5]_i_1 
-       (.I0(\enc_reg_n_0_[3] ),
-        .I1(sel0[0]),
-        .I2(sel0[2]),
-        .I3(sel0[3]),
-        .I4(sel0[4]),
+       (.I0(Q[3]),
+        .I1(Q[0]),
+        .I2(Q[2]),
+        .I3(sw_IBUF[0]),
+        .I4(sw_IBUF[1]),
         .O(\enc_reg[0]_0 [4]));
   LUT6 #(
     .INIT(64'hFF66FFFFFFFFFF5F)) 
     \seven_seg_4_reg[6]_i_1 
-       (.I0(sel0[2]),
-        .I1(sel0[0]),
-        .I2(\enc_reg_n_0_[3] ),
-        .I3(sel0[1]),
-        .I4(sel0[3]),
-        .I5(sel0[4]),
+       (.I0(Q[2]),
+        .I1(Q[0]),
+        .I2(Q[3]),
+        .I3(Q[1]),
+        .I4(sw_IBUF[0]),
+        .I5(sw_IBUF[1]),
         .O(\enc_reg[0]_0 [5]));
   LUT6 #(
     .INIT(64'hFFFF8FFFFFFFFFFF)) 
     \seven_seg_4_reg[7]_i_1 
-       (.I0(sel0[0]),
-        .I1(sel0[1]),
-        .I2(sel0[3]),
-        .I3(sel0[2]),
-        .I4(sel0[4]),
-        .I5(\enc_reg_n_0_[3] ),
+       (.I0(Q[0]),
+        .I1(Q[1]),
+        .I2(sw_IBUF[0]),
+        .I3(Q[2]),
+        .I4(sw_IBUF[1]),
+        .I5(Q[3]),
         .O(\enc_reg[0]_0 [6]));
   (* OPT_MODIFIED = "BUFG_OPT" *) 
   LUT6 #(
     .INIT(64'h5F0F5FFFFF7FFFFF)) 
     \seven_seg_4_reg[7]_i_2 
-       (.I0(sel0[1]),
-        .I1(sel0[0]),
-        .I2(sel0[2]),
-        .I3(sel0[3]),
-        .I4(\enc_reg_n_0_[3] ),
-        .I5(sel0[4]),
+       (.I0(Q[1]),
+        .I1(Q[0]),
+        .I2(Q[2]),
+        .I3(sw_IBUF[0]),
+        .I4(Q[3]),
+        .I5(sw_IBUF[1]),
         .O(\E[0] ));
   (* SOFT_HLUTNM = "soft_lutpair0" *) 
   LUT1 #(

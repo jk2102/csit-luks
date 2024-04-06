@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 -------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version     : Vivado v.2023.2 (win64) Build 4029153 Fri Oct 13 20:14:34 MDT 2023
-| Date             : Sat Apr  6 10:52:35 2024
+| Date             : Sat Apr  6 11:03:58 2024
 | Host             : JKUNDRATALAPTOP running 64-bit major release  (build 9200)
 | Command          : report_power -file ./fpga_output/post_synth_power.rpt
 | Design           : fpga_top_lvl
@@ -58,8 +58,8 @@ Table of Contents
 |   Register     |    <0.001 |       76 |     41600 |            0.18 |
 |   CARRY4       |    <0.001 |        7 |      8150 |            0.09 |
 |   Others       |     0.000 |        7 |       --- |             --- |
-| Signals        |    <0.001 |      176 |       --- |             --- |
-| I/O            |     0.012 |       18 |       106 |           16.98 |
+| Signals        |    <0.001 |      178 |       --- |             --- |
+| I/O            |     0.012 |       24 |       106 |           22.64 |
 | Static Power   |     0.072 |          |           |                 |
 | Total          |     0.085 |          |           |                 |
 +----------------+-----------+----------+-----------+-----------------+

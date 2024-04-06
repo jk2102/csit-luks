@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2023.2 (win64) Build 4029153 Fri Oct 13 20:14:34 MDT 2023
-| Date         : Sat Apr  6 10:53:28 2024
+| Date         : Sat Apr  6 11:04:50 2024
 | Host         : JKUNDRATALAPTOP running 64-bit major release  (build 9200)
 | Command      : report_timing -sort_by group -max_paths 100 -path_type summary -file ./fpga_output/post_route_timing.rpt
 | Design       : fpga_top_lvl
@@ -14,39 +14,39 @@ Timing Report
 
 Startpoint                     Endpoint                       Slack(ns)     
 ----------------------------------------------------------------------------
-counter_reg[4]/C               counter_reg[10]/R              5.772         
-counter_reg[4]/C               counter_reg[11]/R              5.772         
-counter_reg[4]/C               counter_reg[12]/R              5.772         
-counter_reg[4]/C               counter_reg[9]/R               5.772         
-counter_reg[4]/C               counter_reg[13]/R              5.921         
-counter_reg[4]/C               counter_reg[14]/R              5.921         
-counter_reg[4]/C               counter_reg[15]/R              5.921         
-counter_reg[4]/C               counter_reg[1]/R               5.932         
-counter_reg[4]/C               counter_reg[2]/R               5.932         
-counter_reg[4]/C               counter_reg[3]/R               5.932         
-counter_reg[4]/C               counter_reg[4]/R               5.932         
-counter_reg[4]/C               counter_reg[0]/R               6.005         
-counter_reg[4]/C               counter_reg[5]/R               6.057         
-counter_reg[4]/C               counter_reg[6]/R               6.057         
-counter_reg[4]/C               counter_reg[7]/R               6.057         
-counter_reg[4]/C               counter_reg[8]/R               6.057         
-counter_reg[4]/C               clk_10kHz_reg/D                6.400         
-counter_reg[2]/C               counter_reg[14]/D              7.699         
-counter_reg[2]/C               counter_reg[15]/D              7.783         
-counter_reg[2]/C               counter_reg[13]/D              7.803         
-counter_reg[2]/C               counter_reg[10]/D              7.815         
-counter_reg[2]/C               counter_reg[12]/D              7.823         
-counter_reg[2]/C               counter_reg[11]/D              7.899         
-counter_reg[2]/C               counter_reg[9]/D               7.919         
-counter_reg[2]/C               counter_reg[6]/D               7.932         
-counter_reg[2]/C               counter_reg[8]/D               7.940         
-counter_reg[2]/C               counter_reg[7]/D               8.016         
-counter_reg[2]/C               counter_reg[5]/D               8.036         
-counter_reg[2]/C               counter_reg[4]/D               8.169         
-counter_reg[2]/C               counter_reg[3]/D               8.234         
-counter_reg[1]/C               counter_reg[2]/D               8.471         
-counter_reg[1]/C               counter_reg[1]/D               8.646         
-counter_reg[0]/C               counter_reg[0]/D               8.899         
+counter_reg[4]/C               counter_reg[0]/R               6.163         
+counter_reg[4]/C               counter_reg[10]/R              6.191         
+counter_reg[4]/C               counter_reg[11]/R              6.191         
+counter_reg[4]/C               counter_reg[12]/R              6.191         
+counter_reg[4]/C               counter_reg[9]/R               6.191         
+counter_reg[4]/C               counter_reg[5]/R               6.205         
+counter_reg[4]/C               counter_reg[6]/R               6.205         
+counter_reg[4]/C               counter_reg[7]/R               6.205         
+counter_reg[4]/C               counter_reg[8]/R               6.205         
+counter_reg[4]/C               counter_reg[13]/R              6.261         
+counter_reg[4]/C               counter_reg[14]/R              6.261         
+counter_reg[4]/C               counter_reg[15]/R              6.261         
+counter_reg[4]/C               counter_reg[1]/R               6.342         
+counter_reg[4]/C               counter_reg[2]/R               6.342         
+counter_reg[4]/C               counter_reg[3]/R               6.342         
+counter_reg[4]/C               counter_reg[4]/R               6.342         
+counter_reg[4]/C               clk_10kHz_reg/D                6.564         
+counter_reg[2]/C               counter_reg[14]/D              7.821         
+counter_reg[2]/C               counter_reg[15]/D              7.916         
+counter_reg[2]/C               counter_reg[13]/D              7.932         
+counter_reg[2]/C               counter_reg[10]/D              7.934         
+counter_reg[2]/C               counter_reg[12]/D              7.955         
+counter_reg[2]/C               counter_reg[11]/D              8.029         
+counter_reg[2]/C               counter_reg[9]/D               8.045         
+counter_reg[2]/C               counter_reg[6]/D               8.048         
+counter_reg[2]/C               counter_reg[8]/D               8.069         
+counter_reg[2]/C               counter_reg[7]/D               8.143         
+counter_reg[2]/C               counter_reg[5]/D               8.159         
+counter_reg[2]/C               counter_reg[4]/D               8.314         
+counter_reg[2]/C               counter_reg[3]/D               8.374         
+counter_reg[0]/C               counter_reg[2]/D               8.419         
+counter_reg[0]/C               counter_reg[1]/D               8.535         
+counter_reg[0]/C               counter_reg[0]/D               8.892         
 
 
 
