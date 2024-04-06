@@ -20,12 +20,12 @@ module tt_um_csit_luks (
 
   // wires
   wire [3:0] enc_w;
-  wire [1:0] pb_press_type_w;
+  wire [1:0] pb_press_type_w, display_select_w;
   wire [7:0] spi_luks_data_w, spi_flash_data_w;
   wire spi_luks_ready_w, spi_luks_valid_w, spi_flash_ready_w, spi_flash_valid_w;
   wire [23:0] spi_flash_address_w;
   wire spi_luks_ss_w, spi_luks_sclk_w, spi_luks_miso_w;
-  wire spi_flash_ss_w, spi_flash_sclk_w, spi_flash_miso_w, spi_flsah_mosi_w;
+  wire spi_flash_ss_w, spi_flash_sclk_w, spi_flash_miso_w, spi_flash_mosi_w;
 
 
   // Rotational encoder
@@ -78,10 +78,18 @@ fsm fsm_instance (
 );
 
  // Flash SPI master
-  spi_flash spi_flash_instance (
-    .clk    (clk),
-    .rstn   (rstn)
+  spi_wrapper spi_wrapper_instance (
+    .clk_i    (clk),
+    .rstn_i   (rstn),
+
+    .valid_i  (spi_flash_valid_w),
+    .ready_o  (spi_flash_ready_w),
+    .addr_i   (spi_flash_address_w),
+    .rdata_o  (spi_flash_data_w),
+
+
   );
+
 
   // Sensor SPI master 
   SPI_Luks SPI_Luks_instance (
