@@ -41,21 +41,10 @@ module SPI_tb;
 
     #51 valid_  = 1;
 
-    #50 valid_  = 1;
-    #51 valid_  = 1;
-    #46 valid_  = 1;
-    #67 valid_  = 1;
+    #400 valid_ = 1;
 
     #1000 $finish;
 
-  end
-
-  always @(negedge ss_) begin
-    if (sclk_) begin
-      count <= 14;
-    end else begin
-      count  <= 15;
-    end
   end
 
   always @(posedge sclk_) begin
@@ -68,6 +57,4 @@ module SPI_tb;
   always @(posedge ready_) begin
     valid_ <= 0;
   end
-
-
 endmodule

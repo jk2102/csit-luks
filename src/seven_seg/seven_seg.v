@@ -34,15 +34,15 @@ module seven_seg (
     output [3:0]    anode
 );
 
-    wire [7:0]  seven_seg_1, seven_seg_2, seven_seg_3, seven_seg_4;
+    reg [7:0]  seven_seg_1, seven_seg_2, seven_seg_3, seven_seg_4;
 
     always @ (display_value, display_select) begin          
-        case (selectInput)
+        case (display_select)
             2'b00:  decode_ISO(display_value); 
             2'b01:  decode_shutter(display_value); 
             2'b10:  decode_focal(display_value); 
             2'b11:  decode_indicator(display_value); 
-            default: seven_seg_4=8'b11111111; seven_seg_3=8'b11111111; seven_seg_2=8'b11111111; seven_seg_1=8'b11111111;
+            default: begin seven_seg_4=8'b11111111; seven_seg_3=8'b11111111; seven_seg_2=8'b11111111; seven_seg_1=8'b11111111; end
         endcase
     end
 
@@ -118,7 +118,7 @@ module seven_seg (
         end        
     endtask
 
-    task decodeindicator;
+    task decode_indicator;
         input [3:0] value;
         begin
             case (value[2:0])            
@@ -136,14 +136,15 @@ module seven_seg (
 
     // Multiplexing the 4 seven-segment displays
     always @ (posedge clk or negedge rstn) begin
-        if (~rstn) begin
-            multiplexing_counter       <= 0;
-        end else begin
-            multiplexing_counter <= multiplexing_counter + 1;
-        end
+        if (~rstn)  multiplexing_counter        <= 0;
+        else        multiplexing_counter        <= multiplexing_counter + 1;        
     end
 
-    assign seven_seg    =   (anode == 4'b1111) ? seven_seg_1 : seven_seg;
+    assign seven_seg    =   (multiplexing_counter[1:0] == 2'b00) ? seven_seg_1 : 
+                            (multiplexing_counter[1:0] == 2'b01) ? seven_seg_2 : 
+                            (multiplexing_counter[1:0] == 2'b10) ? seven_seg_3 : 
+                            (multiplexing_counter[1:0] == 2'b11) ? seven_seg_4 : 8'b11111111;
+                            
     assign anode        =   (multiplexing_counter[1:0] == 2'b00) ? 4'b1110 : 
                             (multiplexing_counter[1:0] == 2'b01) ? 4'b1101 : 
                             (multiplexing_counter[1:0] == 2'b10) ? 4'b1011 : 

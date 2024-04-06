@@ -15,6 +15,7 @@ file mkdir $outputDir
 #
 
 read_verilog  [ glob ../src/rotational_encoder/rotational_encoder.v ]
+read_verilog  [ glob ../src/seven_seg/seven_seg.v ]
 read_verilog  [ glob ../src/tt_um_csit_luks.v ]
 read_verilog  [ glob ../src/fpga/fpga_top_lvl.v ]
 
