@@ -42,7 +42,7 @@ module tt_um_csit_luks (
     .seven_seg      (uio_out[7:0]),   // Single segment output 
     .anode          (uio_oe[3:0]),    // Segment select 
     .display_value  (enc_w),
-    .display_select (sw) 
+    .display_select (pb_press_type_w)
  );
 
 endmodule
