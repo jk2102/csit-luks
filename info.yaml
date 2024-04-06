@@ -19,7 +19,8 @@ project:
     - "rotational_encoder/rotational_encoder.v"
     - "seven_seg/seven_seg.v"
     - "fsm/fsm.v"
-    - "spi_flash/spi_flash.v"
+    - "spi_flash/spi_wrapper.v"
+    - "spi_flash/spimemio.v"
     - "spi_sensor/rtl/SPI_Luks.v"
 
 # The pinout of your project. Leave unused pins blank. DO NOT delete or add any pins.
