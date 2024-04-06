@@ -9,7 +9,7 @@ module spi_wrapper (
 	output ready_o,
 	input [23:0] addr_i,
 	input [31:0] wrdata_i,
-	output wire [31:0] rdata_o
+	output wire [7:0] rdata_o
 );
 
 
@@ -39,7 +39,7 @@ reg [31:0] cfgreg_di;
 
 spiflash spiflash_inst_0 (
 	.csb(csb),
-	.clk(clock), //clock
+	.clk(clock), 
 	.io0(flash_io0), //MOSI
 	.io1(flash_io1), //MISO
 	.io2(flash_io2),
