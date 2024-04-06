@@ -41,18 +41,16 @@ module rotational_encoder (
                                         
 reg lastA, lastB;                   // Registers to store the last state of A and B 
 reg [11:0] pb_cnt;          
-reg [1:0]  tmp_press; 
-        
+     
 // Initialize or update the last state of A and B
-always @(posedge clk) begin
+always @(posedge clk or negedge rstn) begin
     if (!rstn) begin
         lastA <= 0;
         lastB <= 0;
         // Default encoder      
-        enc <= 4'b0000;   
+        enc <= 4'b1000;   
         // Default pushbutton 
         pb_cnt <=  12'b000000000000;
-        tmp_press <= 2'b00; 
         pb_press_type <= 2'b00;        
     end 
 
@@ -73,19 +71,16 @@ always @(posedge clk) begin
 
         // Pushbutton released / not pressed  
         if(PB) begin 
-            if(pb_cnt<12'd50) tmp_press <= 2'b00;                       // not pressed/filtered bad press  
-            if(pb_cnt>=12'd50 && pb_cnt<12'd400) tmp_press <= 2'b01;    // short press 
-            if(pb_cnt>=12'd400 && pb_cnt<12'd1200) tmp_press <= 2'b10;  // normal press 
-            if(pb_cnt>=12'd1200) tmp_press <= 2'b11;                    // long press   
-             pb_cnt <=  12'b000000000000;
-
-            // if proper press accured 
-            if(tmp_press)begin 
-                if(tmp_press != pb_press_type) begin
-                pb_press_type <= tmp_press;
-                tmp_press <= 2'b00;
-                end        
-            end    
+            if(pb_cnt<12'd50) pb_press_type <= 2'b00;                       // not pressed/filtered bad press  
+            if(pb_cnt>=12'd50 && pb_cnt<12'd400) pb_press_type <= 2'b01;    // short press 
+            if(pb_cnt>=12'd400 && pb_cnt<12'd1200) pb_press_type <= 2'b10;  // normal press 
+            if(pb_cnt>=12'd1200) pb_press_type <= 2'b11;                    // long press   
+            
+            if(pb_press_type!=2'b00) begin 
+                pb_press_type <= 2'b00;
+                pb_cnt <=  12'b000000000000;
+                enc <= 4'b1000;  
+            end       
         end
     end
 end
