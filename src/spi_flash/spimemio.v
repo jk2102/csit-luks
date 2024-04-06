@@ -23,7 +23,7 @@ module spimemio (
 	input valid,
 	output ready,
 	input [23:0] addr,
-	output reg [31:0] rdata,
+	output reg [7:0] rdata,
 
 	output flash_csb,
 	output flash_clk,
@@ -53,8 +53,6 @@ module spimemio (
 	reg  [7:0] din_data;
 	reg  [3:0] din_tag;
 	reg        din_cont;
-	reg        din_qspi;
-	reg        din_ddr;
 	reg        din_rd;
 
 	wire       dout_valid;
@@ -74,8 +72,6 @@ module spimemio (
 	reg softreset;
 
 	reg       config_en;      // cfgreg[31]
-	reg       config_ddr;     // cfgreg[22]
-	reg       config_qspi;    // cfgreg[21]
 	reg       config_cont;    // cfgreg[20]
 	reg [3:0] config_dummy;   // cfgreg[19:16]
 	reg [3:0] config_oe;      // cfgreg[11:8]
@@ -85,8 +81,8 @@ module spimemio (
 
 	assign cfgreg_do[31] = config_en;
 	assign cfgreg_do[30:23] = 0;
-	assign cfgreg_do[22] = config_ddr;
-	assign cfgreg_do[21] = config_qspi;
+	assign cfgreg_do[22] = cfgreg_di[22]; //config_ddr
+	assign cfgreg_do[21] = cfgreg_di[21]; //config_qspi
 	assign cfgreg_do[20] = config_cont;
 	assign cfgreg_do[19:16] = config_dummy;
 	assign cfgreg_do[15:12] = 0;
@@ -105,8 +101,6 @@ module spimemio (
 			config_clk <= 0;
 			config_oe <= 0;
 			config_do <= 0;
-			config_ddr <= 0;
-			config_qspi <= 0;
 			config_cont <= 0;
 			config_dummy <= 8;
 		end else begin
@@ -115,12 +109,11 @@ module spimemio (
 				config_clk <= cfgreg_di[4];
 				config_do <= cfgreg_di[3:0];
 			end
+			
 			if (cfgreg_we[1]) begin
 				config_oe <= cfgreg_di[11:8];
 			end
 			if (cfgreg_we[2]) begin
-				config_ddr <= cfgreg_di[22];
-				config_qspi <= cfgreg_di[21];
 				config_cont <= cfgreg_di[20];
 				config_dummy <= cfgreg_di[19:16];
 			end
@@ -163,13 +156,13 @@ module spimemio (
 	assign flash_io2_oe = config_en ? xfer_io2_oe : config_oe[2];
 	assign flash_io3_oe = config_en ? xfer_io3_oe : config_oe[3];
 
-	assign flash_io0_do = config_en ? (config_ddr ? xfer_io0_90 : xfer_io0_do) : config_do[0];
-	assign flash_io1_do = config_en ? (config_ddr ? xfer_io1_90 : xfer_io1_do) : config_do[1];
-	assign flash_io2_do = config_en ? (config_ddr ? xfer_io2_90 : xfer_io2_do) : config_do[2];
-	assign flash_io3_do = config_en ? (config_ddr ? xfer_io3_90 : xfer_io3_do) : config_do[3];
+	assign flash_io0_do = config_en ? ( xfer_io0_do) : config_do[0];
+	assign flash_io1_do = config_en ? ( xfer_io1_do) : config_do[1];
+	assign flash_io2_do = config_en ? ( xfer_io2_do) : config_do[2];
+	assign flash_io3_do = config_en ? ( xfer_io3_do) : config_do[3];
 
-	wire xfer_dspi = din_ddr && !din_qspi;
-	wire xfer_ddr = din_ddr && din_qspi;
+	wire xfer_dspi = cfgreg_di[22] && !cfgreg_di[21];
+	wire xfer_ddr = cfgreg_di[22] && cfgreg_di[21];
 
 	spimemio_xfer xfer (
 		.clk          (clk         ),
@@ -179,9 +172,6 @@ module spimemio (
 		.din_data     (din_data    ),
 		.din_tag      (din_tag     ),
 		.din_cont     (din_cont    ),
-		.din_dspi     (xfer_dspi   ),
-		.din_qspi     (din_qspi    ),
-		.din_ddr      (xfer_ddr    ),
 		.din_rd       (din_rd      ),
 		.dout_valid   (dout_valid  ),
 		.dout_data    (dout_data   ),
@@ -214,16 +204,11 @@ module spimemio (
 			rd_valid <= 0;
 			din_tag <= 0;
 			din_cont <= 0;
-			din_qspi <= 0;
-			din_ddr <= 0;
 			din_rd <= 0;
 		end else begin
-			if (dout_valid && dout_tag == 1) buffer[ 7: 0] <= dout_data;
-			if (dout_valid && dout_tag == 2) buffer[15: 8] <= dout_data;
-			if (dout_valid && dout_tag == 3) buffer[23:16] <= dout_data;
-			if (dout_valid && dout_tag == 4) begin
-				rdata <= {dout_data, buffer};
-				rd_addr <= rd_inc ? rd_addr + 4 : addr;
+			if (dout_valid && dout_tag == 1) begin
+				rdata <= dout_data;
+				rd_addr <= rd_inc ? rd_addr + 1 : addr; //dout_tag i rd_addr promijenit
 				rd_valid <= 1;
 				rd_wait <= rd_inc;
 				rd_inc <= 1;
@@ -267,12 +252,10 @@ module spimemio (
 					rd_inc <= 0;
 					din_valid <= 1;
 					din_tag <= 0;
-					case ({config_ddr, config_qspi})
-						2'b11: din_data <= 8'h ED;
-						2'b01: din_data <= 8'h EB;
-						2'b10: din_data <= 8'h BB;
-						2'b00: din_data <= 8'h 03;
-					endcase
+						 din_data <= 8'h ED;
+						 din_data <= 8'h EB;
+						 din_data <= 8'h BB;
+						 din_data <= 8'h 03;
 					if (din_ready) begin
 						din_valid <= 0;
 						state <= 5;
@@ -283,8 +266,6 @@ module spimemio (
 						din_valid <= 1;
 						din_tag <= 0;
 						din_data <= addr[23:16];
-						din_qspi <= config_qspi;
-						din_ddr <= config_ddr;
 						if (din_ready) begin
 							din_valid <= 0;
 							state <= 6;
@@ -307,7 +288,7 @@ module spimemio (
 					if (din_ready) begin
 						din_valid <= 0;
 						din_data <= 0;
-						state <= config_qspi || config_ddr ? 8 : 9;
+						state <= 9;
 					end
 				end
 				8: begin
@@ -326,34 +307,7 @@ module spimemio (
 					din_tag <= 1;
 					if (din_ready) begin
 						din_valid <= 0;
-						state <= 10;
-					end
-				end
-				10: begin
-					din_valid <= 1;
-					din_data <= 8'h 00;
-					din_tag <= 2;
-					if (din_ready) begin
-						din_valid <= 0;
-						state <= 11;
-					end
-				end
-				11: begin
-					din_valid <= 1;
-					din_tag <= 3;
-					if (din_ready) begin
-						din_valid <= 0;
-						state <= 12;
-					end
-				end
-				12: begin
-					if (!rd_wait || valid) begin
-						din_valid <= 1;
-						din_tag <= 4;
-						if (din_ready) begin
-							din_valid <= 0;
-							state <= 9;
-						end
+						state <= 9;
 					end
 				end
 			endcase
@@ -366,8 +320,6 @@ module spimemio (
 					state <= 5;
 				end else begin
 					state <= 4;
-					din_qspi <= 0;
-					din_ddr <= 0;
 				end
 				din_rd <= 0;
 			end
@@ -383,9 +335,6 @@ module spimemio_xfer (
 	input      [7:0] din_data,
 	input      [3:0] din_tag,
 	input            din_cont,
-	input            din_dspi,
-	input            din_qspi,
-	input            din_ddr,
 	input            din_rd,
 
 	output           dout_valid,
@@ -417,10 +366,6 @@ module spimemio_xfer (
 	reg [3:0] dummy_count;
 
 	reg xfer_cont;
-	reg xfer_dspi;
-	reg xfer_qspi;
-	reg xfer_ddr;
-	reg xfer_ddr_q;
 	reg xfer_rd;
 	reg [3:0] xfer_tag;
 	reg [3:0] xfer_tag_q;
@@ -434,13 +379,12 @@ module spimemio_xfer (
 	reg last_fetch;
 
 	always @(posedge clk) begin
-		xfer_ddr_q <= xfer_ddr;
 		xfer_tag_q <= xfer_tag;
 	end
 
 	assign din_ready = din_valid && resetn && next_fetch;
 
-	assign dout_valid = (xfer_ddr_q ? fetch && !last_fetch : next_fetch && !fetch) && resetn;
+	assign dout_valid = (next_fetch && !fetch) && resetn;
 	assign dout_data = ibuffer;
 	assign dout_tag = xfer_tag_q;
 
@@ -461,8 +405,6 @@ module spimemio_xfer (
 		next_fetch = 0;
 
 		if (dummy_count == 0) begin
-			casez ({xfer_ddr, xfer_qspi, xfer_dspi})
-				3'b 000: begin
 					flash_io0_oe = 1;
 					flash_io0_do = obuffer[7];
 
@@ -474,61 +416,6 @@ module spimemio_xfer (
 					end
 
 					next_fetch = (next_count == 0);
-				end
-				3'b 01?: begin
-					flash_io0_oe = !xfer_rd;
-					flash_io1_oe = !xfer_rd;
-					flash_io2_oe = !xfer_rd;
-					flash_io3_oe = !xfer_rd;
-
-					flash_io0_do = obuffer[4];
-					flash_io1_do = obuffer[5];
-					flash_io2_do = obuffer[6];
-					flash_io3_do = obuffer[7];
-
-					if (flash_clk) begin
-						next_obuffer = {obuffer[3:0], 4'b 0000};
-						next_count = count - {|count, 2'b00};
-					end else begin
-						next_ibuffer = {ibuffer[3:0], flash_io3_di, flash_io2_di, flash_io1_di, flash_io0_di};
-					end
-
-					next_fetch = (next_count == 0);
-				end
-				3'b 11?: begin
-					flash_io0_oe = !xfer_rd;
-					flash_io1_oe = !xfer_rd;
-					flash_io2_oe = !xfer_rd;
-					flash_io3_oe = !xfer_rd;
-
-					flash_io0_do = obuffer[4];
-					flash_io1_do = obuffer[5];
-					flash_io2_do = obuffer[6];
-					flash_io3_do = obuffer[7];
-
-					next_obuffer = {obuffer[3:0], 4'b 0000};
-					next_ibuffer = {ibuffer[3:0], flash_io3_di, flash_io2_di, flash_io1_di, flash_io0_di};
-					next_count = count - {|count, 2'b00};
-
-					next_fetch = (next_count == 0);
-				end
-				3'b ??1: begin
-					flash_io0_oe = !xfer_rd;
-					flash_io1_oe = !xfer_rd;
-
-					flash_io0_do = obuffer[6];
-					flash_io1_do = obuffer[7];
-
-					if (flash_clk) begin
-						next_obuffer = {obuffer[5:0], 2'b 00};
-						next_count = count - {|count, 1'b0};
-					end else begin
-						next_ibuffer = {ibuffer[5:0], flash_io1_di, flash_io0_di};
-					end
-
-					next_fetch = (next_count == 0);
-				end
-			endcase
 		end
 	end
 
@@ -542,13 +429,10 @@ module spimemio_xfer (
 			dummy_count <= 0;
 			xfer_tag <= 0;
 			xfer_cont <= 0;
-			xfer_dspi <= 0;
-			xfer_qspi <= 0;
-			xfer_ddr <= 0;
 			xfer_rd <= 0;
 		end else begin
 			fetch <= next_fetch;
-			last_fetch <= xfer_ddr ? fetch : 1;
+			last_fetch <= 1;
 			if (dummy_count) begin
 				flash_clk <= !flash_clk && !flash_csb;
 				dummy_count <= dummy_count - flash_clk;
@@ -569,9 +453,6 @@ module spimemio_xfer (
 
 				xfer_tag <= din_tag;
 				xfer_cont <= din_cont;
-				xfer_dspi <= din_dspi;
-				xfer_qspi <= din_qspi;
-				xfer_ddr <= din_ddr;
 				xfer_rd <= din_rd;
 			end
 		end

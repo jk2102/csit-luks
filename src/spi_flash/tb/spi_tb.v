@@ -8,7 +8,7 @@ reg reset_n;
 reg valid;
 reg [23:0] addr;
 wire ready;
-wire [31:0] rdata;
+wire [7:0] rdata;
 integer i = 0;
 reg [3:0] cfgreg_we;
 reg [31:0] wrdata_i;
@@ -60,22 +60,12 @@ always @(posedge clock or negedge reset_n) begin
 	if (reset_n == 0) begin
 		valid = 1'b0;
 	end else if(ready & valid) begin
-		addr = addr + 4;
+		addr = addr + 1;
 		valid = 1'b0;
 	end else begin
 		valid = 1'b1;
 	end
 end
-
-
-//initial begin
-//   for (i = 0; i < 256; i = i +1)
-//   begin
-//	#200;
-//	addr = i;
-//   end
-//end
-
 
 initial begin
 	cfgreg_we =4'b0000;

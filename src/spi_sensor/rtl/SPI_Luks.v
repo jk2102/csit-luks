@@ -55,7 +55,7 @@ always @(negedge clk) begin
   end
 
   if (ready == 1) begin                       //  when ready slave is deselected and it sends value revieved from slave to memory
-    ss = 1;
+    ss <= 1;
     toMemory [7:0] <= rx_data [11:4];
   end
 end
@@ -66,13 +66,13 @@ always @(negedge sclk) begin
   end                                         //  slave sends data from msb to lsb
 
   if (counter == 16) begin                    //  6 == end of recieving data
-    ready = 1;                                //  it is placed in negedge because otherwise it would send extra data to memory
+    ready <= 1;                                //  it is placed in negedge because otherwise it would send extra data to memory
   end
 end
 
 always @(posedge sclk) begin                  //  on each new positive sclk generated it adds 1 to the counter
   if (valid) begin
-    counter = counter + 1;
+    counter <= counter + 1;
   end
 end
 endmodule
