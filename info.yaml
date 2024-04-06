@@ -17,6 +17,7 @@ project:
   source_files:        
     - "tt_um_csit_luks.v"
     - "rotational_encoder/rotational_encoder.v"
+    - "seven_seg/seven_seg.v"
 
 # The pinout of your project. Leave unused pins blank. DO NOT delete or add any pins.
 pinout:

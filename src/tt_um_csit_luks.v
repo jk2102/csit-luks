@@ -22,7 +22,7 @@ module tt_um_csit_luks (
   assign uio_oe  = 0;
 
   wire [3:0] enc_w;
-  wire [2:0] pb_press_type_w;
+  wire [1:0] pb_press_type_w;
 
   // Rotational encoder
   rotational_encoder rotational_encoder_instance (

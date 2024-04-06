@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 -------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version     : Vivado v.2023.2 (win64) Build 4029153 Fri Oct 13 20:14:34 MDT 2023
-| Date             : Sat Apr  6 11:56:03 2024
+| Date             : Sat Apr  6 12:12:24 2024
 | Host             : JKUNDRATALAPTOP running 64-bit major release  (build 9200)
 | Command          : report_power -file ./fpga_output/post_route_power.rpt
 | Design           : fpga_top_lvl
@@ -30,10 +30,10 @@ Table of Contents
 ----------
 
 +--------------------------+--------------+
-| Total On-Chip Power (W)  | 0.110        |
+| Total On-Chip Power (W)  | 0.112        |
 | Design Power Budget (W)  | Unspecified* |
 | Power Budget Margin (W)  | NA           |
-| Dynamic (W)              | 0.038        |
+| Dynamic (W)              | 0.040        |
 | Device Static (W)        | 0.072        |
 | Effective TJA (C/W)      | 5.0          |
 | Max Ambient (C)          | 84.4         |
@@ -53,16 +53,15 @@ Table of Contents
 | On-Chip        | Power (W) | Used     | Available | Utilization (%) |
 +----------------+-----------+----------+-----------+-----------------+
 | Clocks         |    <0.001 |        3 |       --- |             --- |
-| Slice Logic    |    <0.001 |      106 |       --- |             --- |
-|   LUT as Logic |    <0.001 |       45 |     20800 |            0.22 |
-|   F7/F8 Muxes  |    <0.001 |       24 |     32600 |            0.07 |
-|   Register     |    <0.001 |       25 |     41600 |            0.06 |
-|   CARRY4       |    <0.001 |        4 |      8150 |            0.05 |
-|   Others       |     0.000 |        4 |       --- |             --- |
-| Signals        |     0.002 |       53 |       --- |             --- |
-| I/O            |     0.036 |       23 |       106 |           21.70 |
+| Slice Logic    |    <0.001 |      138 |       --- |             --- |
+|   LUT as Logic |    <0.001 |       80 |     20800 |            0.38 |
+|   Register     |    <0.001 |       39 |     41600 |            0.09 |
+|   CARRY4       |    <0.001 |        7 |      8150 |            0.09 |
+|   Others       |     0.000 |        5 |       --- |             --- |
+| Signals        |     0.002 |      128 |       --- |             --- |
+| I/O            |     0.037 |       24 |       106 |           22.64 |
 | Static Power   |     0.072 |          |           |                 |
-| Total          |     0.110 |          |           |                 |
+| Total          |     0.112 |          |           |                 |
 +----------------+-----------+----------+-----------+-----------------+
 
 
@@ -141,8 +140,8 @@ Table of Contents
 +-------------------------------+-----------+
 | Name                          | Power (W) |
 +-------------------------------+-----------+
-| fpga_top_lvl                  |     0.038 |
-|   rotational_encoder_instance |     0.001 |
+| fpga_top_lvl                  |     0.040 |
+|   rotational_encoder_instance |     0.002 |
 +-------------------------------+-----------+
 
 
