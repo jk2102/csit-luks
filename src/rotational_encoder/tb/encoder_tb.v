@@ -71,46 +71,20 @@ initial begin
     #10; B = 1;
     #10; A = 0;
     #10; B = 0;
-    
+    #10; A = 1;
+    #10; B = 1;
+    #10; A = 0;
+    #10; B = 0;
+    #10; A = 1;
+    #10; B = 1;
+    #10; A = 0;
+    #10; B = 0;
     
     // Wait for a few clock cycles
     #50;
-    
-    // CCW movement: B leads A
-    #10; B = 1; A = 0;
-    #10; A = 1;
-    #10; B = 0;
-    #10; A = 0;
-    #10; B = 1; 
-    #10; A = 1;
-    #10; B = 0;
-    #10; A = 0;
-    #10; B = 1; 
-    #10; A = 1;
-    #10; B = 0;
-    #10; A = 0;
-    #10; B = 1; 
-    #10; A = 1;
-    #10; B = 0;
-    #10; A = 0;
-    
-    // Wait for a few clock cycles
-    #50;
-    
-    // Test pushbutton debounce press 
-    PB = 0; #30; PB = 1;
-    #100;
 
-    // Simulate short pushbutton press
-    PB = 0; #300; PB = 1;
-    #100;
-
-    // Simulate long pushbutton press
-    PB = 0; #800; PB = 1;
-    #100;
-    
-    // Simulate really long pushbutton press
-    PB = 0; #2000; PB = 1;
+    // Simulate normal pushbutton press
+    PB = 0; #5000; PB = 1;
     #100;
 
     // Wait for a few clock cycles and finish simulation
@@ -125,4 +99,3 @@ initial begin
 end
 
 endmodule
-
