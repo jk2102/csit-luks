@@ -28,8 +28,8 @@ module tt_um_csit_luks (
     .A            (ui_in[0]),            // Encoder input A
     .B            (ui_in[1]),            // Encoder input B
     .PB           (ui_in[2]),           // Pushbutton
-    .enc          (uo_out[3:0]),  // 4-bit encoder counter
-    .pb_press_type ()       // 2-bit pushbutton press type
+    .enc    (uo_out[3:0]),  // 4-bit encoder counter
+    .pb_cnt       ()        // 12-bit pushbutton counter
 );
 
 
