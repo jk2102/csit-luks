@@ -39,8 +39,7 @@ module rotational_encoder (
     output reg [1:0] pb_press_type  // Pushbutton press type (2-bit) 
  );   
                                         
-reg lastA, lastB;                   // Registers to store the last state of A and B
-reg [3:0]  tmp_enc;                    
+reg lastA, lastB;                   // Registers to store the last state of A and B 
 reg [11:0] pb_cnt;          
 reg [1:0]  tmp_press; 
         
@@ -50,8 +49,7 @@ always @(posedge clk) begin
         lastA <= 0;
         lastB <= 0;
         // Default encoder      
-        tmp_enc <= 4'b0000; 
-        enc <= 4'b0000;         
+        enc <= 4'b0000;   
         // Default pushbutton 
         pb_cnt <=  12'b000000000000;
         tmp_press <= 2'b00; 
@@ -60,9 +58,9 @@ always @(posedge clk) begin
 
     else begin
         // Check for CW movement (A rising edge before B)
-        if (A && !lastA && !B) tmp_enc <= tmp_enc + 4'b0001;
+        if (A && !lastA && !B) enc <= enc + 4'b0001;
         // Check for CCW movement (B rising edge before A)
-        else if (B && !lastB && !A) tmp_enc <= tmp_enc - 4'b0001;
+        else if (B && !lastB && !A) enc <= enc - 4'b0001;
         // Update last state
         lastA <= A;
         lastB <= B;
@@ -83,9 +81,7 @@ always @(posedge clk) begin
 
             // if proper press accured 
             if(tmp_press)begin 
-                if((tmp_press != pb_press_type) || (tmp_enc != enc)) begin
-                enc <= tmp_enc;
-                tmp_enc <= 4'b0000; 
+                if(tmp_press != pb_press_type) begin
                 pb_press_type <= tmp_press;
                 tmp_press <= 2'b00;
                 end        
