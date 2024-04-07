@@ -6,6 +6,12 @@ SIM ?= icarus
 TOPLEVEL_LANG ?= verilog
 SRC_DIR = $(PWD)/../src
 PROJECT_SOURCES = tt_um_csit_luks.v
+PROJECT_SOURCES += rotational_encoder/rotational_encoder.v
+PROJECT_SOURCES += seven_seg/seven_seg.v
+PROJECT_SOURCES += fsm/fsm.v
+PROJECT_SOURCES += spi_flash/spi_wrapper.v
+PROJECT_SOURCES += spi_flash/spimemio.v
+PROJECT_SOURCES += spi_sensor/rtl/SPI_Luks.v
 
 ifneq ($(GATES),yes)
 
