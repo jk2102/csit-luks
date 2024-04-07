@@ -41,4 +41,46 @@ module tb ();
       .rst_n  (rst_n)     // not reset
   );
 
+// Clock generation
+always #5 clk = ~clk;
+
+initial begin
+  // Initialize Inputs
+    clk = 0;
+    rstn = 0;
+
+    // Reset the system
+    #100;
+    rstn = 1;
+
+  /*
+    CW	
+      CH	A	0	1	1	0	0			
+      CH	B	0	0	1	1	0
+    _______________________________
+    CCW
+      CH	A	0	0	1	1	0		
+      CH	B	0	1	1	0	0
+    _______________________________	
+  */
+    #10; ui_in[1:0] = 2'b00;  //  1
+    #10; ui_in[1:0] = 2'b01;  //  2
+    #10; ui_in[1:0] = 2'b11;  //  3
+    #10; ui_in[1:0] = 2'b10;  //  4
+    #10; ui_in[1:0] = 2'b00;  //  5
+    #10; ui_in[1:0] = 2'b01;  //  6
+    #10; ui_in[2] = 2'b1;     // PB = 1
+
+    
+
+
+    $finish;
+end
+
+// Monitor changes
+initial begin
+    $monitor("Time = %d, Reset = %b, enc = %d, pb_press_type = %d", 
+             $time, rstn, enc, pb_press_type);
+end
+
 endmodule
