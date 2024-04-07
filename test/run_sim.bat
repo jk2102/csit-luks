@@ -2,7 +2,7 @@
 REM This is the Windows batch script for launching Icarus Verilog and GTKWave
 
 REM Compile the Verilog design files
-iverilog -o output.vvp rotational_encoder.v encoder_tb.v seven_seg.v seven_seg_tb.v fsm.v fsm_tb.v tb.v
+iverilog -o output.vvp ..\src\fsm\fsm.v ..\src\rotational_encoder\rotational_encoder.v ..\src\seven_seg\seven_seg.v ..\src\spi_flash\spi_wrapper.v ..\src\spi_flash\spimemio.v ..\src\spi_sensor\spi_sensor.v ..\src\tt_um_csit_luks.v tb.v
 
 IF %ERRORLEVEL% NEQ 0 (
     echo Compilation failed
