@@ -41,7 +41,10 @@ module SPI_tb;
 
     #51 valid_  = 1;
 
-    #400 valid_ = 1;
+    #199 rstn_  = 0;
+    #1   rstn_  = 1;
+
+    #200 valid_ = 1;
 
     #1000 $finish;
 
