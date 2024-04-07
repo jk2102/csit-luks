@@ -29,16 +29,13 @@ module fsm (
    input lux_ready,
    output reg lux_valid,
 
-   input [31:0] fd,
+   input [7:0] fd,
    input fd_ready,
    output reg [23:0] fd_address,
    output reg fd_valid,
 
-   output reg [3:0] ISO_val,
-   output reg [3:0] SS_val,
-   output reg [3:0] F_val,
-   output reg [2:0] EXP_val,
-   output reg [1:0] input_sel
+   output reg [3:0] display_out,
+   output reg [1:0] display_sel
 );
 
 
@@ -58,17 +55,23 @@ module fsm (
    reg [3:0] previous_state;
    reg F_set_flag;
 
+   reg [3:0] ISO_val;
+   reg [3:0] SS_val;
+   reg [3:0] F_val;
+   reg [2:0] EXP_val;
+
    always @(posedge clk)
-      if (rstn) begin
+      if (!rstn) begin
          current_state <= IDLE;
          previous_state <= IDLE;
          fd_address <= 8'b00000000;
          fd_valid <= 1'b0;
-         ISO_val <= 4'b1000;
-         SS_val <= 4'b1000;
-         F_val <= 4'b1000;
+         ISO_val <= 4'b0000;
+         SS_val <= 4'b0000;
+         F_val <= 4'b0000;
          EXP_val <= 3'b000;
-         input_sel <= 2'b00;
+         display_out <= 4'b1000;
+         display_sel <= 2'b00;
          lux_valid <= 1'b0;
          F_set_flag <= 1'b0;
       end
@@ -79,22 +82,23 @@ module fsm (
                previous_state <= IDLE;
                fd_address <= 8'b00000000;
                fd_valid <= 1'b0;
-               ISO_val <= 4'b1000;
-               SS_val <= 4'b1000;
-               F_val <= 4'b1000;
+               ISO_val <= 4'b0000;
+               SS_val <= 4'b0000;
+               F_val <= 4'b0000;
                EXP_val <= 3'b000;
-               input_sel <= 2'b00;
+               display_sel <= 2'b00;
                lux_valid <= 1'b0;
                F_set_flag <= 1'b0;
             end
 
             ISO_SEL: begin
-               if (pb_press == 2'b10)
+               if (pb_press == 2'b01)
                   current_state <= SS_SEL;
                else
                   current_state <= ISO_SEL;
                ISO_val <= enc_count;
-               input_sel <= 2'b00;
+               display_out <= enc_count;
+               display_sel <= 2'b00;
             end
 
             SS_SEL: begin
@@ -108,7 +112,9 @@ module fsm (
                   current_state <= SS_SEL;
                previous_state <= SS_SEL;
                SS_val <= enc_count;
-               input_sel <= 2'b01;
+               display_sel <= 2'b01;
+               display_out <= SS_val;
+
             end
 
             F_SEL: begin
@@ -122,16 +128,20 @@ module fsm (
                   current_state <= F_SEL;
                F_set_flag = 1'b1;
                previous_state <= F_SEL;
-               SS_val <= enc_count;
-               input_sel <= 2'b10;
+               F_val <= enc_count;
             end
 
             EXP_METER: begin
-               if (lux_ready == 1'b1)
+               if (lux_ready == 1'b1) begin
                   current_state <= EXP_LUT;
-               else
+                  lux_valid <= 1'b0;
+               end else begin
                   current_state <= EXP_METER;
-               lux_valid <= 1'b1;
+                  lux_valid <= 1'b1;
+               end
+               display_sel <= 2'b11;
+               display_out <= 4'b0010;
+
             end
 
             EXP_LUT: begin
@@ -141,6 +151,8 @@ module fsm (
                   current_state <= EXP_LUT;
                fd_address <= {ISO_val, SS_val, F_val, LUX_val};
                fd_valid <= 1'b1;
+               display_sel <= 2'b11;
+               display_out <= 4'b0010;
             end
 
             EXP_DISP: begin
@@ -152,8 +164,9 @@ module fsm (
                   current_state <= ISO_SEL;
                else
                   current_state <= EXP_DISP;
-               input_sel <= 2'b11;
-               EXP_val <= fd;
+               display_sel <= 2'b11;
+               EXP_val <= fd [2:0];
+               display_out <= EXP_val;
             end
 
             default : begin  // Fault Recovery
