@@ -29,6 +29,16 @@ spi_wrapper UUT(
 );
 
 
+spiflash flash_0(
+	.csb(csb),
+	.clk(spi_clk),
+	.io0(mosi), // MOSI
+	.io1(miso), // MISO
+	.io2(),
+	.io3()
+);
+
+
 initial begin
 
 $dumpfile("sim/dump.vcd");$dumpvars;
@@ -60,14 +70,6 @@ initial begin
 	reset_n = 1'b1;
 end
 
-spiflash flash_0(
-	.csb(csb),
-	.clk(spi_clk),
-	.io0(mosi), // MOSI
-	.io1(miso), // MISO
-	.io2(),
-	.io3()
-);
 
 always @(posedge clock or negedge reset_n) begin
 
@@ -81,9 +83,6 @@ always @(posedge clock or negedge reset_n) begin
 	end
 end
 
-//initial begin
-//	cfgreg_we =4'b0000;
-//end
 
 endmodule
 
