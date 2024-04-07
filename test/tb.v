@@ -84,7 +84,8 @@ initial begin
 
     #1000; ui_in[2] = 2'b0;     // Pushbutton pressed
     #1000; ui_in[2] = 2'b1;     // Pushbutton released
-
+    #1000
+    
     $finish;
 end
 
