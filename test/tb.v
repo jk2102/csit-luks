@@ -51,16 +51,6 @@ initial begin
     ui_in[1:0] = 2'b00;     // Encoder initial state  
     ui_in[2]  = 1'b1;       // Pushbutton initial state  
 
-  // Init Outputs 
-    uo_out [7:0] = 8'b11111111; // Seven seg. low
-    uio_out[3:0] = 4'b1111;     // Segment enable/disable
-    
-  // SPI Initial 
-    uio_out[4] = 2'b0;     // SCLK
-    uio_out[5] = 2'b0;     // Flash SS
-    uio_out[6] = 2'b0;     // Luks SS
-    ui0_out[7] = 2'b0;     // Flash MOSI
-
   // Reset the system
     #100;
     rstn = 1;
