@@ -19,7 +19,7 @@ module tt_um_csit_luks (
   wire rstn = ena ? rst_n : 1'b0;
 
   // wires
-  wire [3:0] enc_w;
+  wire [3:0] enc_w, display_out_w;
   wire [1:0] pb_press_type_w, display_select_w;
   wire [7:0] spi_luks_data_w, spi_flash_data_w;
   wire spi_luks_ready_w, spi_luks_valid_w, spi_flash_ready_w, spi_flash_valid_w;
@@ -70,11 +70,8 @@ fsm fsm_instance (
     .fd_address     (spi_flash_address_w),
     .fd_valid       (spi_flash_valid_w),
     
-    .ISO_val        (),
-    .SS_val         (),
-    .F_val          (),
-    .EXP_val        (),
-    .input_sel      (display_select_w)
+    .display_out      (display_out_w),
+    .display_sel      (display_select_w)
 );
 
  // Flash SPI master
@@ -87,7 +84,10 @@ fsm fsm_instance (
     .addr_i   (spi_flash_address_w),
     .rdata_o  (spi_flash_data_w),
 
-
+    .spi_clk  (spi_flash_sclk_w),
+    .csb      (spi_flash_ss_w),
+    .mosi     (spi_flash_mosi_w),
+    .miso     (spi_flash_miso_w)
   );
 
 
@@ -104,11 +104,6 @@ fsm fsm_instance (
     .sclk     (spi_luks_sclk_w),             //  takes 8 bits from rx_data (4-11) and sends it to memory
     .miso     (spi_luks_miso_w)
   );
-
-  // test
-  assign spi_flash_mosi_w = 0;
-  assign spi_flash_ss_w = 0;
-  assign spi_flash_sclk_w = 0;
 
   // All output pins must be assigned. If not used, assign to 0.
   assign spi_flash_miso_w = ui_in[3];

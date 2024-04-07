@@ -9,20 +9,25 @@ reg valid;
 reg [23:0] addr;
 wire ready;
 wire [7:0] rdata;
+wire miso;
+wire mosi;
+wire csb;
+wire spi_clk;
 integer i = 0;
-reg [3:0] cfgreg_we;
-reg [31:0] wrdata_i;
 
 spi_wrapper UUT(
     .clk_i(clock),
     .rstn_i(reset_n),
     .valid_i(valid),
-    .cfgreg_we(cfgreg_we),
     .ready_o(ready),
     .addr_i(addr),
-    .wrdata_i(wrdata_i),
-    .rdata_o(rdata)
+    .rdata_o(rdata),
+    .spi_clk(spi_clk),
+    .miso(miso),
+    .mosi(mosi),
+    .csb(csb)
 );
+
 
 initial begin
 
@@ -55,10 +60,19 @@ initial begin
 	reset_n = 1'b1;
 end
 
+spiflash flash_0(
+	.csb(csb),
+	.clk(spi_clk),
+	.io0(mosi), // MOSI
+	.io1(miso), // MISO
+	.io2(),
+	.io3()
+);
+
 always @(posedge clock or negedge reset_n) begin
 
 	if (reset_n == 0) begin
-		valid = 1'b0;
+	valid = 1'b0;
 	end else if(ready & valid) begin
 		addr = addr + 1;
 		valid = 1'b0;
@@ -67,10 +81,9 @@ always @(posedge clock or negedge reset_n) begin
 	end
 end
 
-initial begin
-	cfgreg_we =4'b0000;
-	wrdata_i = 32'h00000000;
-end
+//initial begin
+//	cfgreg_we =4'b0000;
+//end
 
 endmodule
 
