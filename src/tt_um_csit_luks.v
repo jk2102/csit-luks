@@ -92,18 +92,23 @@ fsm fsm_instance (
 
 
   // Sensor SPI master 
-  SPI_Luks SPI_Luks_instance (
-    .clk      (clk),
-    .rstn     (rstn),
+  // SPI_Luks SPI_Luks_instance (
+  //   .clk      (clk),
+  //   .rstn     (rstn),
 
-    .valid    (spi_luks_valid_w),
-    .ready    (spi_luks_ready_w),
-    .toMemory (spi_luks_data_w),                            //  0 == master can retrieve data from slave
+  //   .valid    (spi_luks_valid_w),
+  //   .ready    (spi_luks_ready_w),
+  //   .toMemory (spi_luks_data_w),                            //  0 == master can retrieve data from slave
 
-    .ss       (spi_luks_ss_w),                              //  0 sets slave in selected state
-    .sclk     (spi_luks_sclk_w),             //  takes 8 bits from rx_data (4-11) and sends it to memory
-    .miso     (spi_luks_miso_w)
-  );
+  //   .ss       (spi_luks_ss_w),                              //  0 sets slave in selected state
+  //   .sclk     (spi_luks_sclk_w),             //  takes 8 bits from rx_data (4-11) and sends it to memory
+  //   .miso     (spi_luks_miso_w)
+  // );
+
+  assign spi_luks_data_w = 8'b0;
+  assign spi_luks_ready_w = 1'b0;
+  assign spi_luks_ss_w = 1'b1;
+  assign spi_luks_sclk_w = 1'b0;
 
   // All output pins must be assigned. If not used, assign to 0.
   assign spi_flash_miso_w = ui_in[3];
