@@ -50,16 +50,16 @@ module fsm (
    output reg [1:0] display_sel
 );
 
-   parameter IDLE  = 4'b0000;
-   parameter ISO_SEL = 4'b0001;
-   parameter SS_SEL  = 4'b0010;
-   parameter F_SEL  = 4'b0011;
-   parameter EXP_METER = 4'b0100;
-   parameter EXP_LUT = 4'b0101;
-   parameter EXP_DISP  = 4'b0110;
+   parameter IDLE  = 3'b000;
+   parameter ISO_SEL = 3'b001;
+   parameter SS_SEL  = 3'b010;
+   parameter F_SEL  = 3'b011;
+   parameter EXP_METER = 3'b100;
+   parameter EXP_LUT = 3'b101;
+   parameter EXP_DISP  = 3'b110;
 
-   reg [3:0] current_state;
-   reg [3:0] previous_state;
+   reg [2:0] current_state;
+   reg [2:0] previous_state;
    reg F_set_flag;
 
    reg [3:0] ISO_val;
@@ -90,6 +90,7 @@ module fsm (
                ISO_val <= 4'b0000;
                SS_val <= 4'b0000;
                F_val <= 4'b0000;
+               display_out <= 4'b1000;
                display_sel <= 2'b00;
                lux_valid <= 1'b0;
                F_set_flag <= 1'b0;
@@ -147,13 +148,13 @@ module fsm (
                end
                display_sel <= 2'b11;
                display_out <= 4'b0010;
-
             end
 
             EXP_LUT: begin
-               if (fd_ready)
+               if (fd_ready) begin
                   current_state <= EXP_DISP;
-               else
+                  fd_valid <= 1'b0;
+               end else
                   current_state <= EXP_LUT;
                fd_address <= {4'b0000, ISO_val, SS_val, F_val, LUX_val};
                fd_valid <= 1'b1;
