@@ -26,7 +26,7 @@ module tt_um_csit_luks (
   wire [23:0] spi_flash_address_w;
   wire spi_luks_ss_w, spi_luks_sclk_w, spi_luks_miso_w;
   wire spi_flash_ss_w, spi_flash_sclk_w, spi_flash_miso_w, spi_flash_mosi_w;
-  wire [1:0] display_select_w;
+
 
   // Rotational encoder
   rotational_encoder rotational_encoder_instance (

@@ -17,7 +17,6 @@ module spi_wrapper (
 
 wire clock;
 wire reset_n;
-wire csb;
 
 wire flash_io0;
 wire flash_io1;
@@ -58,13 +57,13 @@ spimemio spimemio_inst_0 (
 	.flash_io2_do(flash_io2_do),
 	.flash_io3_do(flash_io3_do),
 
-	.flash_io0_di(),
+	.flash_io0_di(mosi),
 	.flash_io1_di(miso),
 	.flash_io2_di(flash_io2),
 	.flash_io3_di(flash_io3),
 
 	.cfgreg_we(cfgreg_we),
-	.cfgreg_di(),
+	.cfgreg_di(0),
 	.cfgreg_do()
 );
 
