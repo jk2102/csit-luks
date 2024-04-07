@@ -10,9 +10,9 @@ module SPI_Luks (
 );
 
   // Internal signals
-reg [15:0] rx_data <= 16'h0000;                //  collects data comming from slave
-reg [4:0] counter <= 0;                        //  counts 16 bits comming from slave
-reg [1:0] ss_wait <= 0;                        //  divides basic clk - sclk == clk/8
+reg [15:0] rx_data = 16'h0000;                //  collects data comming from slave
+reg [4:0] counter = 0;                        //  counts 16 bits comming from slave
+reg [1:0] ss_wait = 0;                        //  divides basic clk - sclk == clk/8
 
 // Initialize
 initial begin
