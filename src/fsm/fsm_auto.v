@@ -29,16 +29,13 @@ module fsm (
    input lux_ready,
    output reg lux_valid,
 
-   input [31:0] fd,
+   input [7:0] fd,
    input fd_ready,
    output reg [23:0] fd_address,
    output reg fd_valid,
 
-   output reg [3:0] ISO_val,
-   output reg [3:0] SS_val,
-   output reg [3:0] F_val,
-   output reg [2:0] EXP_val,
-   output reg [1:0] input_sel,
+   output reg [3:0] display_out,
+   output reg [1:0] display_sel
 );
 
 
@@ -58,33 +55,44 @@ module fsm (
    reg [3:0] previous_state;
    reg [3:0] last_normal_state;
    reg [3:0] last_auto_state;
+   reg F_set_flag;
 
-   always @(posedge clk)
-      if (rstn) begin
+   reg [3:0] ISO_val;
+   reg [3:0] SS_val;
+   reg [3:0] F_val;
+
+   always @(posedge clk or negedge rstn)
+      if (!rstn) begin
          current_state <= IDLE;
          previous_state <= IDLE;
          last_normal_state <= SS_SEL;
-         fd_address <= 8'b00000000;
+         last_auto_state <= AUTO_DISP_SS;
+         fd_address <= 24'b000000000000000000000000;
          fd_valid <= 1'b0;
-         ISO_val <= 4'b1000;
-         SS_val <= 4'b1000;
-         F_val <= 4'b1000;
-         EXP_val <= 3'b000;
-         selectInput <= 2'b00;
+         ISO_val <= 4'b0000;
+         SS_val <= 4'b0000;
+         F_val <= 4'b0000;
+         display_out <= 4'b0000;
+         display_sel <= 2'b00;
          lux_valid <= 1'b0;
+         F_set_flag <= 1'b0;
       end
       else
          case (current_state)
             IDLE: begin
                current_state <= ISO_SEL;
-               fd_address <= 8'b00000000;
+               previous_state <= IDLE;
+               last_normal_state <= SS_SEL;
+               last_auto_state <= AUTO_DISP_SS;
+               fd_address <= 24'b000000000000000000000000;
                fd_valid <= 1'b0;
-               ISO_val <= 4'b1000;
-               SS_val <= 4'b1000;
-               F_val <= 4'b1000;
-               EXP_val <= 3'b000;
-               selectInput <= 2'b00;
+               ISO_val <= 4'b0000;
+               SS_val <= 4'b0000;
+               F_val <= 4'b0000;
+               display_out <= 4'b1000;
+               display_sel <= 2'b00;
                lux_valid <= 1'b0;
+               F_set_flag <= 1'b0;
             end
 
             ISO_SEL: begin
@@ -95,119 +103,137 @@ module fsm (
                else
                   current_state <= ISO_SEL;
                ISO_val <= enc_count;
-               input_sel <= 2'b00;
+               display_sel <= 2'b00;
+               display_out <= enc_count;
             end
 
             SS_SEL: begin
                if (pb_press == 2'b01)
                   current_state <= F_SEL;
+               else if (pb_press == 2'b10 && F_set_flag)
+                  current_state <= EXP_METER;
                else if (pb_press == 2'b11)
                   current_state <= AUTO_MODE;
                else
                   current_state <= SS_SEL;
-               last_normal_state <= SS_SEL
+               last_normal_state <= SS_SEL;
                SS_val <= enc_count;
-               input_sel <= 2'b01;
+               display_sel <= 2'b01;
+               display_out <= enc_count;
             end
 
             F_SEL: begin
                if (pb_press == 2'b01)
+                  current_state <=  SS_SEL;
+               else if (pb_press == 2'b10) begin
+                  previous_state <= F_SEL;
                   current_state <= EXP_METER;
-               else if (pb_press == 2'b10)
-                  current_state <= SS_SEL;
-               else if (pb_press == 2'b11)
+               end else if (pb_press == 2'b11)
                   current_state <= AUTO_MODE;
                else
                   current_state <= F_SEL;
+               F_set_flag <= 1'b1;
                last_normal_state <= F_SEL;
-               SS_val <= enc_count;
-               input_sel <= 2'b10;
+               F_val <= enc_count;
+               display_sel <= 2'b10;
+               display_out <= enc_count;
             end
 
             EXP_METER: begin
-               if (lux_ready == 1'b1 && previous_state == F_SEL)
+               if (lux_ready == 1'b1 && previous_state == F_SEL) begin
                   current_state <= EXP_LUT;
-               else if (lux_ready == 1'b1 && previous_state == AUTO_MODE)
+                  lux_valid <= 1'b0;
+               end else if (lux_ready == 1'b1 && previous_state == AUTO_MODE) begin
                   current_state <= AUTO_LUT;
-               else
+                  lux_valid <= 1'b0;
+               end else begin
                   current_state <= EXP_METER;
-               lux_valid <= 1'b1;
+                  lux_valid <= 1'b1;
+               end
+               display_sel <= 2'b11;
+               display_out <= 4'b0010;
             end
 
             EXP_LUT: begin
-               if (fd_ready)
+               if (fd_ready) begin
                   current_state <= EXP_DISP;
-               else
+                  fd_valid <= 1'b0;
+               end else
                   current_state <= EXP_LUT;
-               fd_address <= {ISO_val, SS_val, F_val, LUX_val};
+               fd_address <= {4'b0000, ISO_val, SS_val, F_val, LUX_val};
                fd_valid <= 1'b1;
+               display_sel <= 2'b11;
+               display_out <= 4'b0010;
             end
 
             EXP_DISP: begin
                if(pb_press == 2'b01)
                   current_state <= EXP_METER;
                else if (pb_press == 2'b10)
-                  current_state <= SS_SEL;
+                  current_state <= last_normal_state;
                else if (pb_press == 2'b11)
-                  last_normal_state <= SS_SEL;
                   current_state <= AUTO_MODE;
                else
                   current_state <= EXP_DISP;
-               input_sel <= 2'b11;
-               EXP_val <= fd;
+               display_sel <= 2'b11;
+               display_out <= {1'b0, fd[2:0]};
             end
 
             AUTO_MODE: begin
-               if (pb_press == 2'b01)
+               if (pb_press == 2'b01) begin
                   previous_state <= AUTO_MODE;
                   current_state <= EXP_METER;
-               else if (pb_press == 2'b11)
+               end else if (pb_press == 2'b11)
                   current_state <= last_normal_state;
                else
                   current_state <= AUTO_MODE;
-               input_sel <= 2'b11;
-               EXP_val <= 3'b101;
+               display_sel <= 2'b11;
+               display_out <= 4'b0101;
             end
 
             AUTO_LUT: begin
-               if (fd_ready && (last_auto_state == AUTO_DISP_SS))
+               if (fd_ready && (last_auto_state == AUTO_DISP_SS)) begin
                   current_state <= AUTO_DISP_SS;
-               else if (fd_ready && (last_auto_state == AUTO_DISP_F))
+                  fd_valid <= 1'b0;
+               end else if (fd_ready && (last_auto_state == AUTO_DISP_F)) begin
                   current_state <= AUTO_DISP_F;
-               else
+                  fd_valid <= 1'b0;
+               end else
                   current_state <= AUTO_LUT;
-               fd_address <= ({ISO_val, LUX_val} || (24'b000000000000000000001000));
-               fd_valid <= 1'b1;
+               fd_address <= {ISO_val, LUX_val, 12'b000000000000};
+               fd_valid <= 1'b0;
+               display_sel <= 2'b11;
+               display_out <= 4'b0101;
             end
 
             AUTO_DISP_SS: begin
                if (pb_press == 2'b01)
                   current_state <= AUTO_DISP_F;
-               else if (pb_press == 2'b10)
+               else if (pb_press == 2'b10) begin
                   previous_state <= AUTO_MODE;
-                  last_auto_state <= AUTO_DISP_SS,
+                  last_auto_state <= AUTO_DISP_SS;
                   current_state <= EXP_METER;
-               else if (pb_press == 2'b11)
+               end else if (pb_press == 2'b11)
                   current_state <= last_normal_state;
                else
                   current_state <= AUTO_DISP_SS;
-               SS_val <= fd[3:0];
-               input_sel <= 2'b01;
+               display_sel <= 2'b01;
+               display_out <= fd[3:0];
             end
 
             AUTO_DISP_F: begin
                if (pb_press == 2'b01)
                   current_state <= AUTO_DISP_SS;
-               else if (pb_press == 2'b10)
+               else if (pb_press == 2'b10) begin
                   previous_state <= AUTO_MODE;
                   last_auto_state <= AUTO_DISP_F;
                   current_state <= EXP_METER;
-               else if (pb_press == 2'b11)
+               end else if (pb_press == 2'b11)
                   current_state <= last_normal_state;
                else
                   current_state <= AUTO_DISP_F;
-               F_val <= fd[7:4];
-               input_sel <= 2'b10;
+               display_sel <= 2'b10;
+               display_out <= fd[7:4];
             end
 
             default : begin  // Fault Recovery

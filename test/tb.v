@@ -7,14 +7,14 @@ module tb ();
 
   // Dump the signals to a VCD file. You can view it with gtkwave.
   initial begin
-    $dumpfile("tb.vcd");
+    $dumpfile("dump.vcd");
     $dumpvars(0, tb);
     #1;
   end
 
   // Wire up the inputs and outputs:
   reg clk;
-  reg rst_n;
+  reg rstn;
   reg ena;
   reg [7:0] ui_in;
   reg [7:0] uio_in;
@@ -38,7 +38,7 @@ module tb ();
       .uio_oe (uio_oe),   // IOs: Enable path (active high: 0=input, 1=output)
       .ena    (ena),      // enable - goes high when design is selected
       .clk    (clk),      // clock
-      .rst_n  (rst_n)     // not reset
+      .rst_n   (rstn)      // not reset
   );
 
 // Clock generation
@@ -48,8 +48,10 @@ initial begin
   // Initialize Inputs
     clk = 0;
     rstn = 0;
+    ui_in[1:0] = 2'b00;     // Encoder initial state  
+    ui_in[2]  = 1'b1;       // Pushbutton initial state  
 
-    // Reset the system
+  // Reset the system
     #100;
     rstn = 1;
 
@@ -63,24 +65,49 @@ initial begin
       CH	B	0	1	1	0	0
     _______________________________	
   */
-    #10; ui_in[1:0] = 2'b00;  //  1
-    #10; ui_in[1:0] = 2'b01;  //  2
-    #10; ui_in[1:0] = 2'b11;  //  3
-    #10; ui_in[1:0] = 2'b10;  //  4
-    #10; ui_in[1:0] = 2'b00;  //  5
-    #10; ui_in[1:0] = 2'b01;  //  6
-    #10; ui_in[2] = 2'b1;     // PB = 1
+    #10; ui_in[1:0] = 2'b00; 
+    #10; ui_in[1:0] = 2'b01;  
+    #10; ui_in[1:0] = 2'b11; 
+    #10; ui_in[1:0] = 2'b10;  
+    #10; ui_in[1:0] = 2'b00;  
+    #10; ui_in[1:0] = 2'b01;  
+    #10; ui_in[1:0] = 2'b11; 
+    #10; ui_in[1:0] = 2'b10;  
+    #10; ui_in[1:0] = 2'b00;  
+    #10; ui_in[1:0] = 2'b01;
 
+    #10;   ui_in[2] = 2'b0;   // Pushbutton pressed
+    #500; ui_in[2] = 2'b1;   // Pushbutton released
+
+    #10; ui_in[1:0] = 2'b00; 
+    #10; ui_in[1:0] = 2'b10; 
+    #10; ui_in[1:0] = 2'b11;
+    #10; ui_in[1:0] = 2'b01;
+    #10; ui_in[1:0] = 2'b00; 
+    #10; ui_in[1:0] = 2'b10; 
+    #10; ui_in[1:0] = 2'b11;
+    #10; ui_in[1:0] = 2'b01;
+    #10; ui_in[1:0] = 2'b00; 
+    #10; ui_in[1:0] = 2'b10; 
+    #10; ui_in[1:0] = 2'b11;
+    #10; ui_in[1:0] = 2'b01;
+    #10; ui_in[1:0] = 2'b00; 
+    #10; ui_in[1:0] = 2'b10; 
+    #10; ui_in[1:0] = 2'b11;
+    #10; ui_in[1:0] = 2'b01;
+    #10; ui_in[1:0] = 2'b00; 
+    #10; ui_in[1:0] = 2'b10; 
+  
+    #10;   ui_in[2] = 2'b0;   // Pushbutton pressed
+    #1000; ui_in[2] = 2'b1;   // Pushbutton released
+                   
     
-
-
     $finish;
 end
 
 // Monitor changes
 initial begin
-    $monitor("Time = %d, Reset = %b, enc = %d, pb_press_type = %d", 
-             $time, rstn, enc, pb_press_type);
+    $monitor("Time = %d, Reset = %b", $time, rstn);
 end
 
 endmodule

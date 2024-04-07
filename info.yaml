@@ -18,7 +18,7 @@ project:
     - "tt_um_csit_luks.v"
     - "rotational_encoder/rotational_encoder.v"
     - "seven_seg/seven_seg.v"
-    - "fsm/fsm.v"
+    - "fsm/fsm_auto.v"
     - "spi_flash/spi_wrapper.v"
     - "spi_flash/spimemio.v"
     - "spi_sensor/rtl/SPI_Luks.v"
