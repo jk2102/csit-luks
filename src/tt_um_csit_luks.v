@@ -30,12 +30,12 @@ module tt_um_csit_luks (
 
   // Rotational encoder
   rotational_encoder rotational_encoder_instance (
-    .clk            (clk),          // Clock input
-    .rstn           (rstn),        // Active low reset input
+    .clk            (clk),            // Clock input
+    .rstn           (rstn),           // Active low reset input
     
-    .A              (ui_in[0]),     // Encoder input A
-    .B              (ui_in[1]),     // Encoder input B
-    .PB             (ui_in[2]),     // Pushbutton
+    .A              (ui_in[0]),       // Encoder input A
+    .B              (ui_in[1]),       // Encoder input B
+    .PB             (ui_in[2]),       // Pushbutton
     
     .enc            (enc_w),          // 4-bit encoder counter
     .pb_press_type  (pb_press_type_w) // 2-bit pushbutton press type
@@ -44,10 +44,10 @@ module tt_um_csit_luks (
  // Seven segment 
  seven_seg seven_segment_instance(
     .clk            (clk),            // Clock input
-    .rstn           (rstn),          // Active low reset input 
+    .rstn           (rstn),           // Active low reset input 
     
-    .seven_seg      (uo_out[7:0]),   // Single segment output 
-    .anode          (uio_out[3:0]),    // Segment select 
+    .seven_seg      (uo_out[7:0]),    // Single segment output 
+    .anode          (uio_out[3:0]),   // Segment select 
     
     .display_value  (enc_w),
     .display_select (display_select_w)

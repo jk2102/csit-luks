@@ -48,8 +48,20 @@ initial begin
   // Initialize Inputs
     clk = 0;
     rstn = 0;
+    ui_in[1:0] = 2'b00;     // Encoder initial state  
+    ui_in[2]  = 1'b1;       // Pushbutton initial state  
 
-    // Reset the system
+  // Init Outputs 
+    uo_out [7:0] = 8'b11111111; // Seven seg. low
+    uio_out[3:0] = 4'b1111;     // Segment enable/disable
+    
+  // SPI Initial 
+    uio_out[4] = 2'b0;     // SCLK
+    uio_out[5] = 2'b0;     // Flash SS
+    uio_out[6] = 2'b0;     // Luks SS
+    ui0_out[7] = 2'b0;     // Flash MOSI
+
+  // Reset the system
     #100;
     rstn = 1;
 
@@ -63,16 +75,15 @@ initial begin
       CH	B	0	1	1	0	0
     _______________________________	
   */
-    #10; ui_in[1:0] = 2'b00;  //  1
-    #10; ui_in[1:0] = 2'b01;  //  2
-    #10; ui_in[1:0] = 2'b11;  //  3
-    #10; ui_in[1:0] = 2'b10;  //  4
-    #10; ui_in[1:0] = 2'b00;  //  5
-    #10; ui_in[1:0] = 2'b01;  //  6
-    #10; ui_in[2] = 2'b1;     // PB = 1
+    #1000; ui_in[1:0] = 2'b00;  // 1
+    #1000; ui_in[1:0] = 2'b01;  // 2
+    #1000; ui_in[1:0] = 2'b11;  // 3
+    #1000; ui_in[1:0] = 2'b10;  // 4
+    #1000; ui_in[1:0] = 2'b00;  // 5
+    #1000; ui_in[1:0] = 2'b01;  // 6
 
-    
-
+    #1000; ui_in[2] = 2'b0;     // Pushbutton pressed
+    #1000; ui_in[2] = 2'b1;     // Pushbutton released
 
     $finish;
 end
