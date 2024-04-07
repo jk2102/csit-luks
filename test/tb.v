@@ -65,26 +65,42 @@ initial begin
       CH	B	0	1	1	0	0
     _______________________________	
   */
-    #10; ui_in[1:0] = 2'b00;  // 9
-    #10; ui_in[1:0] = 2'b01;  // 10
-    #10; ui_in[1:0] = 2'b11;  // 11
-    #10; ui_in[1:0] = 2'b10;  // 12
+    #10; ui_in[1:0] = 2'b00; 
+    #10; ui_in[1:0] = 2'b01;  
+    #10; ui_in[1:0] = 2'b11; 
+    #10; ui_in[1:0] = 2'b10;  
+    #10; ui_in[1:0] = 2'b00;  
+    #10; ui_in[1:0] = 2'b01;  
+    #10; ui_in[1:0] = 2'b11; 
+    #10; ui_in[1:0] = 2'b10;  
+    #10; ui_in[1:0] = 2'b00;  
+    #10; ui_in[1:0] = 2'b01;
+
+    #10;   ui_in[2] = 2'b0;   // Pushbutton pressed
+    #500; ui_in[2] = 2'b1;   // Pushbutton released
+
+    #10; ui_in[1:0] = 2'b00; 
+    #10; ui_in[1:0] = 2'b10; 
+    #10; ui_in[1:0] = 2'b11;
+    #10; ui_in[1:0] = 2'b01;
+    #10; ui_in[1:0] = 2'b00; 
+    #10; ui_in[1:0] = 2'b10; 
+    #10; ui_in[1:0] = 2'b11;
+    #10; ui_in[1:0] = 2'b01;
+    #10; ui_in[1:0] = 2'b00; 
+    #10; ui_in[1:0] = 2'b10; 
+    #10; ui_in[1:0] = 2'b11;
+    #10; ui_in[1:0] = 2'b01;
+    #10; ui_in[1:0] = 2'b00; 
+    #10; ui_in[1:0] = 2'b10; 
+    #10; ui_in[1:0] = 2'b11;
+    #10; ui_in[1:0] = 2'b01;
+    #10; ui_in[1:0] = 2'b00; 
+    #10; ui_in[1:0] = 2'b10; 
   
-    #10; ui_in[2] = 2'b0;     // Pushbutton pressed
-    #10; ui_in[2] = 2'b1;     // Pushbutton released
-
-
-    #10; ui_in[1:0] = 2'b11;  // 11
-    #10; ui_in[1:0] = 2'b01;  // 10 
-    #10; ui_in[1:0] = 2'b00;  // 9
-    #10; ui_in[1:0] = 2'b10;  // 8
-    #10; ui_in[1:0] = 2'b11;  // 7
-    #10; ui_in[1:0] = 2'b01;  // 6
-    #10; ui_in[1:0] = 2'b00;  // 5
-
-    #10; ui_in[2] = 2'b0;     // Pushbutton pressed
-    #10; ui_in[2] = 2'b1;     // Pushbutton released
-    #10
+    #10;   ui_in[2] = 2'b0;   // Pushbutton pressed
+    #1000; ui_in[2] = 2'b1;   // Pushbutton released
+                   
     
     $finish;
 end
