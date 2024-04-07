@@ -73,8 +73,8 @@ always @(posedge clk or negedge rstn) begin
         if(PB) begin 
             if(pb_cnt<12'd50) pb_press_type <= 2'b00;                       // not pressed/filtered bad press  
             if(pb_cnt>=12'd50 && pb_cnt<12'd400) pb_press_type <= 2'b01;    // short press 
-            if(pb_cnt>=12'd400 && pb_cnt<12'd1200) pb_press_type <= 2'b10;  // normal press 
-            if(pb_cnt>=12'd1200) pb_press_type <= 2'b11;                    // long press   
+            if(pb_cnt>=12'd400 && pb_cnt<12'd3000) pb_press_type <= 2'b10;  // normal press 
+            if(pb_cnt>=12'd3000) pb_press_type <= 2'b11;                    // long press   
             
             if(pb_press_type!=2'b00) begin 
                 pb_press_type <= 2'b00;

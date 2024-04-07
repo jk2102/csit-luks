@@ -49,7 +49,7 @@ module tt_um_csit_luks (
     .seven_seg      (uo_out[7:0]),    // Single segment output 
     .anode          (uio_out[3:0]),   // Segment select 
     
-    .display_value  (enc_w),
+    .display_value  (display_out_w),
     .display_select (display_select_w)
  );
 
@@ -106,7 +106,7 @@ fsm fsm_instance (
   // );
 
   assign spi_luks_data_w = 8'b0;
-  assign spi_luks_ready_w = 1'b0;
+  assign spi_luks_ready_w = 1'b1;
   assign spi_luks_ss_w = 1'b1;
   assign spi_luks_sclk_w = 1'b0;
 
