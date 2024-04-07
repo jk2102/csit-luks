@@ -41,7 +41,7 @@ always @(posedge clk) begin
     ss_wait <= ss_wait + 1;
   end
   if (ss_wait == 2) begin
-    sclk = ~sclk;                             //  toggles sclk when ss_wait value is 2
+    sclk <= ~sclk;                             //  toggles sclk when ss_wait value is 2
   end
 end
 
