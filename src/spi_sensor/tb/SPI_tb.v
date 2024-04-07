@@ -30,11 +30,11 @@ module SPI_tb;
     // required for waveform visualization
     $dumpfile("sim\\dump.vcd"); $dumpvars;
 
-    clk_        = 0;
-    rstn_       = 0;
-    miso_       = 0;
-    valid_      = 0;
-    count       = 15;
+    clk_        <= 0;
+    rstn_       <= 0;
+    miso_       <= 0;
+    valid_      <= 0;
+    count       <= 15;
 
     // rstn generation
     #10 rstn_   = 1;
@@ -49,8 +49,8 @@ module SPI_tb;
 
   always @(posedge sclk_) begin
     if (~ss_) begin
-      miso_ = toMiso[count];
-      count = count - 1;
+      miso_ <= toMiso[count];
+      count <= count - 1;
     end
   end
 
