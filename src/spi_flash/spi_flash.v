@@ -19,9 +19,94 @@
 
 
 module spi_flash (
-    input   clk,
-    input   rstn
+    input wire clk, // System clock
+    input wire rst, // Reset signal, active high
+   
+    input wire mem_valid, // Memory read valid signal from the rest of the system
+    input wire [23:0] mem_addr, // Memory read address
+    output reg [7:0] mem_data, // Data read from flash memory
+    output reg mem_ready, // Memory read data ready signal
+   
+    output reg sclk, // SPI Clock
+    output reg mosi, // Master Out Slave In, not used for data in this example
+    input wire miso, // Master In Slave Out
+    output reg cs // Chip Select
 );
 
-
+    // SPI operation states
+    localparam IDLE = 2'b00,
+               SEND_CMD = 2'b01,
+               READ_DATA = 2'b10,
+               DATA_READY = 2'b11;
+               
+    reg [1:0] state = IDLE;
+    reg [7:0] cmd = 8'h03; // Read command, may vary based on flash spec
+    reg [23:0] address; // Address for reading
+    reg [7:0] bit_counter = 0; // To count bits sent/received
+    
+    always @(posedge clk or posedge rst) begin
+        if (rst) begin
+            state <= IDLE;
+            sclk <= 0;
+            mosi <= 0;
+            cs <= 1; // Deselect the flash memory
+            mem_ready <= 0;
+            mem_data <= 0;
+        end
+        else begin
+            case (state)
+                IDLE: begin
+                    if (mem_valid) begin
+                        address <= mem_addr; // Load the address from input
+                        cs <= 0; // Select the flash memory
+                        bit_counter <= 31; // 8 bits for command + 24 bits for address
+                        state <= SEND_CMD;
+                    end
+                end
+                
+                SEND_CMD: begin
+                    sclk <= ~sclk; // Toggle SPI clock
+                    if (sclk == 1) begin // On the rising edge, prepare data
+                        if (bit_counter > 23) begin // Send command
+                            mosi <= cmd[31 - bit_counter];
+                        end
+                        else begin // Send address
+                            mosi <= address[23 - (bit_counter - 8)];
+                        end
+                        
+                        if (bit_counter == 0) begin
+                            state <= READ_DATA;
+                            bit_counter <= 0; // Reset bit counter for reading data
+                        end
+                        else bit_counter <= bit_counter - 1;
+                    end
+                end
+                
+                READ_DATA: begin
+                    sclk <= ~sclk; // Toggle SPI clock
+                    if (sclk == 0) begin // On the falling edge, read data
+                        if (bit_counter < 8) begin
+                            mem_data <= {mem_data[6:0], miso}; // Shift in data from MISO
+                            bit_counter <= bit_counter + 1;
+                        end
+                        
+                        if (bit_counter == 7) begin
+                            mem_ready <= 1; // Data is ready
+                            state <= DATA_READY;
+                        end
+                    end
+                end
+                
+                DATA_READY: begin
+                    if (!mem_valid) begin
+                        mem_ready <= 0; // Reset ready signal after acknowledgment
+                        state <= IDLE;
+                        cs <= 1; // Deselect the flash memory
+                    end
+                end
+                
+                default: state <= IDLE;
+            endcase
+        end
+    end
 endmodule
