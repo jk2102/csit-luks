@@ -75,35 +75,62 @@ fsm fsm_instance (
 );
 
  // Flash SPI master
-  spi_wrapper spi_wrapper_instance (
-    .clk_i    (clk),
-    .rstn_i   (rstn),
-
-    .valid_i  (spi_flash_valid_w),
-    .ready_o  (spi_flash_ready_w),
-    .addr_i   (spi_flash_address_w),
-    .rdata_o  (spi_flash_data_w),
-
-    .spi_clk  (spi_flash_sclk_w),
-    .csb      (spi_flash_ss_w),
-    .mosi     (spi_flash_mosi_w),
-    .miso     (spi_flash_miso_w)
-  );
+ // spi_wrapper spi_wrapper_instance (
+ //   .clk_i    (clk),
+ //   .rstn_i   (rstn),
+//
+ //   .valid_i  (spi_flash_valid_w),
+ //   .ready_o  (spi_flash_ready_w),
+ //   .addr_i   (spi_flash_address_w),
+ //   .rdata_o  (spi_flash_data_w),
+//
+ //   .spi_clk  (spi_flash_sclk_w),
+  //  .csb      (spi_flash_ss_w),
+ //   .mosi     (spi_flash_mosi_w),
+  //  .miso     (spi_flash_miso_w)
+ // );
+    spi_flash spi_flash_instance (
+        .clk            (clk),
+        .rstn            (rstn),
+        
+        .mem_valid    (spi_flash_valid_w),
+        .mem_addr    (spi_flash_address_w),
+        .mem_data    (spi_flash_data_w),
+        .mem_ready    (spi_flash_ready_w),
+        
+        .sclk    (spi_flash_sclk_w),
+        .mosi    (spi_flash_mosi_w),
+        .miso    (spi_flash_miso_w),
+        .cs        (spi_flash_ss_w)
+    );
 
 
   // Sensor SPI master 
-  SPI_Luks SPI_Luks_instance (
-    .clk      (clk),
-    .rstn     (rstn),
-
-    .valid    (spi_luks_valid_w),
-    .ready    (spi_luks_ready_w),
-    .toMemory (spi_luks_data_w),                            //  0 == master can retrieve data from slave
-
-    .ss       (spi_luks_ss_w),                              //  0 sets slave in selected state
-    .sclk     (spi_luks_sclk_w),             //  takes 8 bits from rx_data (4-11) and sends it to memory
-    .miso     (spi_luks_miso_w)
-  );
+  //SPI_Luks SPI_Luks_instance (
+  //  .clk      (clk),
+  //  .rstn     (rstn),
+//
+  //  .valid    (spi_luks_valid_w),
+  //  .ready    (spi_luks_ready_w),
+  //  .toMemory (spi_luks_data_w),                            //  0 == master can retrieve data from slave
+//
+   // .ss       (spi_luks_ss_w),                              //  0 sets slave in selected state
+   // .sclk     (spi_luks_sclk_w),             //  takes 8 bits from rx_data (4-11) and sends it to memory
+   // .miso     (spi_luks_miso_w)
+  //);
+    spi_sensor spi_sensor_instance (
+        .clk        (clk),
+        .rstn        (rstn),
+        
+        .mem_valid    (spi_luks_valid_w),
+        .mem_data    (spi_luks_data_w),
+        .mem_ready    (spi_luks_ready_w),
+        
+        .sclk    (spi_luks_sclk_w),
+        .cs    (spi_luks_ss_w),
+        .miso    (spi_luks_miso_w)
+    );
+    
 
   // assign spi_luks_data_w = 8'b0;
   // assign spi_luks_ready_w = 1'b1;
