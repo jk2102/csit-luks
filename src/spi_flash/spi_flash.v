@@ -20,7 +20,7 @@
 
 module spi_flash (
     input wire clk, // System clock
-    input wire rst, // Reset signal, active high
+    input wire rstn, // Reset signal, active high
    
     input wire mem_valid, // Memory read valid signal from the rest of the system
     input wire [23:0] mem_addr, // Memory read address
@@ -44,8 +44,8 @@ module spi_flash (
     reg [23:0] address; // Address for reading
     reg [7:0] bit_counter = 0; // To count bits sent/received
     
-    always @(posedge clk or posedge rst) begin
-        if (rst) begin
+    always @(posedge clk or negedge rstn) begin
+        if (~rstn) begin
             state <= IDLE;
             sclk <= 0;
             mosi <= 0;
