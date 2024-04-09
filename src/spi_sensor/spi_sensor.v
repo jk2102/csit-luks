@@ -22,7 +22,7 @@
 
 module spi_sensor (
     input wire clk, // System clock
-    input wire rst, // Reset signal, active high
+    input wire rstn, // Reset signal, active high
     input wire mem_valid, // Trigger signal for reading from ADC
     output reg [7:0] mem_data, // Data read from ADC
     output reg mem_ready, // Indicates when mem_data is valid
@@ -40,8 +40,8 @@ module spi_sensor (
     reg [1:0] state = IDLE;
     reg [4:0] bit_counter; // Adjusted for 15-bit cycle: 3 leading, 8 data, 4 trailing
 
-    always @(posedge clk or posedge rst) begin
-        if (rst) begin
+    always @(posedge clk or negedge rstn) begin
+        if (~rstn) begin
             state <= IDLE;
             sclk <= 0;
             cs <= 1; // ADC not selected
