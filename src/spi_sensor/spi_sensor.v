@@ -32,12 +32,13 @@ module spi_sensor (
 );
 
     // State definitions
-    localparam IDLE = 2'b00,
-               START_CONVERSION = 2'b01,
-               READ_ADC = 2'b10,
-               TRAILING_ZEROES = 2'b11;
+    localparam IDLE = 3'b00,
+               START_CONVERSION = 3'b01,
+               READ_ADC = 3'b10,
+               TRAILING_ZEROES = 3'b11,
+               DATA_READY = 3'b100;
                
-    reg [1:0] state = IDLE;
+    reg [2:0] state = IDLE;
     reg [4:0] bit_counter; // Adjusted for 15-bit cycle: 3 leading, 8 data, 4 trailing
 
     always @(posedge clk or negedge rstn) begin
@@ -67,6 +68,7 @@ module spi_sensor (
                 end
                 
                 READ_ADC: begin
+                    sclk <= ~sclk; // Toggle clock to start conversion
                     if(!sclk) begin // Read on falling edge
                         if(bit_counter > 4) begin // Read during the 8 data bits
                             mem_data <= {mem_data[6:0], miso};
@@ -77,13 +79,21 @@ module spi_sensor (
                 end
                 
                 TRAILING_ZEROES: begin
+                    sclk <= ~sclk; // Toggle clock to start conversion
                     if(sclk) begin // Just clock through the trailing zeroes
                         bit_counter <= bit_counter - 1;
                         if(bit_counter == 0) begin
                             mem_ready <= 1; // Indicate data ready after the last trailing zero
                             cs <= 1; // Deselect ADC, end communication
-                            state <= IDLE; // Return to idle state
+                            state <= DATA_READY; // Return to idle state
                         end
+                    end
+                end
+
+                DATA_READY: begin                    
+                    if(~mem_valid) begin // Just clock through the trailing zeroes
+                        mem_ready <= 0; // Indicate data ready after the last trailing zero
+                        state <= IDLE; // Return to idle state
                     end
                 end
                 

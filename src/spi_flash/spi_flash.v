@@ -71,7 +71,7 @@ module spi_flash (
                             mosi <= cmd[31 - bit_counter];
                         end
                         else begin // Send address
-                            mosi <= address[23 - (bit_counter - 8)];
+                            mosi <= address[23 - bit_counter];
                         end
                         
                         if (bit_counter == 0) begin

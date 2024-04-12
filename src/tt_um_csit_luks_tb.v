@@ -27,8 +27,11 @@ always #5 clk = ~clk; // Generate a clock with a period of 10 ns
 
 // Initial reset sequence
 initial begin
+    $dumpfile("dump.vcd"); $dumpvars(0, mut);
     // Initial values
     rst_n = 0; ena = 0; ui_in = 0; uio_in = 0;
+    // PB is low active
+    ui_in[2] = 1;
     
     // Reset pulse
     #10 rst_n = 1;
@@ -40,9 +43,29 @@ initial begin
     
     // Example test sequence
     // Drive inputs and monitor outputs here...
+
+    // Pushbutton short press to get to SS_SEL
+    #100 ui_in[2] = 0;
+    #1000 ui_in[2] = 1;
+    
+    // Pushbutton short press to get to F_SEL
+    #100 ui_in[2] = 0;
+    #1000 ui_in[2] = 1;
+
+    // Pushbutton medium press to get to EXP_METER
+    #100 ui_in[2] = 0;
+    #4000 ui_in[2] = 1;
+
+    #1000 ui_in[2] = 0;
+    #1000 ui_in[2] = 1;
     
     // Finish simulation
     #1000 $finish;
+end
+
+always @(posedge uio_out[4]) begin
+    ui_in[3] <= $random;
+    ui_in[4] <= $random;
 end
 
 // Optional: Monitoring signals
