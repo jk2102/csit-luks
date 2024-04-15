@@ -60,7 +60,7 @@ module spiflash (
 	reg [7:0] spi_out;
 	reg spi_io_vld;
 
-	reg powered_up = 0;
+	reg powered_up = 1;
 
 	localparam [3:0] mode_spi         = 1;
 	localparam [3:0] mode_dspi_rd     = 2;
@@ -99,7 +99,7 @@ module spiflash (
 	assign #1 io3_delayed = io3;
 
 	// 16 MB (128Mb) Flash
-	reg [7:0] memory [0:1023]; //16*1024*1024-1
+	reg [7:0] memory [0:(1<<24-1)]; //16*1024*1024-1
 
 	reg [1023:0] firmware_file;
 	initial begin

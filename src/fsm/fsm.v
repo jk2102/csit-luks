@@ -154,10 +154,11 @@ module fsm (
                if (fd_ready) begin
                   current_state <= EXP_DISP;
                   fd_valid <= 1'b0;
-               end else
+               end else begin
                   current_state <= EXP_LUT;
+                  fd_valid <= 1'b1;
+               end
                fd_address <= {4'b0000, ISO_val, SS_val, F_val, LUX_val};
-               fd_valid <= 1'b1;
                display_sel <= 2'b11;
                display_out <= 4'b0010;
             end
