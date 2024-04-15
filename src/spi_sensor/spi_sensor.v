@@ -44,7 +44,7 @@ module spi_sensor (
     always @(posedge clk or negedge rstn) begin
         if (~rstn) begin
             state <= IDLE;
-            sclk <= 0;
+            sclk <= 1;
             cs <= 1; // ADC not selected
             mem_ready <= 0;
             mem_data <= 0;
@@ -54,40 +54,43 @@ module spi_sensor (
                 IDLE: begin
                     if(mem_valid) begin
                         cs <= 0; // Begin communication with ADC
-                        bit_counter <= 14; // 15 SCLK cycles are required (3 + 8 + 4)
+                        bit_counter <= 17; // 15 SCLK cycles are required (3 + 8 + 4)
                         state <= START_CONVERSION;
                     end
+                    sclk <= 1;
                 end
                 
                 START_CONVERSION: begin
                     sclk <= ~sclk; // Toggle clock to start conversion
-                    if(sclk && bit_counter > 11) begin // Count down during the 3 leading zeroes
+                    if(sclk && bit_counter > 13) begin // Count down during the 3 leading zeroes
                         bit_counter <= bit_counter - 1;
-                        if(bit_counter == 12) state <= READ_ADC; // Next state after leading zeroes
+                        if(bit_counter == 14) state <= READ_ADC; // Next state after leading zeroes
                     end
                 end
                 
                 READ_ADC: begin
                     sclk <= ~sclk; // Toggle clock to start conversion
                     if(!sclk) begin // Read on falling edge
-                        if(bit_counter > 4) begin // Read during the 8 data bits
+                        if(bit_counter > 6) begin // Read during the 8 data bits
                             mem_data <= {mem_data[6:0], miso};
                         end
                         bit_counter <= bit_counter - 1;
-                        if(bit_counter == 5) state <= TRAILING_ZEROES; // Move to trailing zeroes after data bits
+                        if(bit_counter == 7) state <= TRAILING_ZEROES; // Move to trailing zeroes after data bits
                     end
                 end
                 
                 TRAILING_ZEROES: begin
-                    sclk <= ~sclk; // Toggle clock to start conversion
                     if(sclk) begin // Just clock through the trailing zeroes
                         bit_counter <= bit_counter - 1;
                         if(bit_counter == 0) begin
                             mem_ready <= 1; // Indicate data ready after the last trailing zero
                             cs <= 1; // Deselect ADC, end communication
                             state <= DATA_READY; // Return to idle state
-                        end
-                    end
+                            sclk <= 1; // Keep clock high at the
+                        end else
+                            sclk <= ~sclk; // Toggle clock to start conversion
+                    end else
+                        sclk <= ~sclk; // Toggle clock to start conversion
                 end
 
                 DATA_READY: begin                    
@@ -95,6 +98,7 @@ module spi_sensor (
                         mem_ready <= 0; // Indicate data ready after the last trailing zero
                         state <= IDLE; // Return to idle state
                     end
+                    sclk <= 1;
                 end
                 
                 default: state <= IDLE;

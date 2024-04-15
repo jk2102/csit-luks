@@ -47,7 +47,7 @@ module spi_flash (
     always @(posedge clk or negedge rstn) begin
         if (~rstn) begin
             state <= IDLE;
-            sclk <= 0;
+            sclk <= 1;
             mosi <= 0;
             cs <= 1; // Deselect the flash memory
             mem_ready <= 0;
@@ -59,19 +59,21 @@ module spi_flash (
                     if (mem_valid) begin
                         address <= mem_addr; // Load the address from input
                         cs <= 0; // Select the flash memory
+                        mosi <= 0;
                         bit_counter <= 31; // 8 bits for command + 24 bits for address
                         state <= SEND_CMD;
                     end
+                    sclk <= 1;
                 end
                 
                 SEND_CMD: begin
                     sclk <= ~sclk; // Toggle SPI clock
                     if (sclk == 1) begin // On the rising edge, prepare data
                         if (bit_counter > 23) begin // Send command
-                            mosi <= cmd[31 - bit_counter];
+                            mosi <= cmd[bit_counter - 24];
                         end
                         else begin // Send address
-                            mosi <= address[23 - bit_counter];
+                            mosi <= address[bit_counter];
                         end
                         
                         if (bit_counter == 0) begin
@@ -90,7 +92,8 @@ module spi_flash (
                             bit_counter <= bit_counter + 1;
                         end
                         
-                        if (bit_counter == 7) begin
+                        if (bit_counter == 8) begin
+                            mem_data <= {mem_data[6:0], miso}; // Shift in data from MISO
                             mem_ready <= 1; // Data is ready
                             state <= DATA_READY;
                         end
@@ -103,6 +106,7 @@ module spi_flash (
                         state <= IDLE;
                         cs <= 1; // Deselect the flash memory
                     end
+                    sclk <= 1;
                 end
                 
                 default: state <= IDLE;
