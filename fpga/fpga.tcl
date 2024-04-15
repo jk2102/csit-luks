@@ -17,8 +17,8 @@ file mkdir $outputDir
 read_verilog  [ glob ../src/rotational_encoder/rotational_encoder.v ]
 read_verilog  [ glob ../src/seven_seg/seven_seg.v ]
 read_verilog  [ glob ../src/fsm/fsm_auto.v ]
-read_verilog  [ glob ../src/spi_flash/spimemio.v ]
-read_verilog  [ glob ../src/spi_flash/spi_wrapper.v ]
+read_verilog  [ glob ../src/spi_flash/spi_flash.v ]
+read_verilog  [ glob ../src/spi_sensor/spi_sensor.v ]
 read_verilog  [ glob ../src/tt_um_csit_luks.v ]
 read_verilog  [ glob ../src/fpga/fpga_top_lvl.v ]
 

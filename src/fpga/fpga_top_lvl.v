@@ -14,12 +14,25 @@ module fpga_top_lvl (
     // rot encoder PMOD
     input           A,
     input           B,
-    input           PB
+    input           PB,
+
+    // SPI flash
+    output          FLASH_CS,
+    output          FLASH_MOSI,
+    input           FLASH_MISO
 
 );
 
     // wires    
     wire [7:0] uo_out_w, uio_out_w, uio_oe_w, uio_in_w, ui_in_w;
+
+    // SPI flash wires
+    wire flash_clk_w;
+
+    assign flash_clk_w = uio_out_w[4];
+    assign FLASH_CS = uio_out_w[5];
+    assign FLASH_MOSI = uio_out_w[7];
+    assign ui_in_w[3] = FLASH_MISO; 
 
     // 7-seg 
     assign seg = uo_out_w[6:0];
@@ -30,7 +43,7 @@ module fpga_top_lvl (
     assign ui_in_w[0] = A;
     assign ui_in_w[1] = B;
     assign ui_in_w[2] = PB;
-    assign ui_in_w[7:3] = 5'b0;
+    assign ui_in_w[7:4] = 5'b0;
 
     // IO port
     assign uio_in_w = 8'b0;    
@@ -62,6 +75,26 @@ module fpga_top_lvl (
             end
         end
     end
+
+    STARTUPE2 #(
+        .PROG_USR("FALSE"), // Activate program event security feature. Requires encrypted bitstreams.
+        .SIM_CCLK_FREQ(0.0) // Set the Configuration Clock Frequency(ns) for simulation.
+    )
+    STARTUPE2_inst (
+        .CFGCLK(), // 1-bit output: Configuration main clock output
+        .CFGMCLK(), // 1-bit output: Configuration internal oscillator clock output
+        .EOS(), // 1-bit output: Active high output signal indicating the End Of Startup.
+        .PREQ(), // 1-bit output: PROGRAM request to fabric output
+        .CLK(0), // 1-bit input: User start-up clock input
+        .GSR(0), // 1-bit input: Global Set/Reset input (GSR cannot be used for the port name)
+        .GTS(0), // 1-bit input: Global 3-state input (GTS cannot be used for the port name)
+        .KEYCLEARB(0), // 1-bit input: Clear AES Decrypter Key input from Battery-Backed RAM (BBRAM)
+        .PACK(0), // 1-bit input: PROGRAM acknowledge input
+        .USRCCLKO(flash_clk_w), // 1-bit input: User CCLK input
+        .USRCCLKTS(0), // 1-bit input: User CCLK 3-state enable input
+        .USRDONEO(0), // 1-bit input: User DONE pin output control
+        .USRDONETS(0) // 1-bit input: User DONE 3-state enable output
+    );
 
 endmodule
 

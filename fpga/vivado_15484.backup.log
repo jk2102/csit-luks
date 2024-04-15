@@ -1,0 +1,51 @@
+#-----------------------------------------------------------
+# Vivado v2023.2 (64-bit)
+# SW Build 4029153 on Fri Oct 13 20:14:34 MDT 2023
+# IP Build 4028589 on Sat Oct 14 00:45:43 MDT 2023
+# SharedData Build 4025554 on Tue Oct 10 17:18:54 MDT 2023
+# Start of session at: Sun Apr 14 19:09:33 2024
+# Process ID: 15484
+# Current directory: C:/Users/juric/OneDrive/Dokumenti/csit-luks/tt06-csit-luks/fpga
+# Command line: vivado.exe -mode batch -source fpga.tcl
+# Log file: C:/Users/juric/OneDrive/Dokumenti/csit-luks/tt06-csit-luks/fpga/vivado.log
+# Journal file: C:/Users/juric/OneDrive/Dokumenti/csit-luks/tt06-csit-luks/fpga\vivado.jou
+# Running On: JKUNDRATALAPTOP, OS: Windows, CPU Frequency: 2304 MHz, CPU Physical cores: 2, Host memory: 12728 MB
+#-----------------------------------------------------------
+source fpga.tcl
+# set_param general.maxThreads 8
+# set outputDir ./fpga_output             
+# file mkdir $outputDir
+# read_verilog  [ glob ../src/rotational_encoder/rotational_encoder.v ]
+read_verilog: Time (s): cpu = 00:00:03 ; elapsed = 00:00:13 . Memory (MB): peak = 449.918 ; gain = 181.570
+# read_verilog  [ glob ../src/seven_seg/seven_seg.v ]
+# read_verilog  [ glob ../src/fsm/fsm_auto.v ]
+# read_verilog  [ glob ../src/spi_flash/spi_flash.v ]
+# read_verilog  [ glob ../src/spi_sensor/spi_sensor.v ]
+# read_verilog  [ glob ../src/tt_um_csit_luks.v ]
+# read_verilog  [ glob ../src/fpga/fpga_top_lvl.v ]
+# read_xdc ./fpga.xdc
+# synth_design -top fpga_top_lvl -part xc7a35tcpg236-1 -flatten rebuilt
+Command: synth_design -top fpga_top_lvl -part xc7a35tcpg236-1 -flatten rebuilt
+Starting synth_design
+Attempting to get a license for feature 'Synthesis' and/or device 'xc7a35t'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7a35t'
+INFO: [Device 21-403] Loading part xc7a35tcpg236-1
+INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 4 processes.
+INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
+INFO: [Synth 8-7075] Helper process launched with PID 22080
+---------------------------------------------------------------------------------
+Starting RTL Elaboration : Time (s): cpu = 00:00:05 ; elapsed = 00:00:10 . Memory (MB): peak = 1281.457 ; gain = 438.801
+---------------------------------------------------------------------------------
+ERROR: [Synth 8-36] 'ui_in' is not declared [C:/Users/juric/OneDrive/Dokumenti/csit-luks/tt06-csit-luks/src/fpga/fpga_top_lvl.v:35]
+INFO: [Synth 8-10285] module 'fpga_top_lvl' is ignored due to previous errors [C:/Users/juric/OneDrive/Dokumenti/csit-luks/tt06-csit-luks/src/fpga/fpga_top_lvl.v:99]
+INFO: [Synth 8-9084] Verilog file 'C:/Users/juric/OneDrive/Dokumenti/csit-luks/tt06-csit-luks/src/fpga/fpga_top_lvl.v' ignored due to errors
+ERROR: [Synth 8-439] module 'fpga_top_lvl' not found
+---------------------------------------------------------------------------------
+Finished RTL Elaboration : Time (s): cpu = 00:00:06 ; elapsed = 00:00:13 . Memory (MB): peak = 1388.215 ; gain = 545.559
+---------------------------------------------------------------------------------
+RTL Elaboration failed
+INFO: [Common 17-83] Releasing license: Synthesis
+8 Infos, 0 Warnings, 0 Critical Warnings and 3 Errors encountered.
+synth_design failed
+ERROR: [Common 17-69] Command failed: Synthesis failed - please see the console or run log file for details
+INFO: [Common 17-206] Exiting Vivado at Sun Apr 14 19:10:27 2024...
