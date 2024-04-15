@@ -64,10 +64,12 @@ module spi_flash (
                         state <= SEND_CMD;
                     end
                     sclk <= 1;
+                    mem_ready <= 0;
                 end
                 
                 SEND_CMD: begin
                     sclk <= ~sclk; // Toggle SPI clock
+                    mem_ready <= 0;
                     if (sclk == 1) begin // On the rising edge, prepare data
                         if (bit_counter > 23) begin // Send command
                             mosi <= cmd[bit_counter - 24];
@@ -90,6 +92,7 @@ module spi_flash (
                         if (bit_counter < 8) begin
                             mem_data <= {mem_data[6:0], miso}; // Shift in data from MISO
                             bit_counter <= bit_counter + 1;
+                            mem_ready <= 0;
                         end
                         
                         if (bit_counter == 8) begin
@@ -101,12 +104,12 @@ module spi_flash (
                 end
                 
                 DATA_READY: begin
-                    if (!mem_valid) begin
+                    //if (!mem_valid) begin
                         mem_ready <= 0; // Reset ready signal after acknowledgment
                         state <= IDLE;
-                        cs <= 1; // Deselect the flash memory
-                    end
+                    //end
                     sclk <= 1;
+                    cs <= 1; // Deselect the flash memory
                 end
                 
                 default: state <= IDLE;

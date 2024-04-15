@@ -6,6 +6,10 @@
 `define default_netname none
 
 module tt_um_csit_luks (
+    `ifdef DEBUG
+      output wire [7:0] debug_port,
+    `endif
+
     input  wire [7:0] ui_in,    // Dedicated inputs
     output wire [7:0] uo_out,   // Dedicated outputs
     input  wire [7:0] uio_in,   // IOs: Input path
@@ -13,7 +17,7 @@ module tt_um_csit_luks (
     output wire [7:0] uio_oe,   // IOs: Enable path (active high: 0=input, 1=output)
     input  wire       ena,      // will go high when the design is enabled
     input  wire       clk,      // clock
-    input  wire       rst_n     // reset_n - low to reset
+    input  wire       rst_n    // reset_n - low to reset
 );
 
   wire rstn = ena ? rst_n : 1'b0;
@@ -27,6 +31,10 @@ module tt_um_csit_luks (
   wire spi_luks_ss_w, spi_luks_sclk_w, spi_luks_miso_w;
   wire spi_flash_ss_w, spi_flash_sclk_w, spi_flash_miso_w, spi_flash_mosi_w;
 
+
+  `ifdef DEBUG
+    assign debug_port = spi_flash_data_w;
+  `endif
 
   // Rotational encoder
   rotational_encoder rotational_encoder_instance (

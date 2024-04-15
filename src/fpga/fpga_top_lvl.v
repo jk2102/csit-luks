@@ -1,4 +1,5 @@
 
+`define DEBUG
 
 module fpga_top_lvl (
     input           clk,        // board clock
@@ -19,7 +20,15 @@ module fpga_top_lvl (
     // SPI flash
     output          FLASH_CS,
     output          FLASH_MOSI,
-    input           FLASH_MISO
+    input           FLASH_MISO,
+
+    // debug port
+    output          FLASH_SCLK_debug,
+    output          FLASH_CS_debug,
+    output          FLASH_MOSI_debug,
+    output          FLASH_MISO_debug,
+    output [7:0]         LEDS_debug
+
 
 );
 
@@ -33,6 +42,12 @@ module fpga_top_lvl (
     assign FLASH_CS = uio_out_w[5];
     assign FLASH_MOSI = uio_out_w[7];
     assign ui_in_w[3] = FLASH_MISO; 
+
+    // debug
+    assign FLASH_SCLK_debug = flash_clk_w;
+    assign FLASH_CS_debug = FLASH_CS;
+    assign FLASH_MOSI_debug = FLASH_MOSI;
+    assign FLASH_MISO_debug = FLASH_MISO;
 
     // 7-seg 
     assign seg = uo_out_w[6:0];
@@ -59,7 +74,8 @@ module fpga_top_lvl (
 
         .ena        (1'b1),         // enable signal - always enable on FPGA prototype
         .clk        (clk_1kHz),     // clock signal
-        .rst_n      (!btnC)          // reset signal (active low)
+        .rst_n      (!btnC),          // reset signal (active low)
+        .debug_port (LEDS_debug)    // debug port
     );
 
     // clock divider from 100 MHz to 10kHz

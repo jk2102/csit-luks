@@ -27,7 +27,7 @@ read_xdc ./fpga.xdc
 #
 # STEP#2: run synthesis, report utilization and timing estimates, write checkpoint design
 #
-synth_design -top fpga_top_lvl -part xc7a35tcpg236-1 -flatten rebuilt
+synth_design -top fpga_top_lvl -part xc7a35tcpg236-1 -flatten rebuilt -define DEBUG
 write_checkpoint -force $outputDir/post_synth
 report_timing_summary -file $outputDir/post_synth_timing_summary.rpt
 report_power -file $outputDir/post_synth_power.rpt

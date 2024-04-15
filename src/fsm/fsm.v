@@ -174,6 +174,7 @@ module fsm (
                   current_state <= EXP_DISP;
                display_sel <= 2'b11;
                display_out <= {1'b0, fd[2:0]};
+               fd_valid <= 1'b0;
             end
 
             default : begin  // Fault Recovery

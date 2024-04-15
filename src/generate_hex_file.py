@@ -4,8 +4,8 @@ def generate_verilog_hex_file(filename):
         bytes_per_line = 16
         data_line = []
 
-        # Loop over the entire 24-bit address space
-        for addr in range(0x1000000):  # 0x1000000 is 2^24, covering 0x000000 to 0xFFFFFF
+        # Loop over the entire 20-bit address space
+        for addr in range(2**20):  # 2^20 = 1,048,576
             # Calculate sum of the bytes in the address
             addr_high = (addr >> 16) & 0xFF
             addr_mid = (addr >> 8) & 0xFF

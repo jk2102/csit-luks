@@ -2,7 +2,7 @@
 // Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2023.2 (win64) Build 4029153 Fri Oct 13 20:14:34 MDT 2023
-// Date        : Sun Apr 14 19:15:28 2024
+// Date        : Mon Apr 15 12:34:34 2024
 // Host        : JKUNDRATALAPTOP running 64-bit major release  (build 9200)
 // Command     : write_verilog -force ./fpga_output/fpga_netlist.v
 // Design      : fpga_top_lvl
@@ -13,7 +13,7 @@
 // --------------------------------------------------------------------------------
 `timescale 1 ps / 1 ps
 
-(* ECO_CHECKSUM = "244a9054" *) 
+(* ECO_CHECKSUM = "3cbfef54" *) 
 (* STRUCTURAL_NETLIST = "yes" *)
 module fpga_top_lvl
    (clk,
@@ -27,7 +27,12 @@ module fpga_top_lvl
     PB,
     FLASH_CS,
     FLASH_MOSI,
-    FLASH_MISO);
+    FLASH_MISO,
+    FLASH_SCLK_debug,
+    FLASH_CS_debug,
+    FLASH_MOSI_debug,
+    FLASH_MISO_debug,
+    LEDS_debug);
   input clk;
   input btnC;
   output clk_1kHz;
@@ -40,6 +45,11 @@ module fpga_top_lvl
   output FLASH_CS;
   output FLASH_MOSI;
   input FLASH_MISO;
+  output FLASH_SCLK_debug;
+  output FLASH_CS_debug;
+  output FLASH_MOSI_debug;
+  output FLASH_MISO_debug;
+  output [7:0]LEDS_debug;
 
   wire \<const0> ;
   wire \<const1> ;
@@ -48,11 +58,18 @@ module fpga_top_lvl
   wire B;
   wire B_IBUF;
   wire FLASH_CS;
-  wire FLASH_CS_OBUF;
+  wire FLASH_CS_debug;
+  wire FLASH_CS_debug_OBUF;
   wire FLASH_MISO;
-  wire FLASH_MISO_IBUF;
+  wire FLASH_MISO_debug;
+  wire FLASH_MISO_debug_OBUF;
   wire FLASH_MOSI;
-  wire FLASH_MOSI_OBUF;
+  wire FLASH_MOSI_debug;
+  wire FLASH_MOSI_debug_OBUF;
+  wire FLASH_SCLK_debug;
+  wire FLASH_SCLK_debug_OBUF;
+  wire [7:0]LEDS_debug;
+  wire [7:0]LEDS_debug_OBUF;
   wire PB;
   wire PB_IBUF;
   wire [3:0]an;
@@ -75,10 +92,17 @@ module fpga_top_lvl
   wire \counter_reg[8]_i_1_n_0 ;
   wire dp;
   wire dp_OBUF;
+  wire lopt;
+  wire lopt_2;
+  wire lopt_3;
+  wire lopt_4;
+  wire lopt_5;
+  wire lopt_6;
+  wire lopt_7;
+  wire lopt_8;
   wire [15:0]p_1_in;
   wire [6:0]seg;
   wire [6:0]seg_OBUF;
-  wire [4:4]uio_out_w;
   wire [3:0]\NLW_counter_reg[12]_i_1_CO_UNCONNECTED ;
   wire [3:0]\NLW_counter_reg[4]_i_1_CO_UNCONNECTED ;
   wire [3:0]\NLW_counter_reg[8]_i_1_CO_UNCONNECTED ;
@@ -90,16 +114,61 @@ module fpga_top_lvl
        (.I(B),
         .O(B_IBUF));
   OBUF FLASH_CS_OBUF_inst
-       (.I(FLASH_CS_OBUF),
+       (.I(FLASH_CS_debug_OBUF),
         .O(FLASH_CS));
+  OBUF FLASH_CS_debug_OBUF_inst
+       (.I(FLASH_CS_debug_OBUF),
+        .O(FLASH_CS_debug));
   IBUF FLASH_MISO_IBUF_inst
        (.I(FLASH_MISO),
-        .O(FLASH_MISO_IBUF));
+        .O(FLASH_MISO_debug_OBUF));
+  OBUF FLASH_MISO_debug_OBUF_inst
+       (.I(FLASH_MISO_debug_OBUF),
+        .O(FLASH_MISO_debug));
+  (* OPT_MODIFIED = "SWEEP" *) 
   OBUF FLASH_MOSI_OBUF_inst
-       (.I(FLASH_MOSI_OBUF),
+       (.I(lopt),
         .O(FLASH_MOSI));
+  (* OPT_MODIFIED = "SWEEP" *) 
+  OBUF FLASH_MOSI_debug_OBUF_inst
+       (.I(FLASH_MOSI_debug_OBUF),
+        .O(FLASH_MOSI_debug));
+  OBUF FLASH_SCLK_debug_OBUF_inst
+       (.I(FLASH_SCLK_debug_OBUF),
+        .O(FLASH_SCLK_debug));
   GND GND
        (.G(\<const0> ));
+  OBUF \LEDS_debug_OBUF[0]_inst 
+       (.I(LEDS_debug_OBUF[0]),
+        .O(LEDS_debug[0]));
+  (* OPT_MODIFIED = "SWEEP" *) 
+  OBUF \LEDS_debug_OBUF[1]_inst 
+       (.I(lopt_2),
+        .O(LEDS_debug[1]));
+  (* OPT_MODIFIED = "SWEEP" *) 
+  OBUF \LEDS_debug_OBUF[2]_inst 
+       (.I(lopt_3),
+        .O(LEDS_debug[2]));
+  (* OPT_MODIFIED = "SWEEP" *) 
+  OBUF \LEDS_debug_OBUF[3]_inst 
+       (.I(lopt_4),
+        .O(LEDS_debug[3]));
+  (* OPT_MODIFIED = "SWEEP" *) 
+  OBUF \LEDS_debug_OBUF[4]_inst 
+       (.I(lopt_5),
+        .O(LEDS_debug[4]));
+  (* OPT_MODIFIED = "SWEEP" *) 
+  OBUF \LEDS_debug_OBUF[5]_inst 
+       (.I(lopt_6),
+        .O(LEDS_debug[5]));
+  (* OPT_MODIFIED = "SWEEP" *) 
+  OBUF \LEDS_debug_OBUF[6]_inst 
+       (.I(lopt_7),
+        .O(LEDS_debug[6]));
+  (* OPT_MODIFIED = "SWEEP" *) 
+  OBUF \LEDS_debug_OBUF[7]_inst 
+       (.I(lopt_8),
+        .O(LEDS_debug[7]));
   IBUF PB_IBUF_inst
        (.I(PB),
         .O(PB_IBUF));
@@ -113,7 +182,7 @@ module fpga_top_lvl
         .GTS(\<const0> ),
         .KEYCLEARB(\<const0> ),
         .PACK(\<const0> ),
-        .USRCCLKO(uio_out_w),
+        .USRCCLKO(FLASH_SCLK_debug_OBUF),
         .USRCCLKTS(\<const0> ),
         .USRDONEO(\<const0> ),
         .USRDONETS(\<const0> ));
@@ -380,15 +449,24 @@ module fpga_top_lvl
        (.A_IBUF(A_IBUF),
         .B_IBUF(B_IBUF),
         .CLK(clk_1kHz_OBUF_BUFG),
-        .D(FLASH_MISO_IBUF),
-        .FLASH_CS_OBUF(FLASH_CS_OBUF),
-        .FLASH_MOSI_OBUF(FLASH_MOSI_OBUF),
+        .D(FLASH_MISO_debug_OBUF),
+        .FLASH_CS_debug_OBUF(FLASH_CS_debug_OBUF),
+        .FLASH_MOSI_debug_OBUF(FLASH_MOSI_debug_OBUF),
+        .FLASH_SCLK_debug_OBUF(FLASH_SCLK_debug_OBUF),
         .PB_IBUF(PB_IBUF),
+        .Q(LEDS_debug_OBUF[0]),
         .an_OBUF(an_OBUF),
         .btnC_IBUF(btnC_IBUF),
         .dp_OBUF(dp_OBUF),
-        .seg_OBUF(seg_OBUF),
-        .uio_out_w(uio_out_w));
+        .lopt(lopt),
+        .lopt_2(lopt_2),
+        .lopt_3(lopt_3),
+        .lopt_4(lopt_4),
+        .lopt_5(lopt_5),
+        .lopt_6(lopt_6),
+        .lopt_7(lopt_7),
+        .lopt_8(lopt_8),
+        .seg_OBUF(seg_OBUF));
 endmodule
 
 module fsm
@@ -753,12 +831,12 @@ module fsm
         .I5(\current_state[0]_i_6_n_0 ),
         .O(\current_state[0]_i_3_n_0 ));
   LUT6 #(
-    .INIT(64'h000000000000BB5B)) 
+    .INIT(64'h000000000000CF75)) 
     \current_state[0]_i_4 
-       (.I0(pb_press_type_w[0]),
-        .I1(Q[1]),
+       (.I0(Q[1]),
+        .I1(pb_press_type_w[1]),
         .I2(Q[0]),
-        .I3(pb_press_type_w[1]),
+        .I3(pb_press_type_w[0]),
         .I4(\current_state_reg_n_0_[2] ),
         .I5(\current_state_reg_n_0_[3] ),
         .O(\current_state[0]_i_4_n_0 ));
@@ -809,13 +887,13 @@ module fsm
         .I4(Q[0]),
         .O(\current_state[1]_i_5_n_0 ));
   LUT6 #(
-    .INIT(64'hFFFFFFFFEEEEEEEF)) 
+    .INIT(64'hFEFEFEFEFEFEFEFF)) 
     \current_state[2]_i_1 
        (.I0(\current_state[2]_i_2_n_0 ),
         .I1(\current_state[2]_i_3_n_0 ),
-        .I2(\current_state[3]_i_2_n_0 ),
-        .I3(Q[1]),
-        .I4(\current_state[2]_i_4_n_0 ),
+        .I2(\current_state[2]_i_4_n_0 ),
+        .I3(\current_state[3]_i_2_n_0 ),
+        .I4(Q[1]),
         .I5(\current_state[2]_i_5_n_0 ),
         .O(current_state[2]));
   LUT6 #(
@@ -829,30 +907,30 @@ module fsm
         .I5(\current_state_reg_n_0_[2] ),
         .O(\current_state[2]_i_2_n_0 ));
   LUT6 #(
-    .INIT(64'h00000000FE000000)) 
-    \current_state[2]_i_3 
-       (.I0(Q[0]),
-        .I1(F_set_flag_reg_n_0),
-        .I2(pb_press_type_w[0]),
-        .I3(pb_press_type_w[1]),
-        .I4(Q[1]),
-        .I5(\current_state[2]_i_6_n_0 ),
-        .O(\current_state[2]_i_3_n_0 ));
-  LUT2 #(
-    .INIT(4'hB)) 
-    \current_state[2]_i_4 
-       (.I0(\current_state_reg_n_0_[3] ),
-        .I1(\current_state_reg_n_0_[2] ),
-        .O(\current_state[2]_i_4_n_0 ));
-  LUT6 #(
     .INIT(64'h0000000010200080)) 
-    \current_state[2]_i_5 
+    \current_state[2]_i_3 
        (.I0(Q[0]),
         .I1(pb_press_type_w[0]),
         .I2(pb_press_type_w[1]),
         .I3(Q[1]),
         .I4(\current_state_reg_n_0_[3] ),
         .I5(\current_state_reg_n_0_[2] ),
+        .O(\current_state[2]_i_3_n_0 ));
+  LUT6 #(
+    .INIT(64'h00000000FE000000)) 
+    \current_state[2]_i_4 
+       (.I0(Q[0]),
+        .I1(F_set_flag_reg_n_0),
+        .I2(pb_press_type_w[0]),
+        .I3(pb_press_type_w[1]),
+        .I4(Q[1]),
+        .I5(\current_state[2]_i_6_n_0 ),
+        .O(\current_state[2]_i_4_n_0 ));
+  LUT2 #(
+    .INIT(4'hB)) 
+    \current_state[2]_i_5 
+       (.I0(\current_state_reg_n_0_[3] ),
+        .I1(\current_state_reg_n_0_[2] ),
         .O(\current_state[2]_i_5_n_0 ));
   LUT2 #(
     .INIT(4'hE)) 
@@ -861,14 +939,14 @@ module fsm
         .I1(\current_state_reg_n_0_[3] ),
         .O(\current_state[2]_i_6_n_0 ));
   LUT6 #(
-    .INIT(64'h0000202C000C2C2C)) 
+    .INIT(64'h0000117700F00000)) 
     \current_state[3]_i_1 
-       (.I0(\current_state[3]_i_2_n_0 ),
-        .I1(\current_state_reg_n_0_[3] ),
-        .I2(\current_state_reg_n_0_[2] ),
-        .I3(Q[0]),
-        .I4(Q[1]),
-        .I5(pb_press_type_w[1]),
+       (.I0(Q[0]),
+        .I1(pb_press_type_w[1]),
+        .I2(\current_state[3]_i_2_n_0 ),
+        .I3(Q[1]),
+        .I4(\current_state_reg_n_0_[2] ),
+        .I5(\current_state_reg_n_0_[3] ),
         .O(current_state[3]));
   LUT4 #(
     .INIT(16'h0080)) 
@@ -1858,6 +1936,7 @@ module rotational_encoder
   wire \pb_cnt[11]_i_2_n_0 ;
   wire \pb_cnt[11]_i_3_n_0 ;
   wire \pb_cnt[11]_i_4_n_0 ;
+  wire \pb_cnt[11]_i_5_n_0 ;
   wire \pb_cnt[1]_i_1_n_0 ;
   wire \pb_cnt[2]_i_1_n_0 ;
   wire \pb_cnt[3]_i_1_n_0 ;
@@ -1935,12 +2014,12 @@ module rotational_encoder
         .I5(\enc[3]_i_3_n_0 ),
         .O(p_0_in[1]));
   LUT5 #(
-    .INIT(32'h00007E81)) 
+    .INIT(32'h000078E1)) 
     \enc[2]_i_1 
        (.I0(Q[0]),
         .I1(\enc[3]_i_4_n_0 ),
-        .I2(Q[1]),
-        .I3(Q[2]),
+        .I2(Q[2]),
+        .I3(Q[1]),
         .I4(\enc[3]_i_3_n_0 ),
         .O(p_0_in[2]));
   LUT5 #(
@@ -1953,13 +2032,13 @@ module rotational_encoder
         .I4(B_IBUF),
         .O(\enc[3]_i_1_n_0 ));
   LUT6 #(
-    .INIT(64'hBFFFEAAAFFFEAAAB)) 
+    .INIT(64'hBEEEEEEEEEEEEEEB)) 
     \enc[3]_i_2 
        (.I0(\enc[3]_i_3_n_0 ),
-        .I1(Q[1]),
-        .I2(\enc[3]_i_4_n_0 ),
-        .I3(Q[0]),
-        .I4(Q[3]),
+        .I1(Q[3]),
+        .I2(Q[1]),
+        .I3(\enc[3]_i_4_n_0 ),
+        .I4(Q[0]),
         .I5(Q[2]),
         .O(p_0_in[3]));
   LUT3 #(
@@ -2078,25 +2157,30 @@ module rotational_encoder
         .I5(pb_cnt0[11]),
         .O(\pb_cnt[11]_i_2_n_0 ));
   LUT6 #(
-    .INIT(64'hFFFFFFFF7FFFFFFF)) 
+    .INIT(64'hEFFFFFFFFFFFFFFF)) 
     \pb_cnt[11]_i_3 
-       (.I0(\pb_cnt_reg_n_0_[11] ),
-        .I1(\pb_cnt_reg_n_0_[10] ),
-        .I2(\pb_cnt_reg_n_0_[2] ),
-        .I3(\pb_cnt_reg_n_0_[1] ),
-        .I4(\pb_cnt_reg_n_0_[6] ),
-        .I5(\pb_cnt[11]_i_4_n_0 ),
+       (.I0(\pb_cnt[11]_i_4_n_0 ),
+        .I1(\pb_cnt[11]_i_5_n_0 ),
+        .I2(\pb_cnt_reg_n_0_[6] ),
+        .I3(\pb_cnt_reg_n_0_[11] ),
+        .I4(\pb_cnt_reg_n_0_[2] ),
+        .I5(\pb_cnt_reg_n_0_[9] ),
         .O(\pb_cnt[11]_i_3_n_0 ));
-  LUT6 #(
-    .INIT(64'h7FFFFFFFFFFFFFFF)) 
+  LUT3 #(
+    .INIT(8'h7F)) 
     \pb_cnt[11]_i_4 
-       (.I0(\pb_cnt_reg_n_0_[5] ),
+       (.I0(\pb_cnt_reg_n_0_[3] ),
         .I1(\pb_cnt_reg_n_0_[4] ),
-        .I2(\pb_cnt_reg_n_0_[3] ),
-        .I3(\pb_cnt_reg_n_0_[9] ),
-        .I4(\pb_cnt_reg_n_0_[8] ),
-        .I5(\pb_cnt_reg_n_0_[7] ),
+        .I2(\pb_cnt_reg_n_0_[5] ),
         .O(\pb_cnt[11]_i_4_n_0 ));
+  LUT4 #(
+    .INIT(16'h7FFF)) 
+    \pb_cnt[11]_i_5 
+       (.I0(\pb_cnt_reg_n_0_[7] ),
+        .I1(\pb_cnt_reg_n_0_[8] ),
+        .I2(\pb_cnt_reg_n_0_[1] ),
+        .I3(\pb_cnt_reg_n_0_[10] ),
+        .O(\pb_cnt[11]_i_5_n_0 ));
   LUT6 #(
     .INIT(64'h000FFFFF00022222)) 
     \pb_cnt[1]_i_1 
@@ -2259,34 +2343,34 @@ module rotational_encoder
         .CLR(btnC_IBUF),
         .D(\pb_cnt[9]_i_1_n_0 ),
         .Q(\pb_cnt_reg_n_0_[9] ));
-  (* SOFT_HLUTNM = "soft_lutpair22" *) 
-  LUT4 #(
-    .INIT(16'h0F10)) 
+  LUT6 #(
+    .INIT(64'h0000FFFF44450000)) 
     \pb_press_type[0]_i_1 
        (.I0(pb_press_type_w[1]),
         .I1(\pb_press_type[0]_i_2_n_0 ),
-        .I2(PB_IBUF),
-        .I3(pb_press_type_w[0]),
+        .I2(\pb_press_type[1]_i_2_n_0 ),
+        .I3(\pb_press_type[0]_i_3_n_0 ),
+        .I4(PB_IBUF),
+        .I5(pb_press_type_w[0]),
         .O(\pb_press_type[0]_i_1_n_0 ));
   LUT6 #(
-    .INIT(64'h00CE00CECECE0ECE)) 
+    .INIT(64'hA888888888888888)) 
     \pb_press_type[0]_i_2 
-       (.I0(\pb_press_type[0]_i_3_n_0 ),
-        .I1(\pb_press_type[1]_i_2_n_0 ),
-        .I2(\pb_press_type[0]_i_4_n_0 ),
-        .I3(\pb_cnt_reg_n_0_[11] ),
-        .I4(\pb_press_type[0]_i_5_n_0 ),
-        .I5(\pb_cnt_reg_n_0_[10] ),
+       (.I0(\pb_cnt_reg_n_0_[11] ),
+        .I1(\pb_cnt_reg_n_0_[10] ),
+        .I2(\pb_cnt_reg_n_0_[9] ),
+        .I3(\pb_cnt_reg_n_0_[8] ),
+        .I4(\pb_cnt_reg_n_0_[7] ),
+        .I5(\pb_press_type[0]_i_4_n_0 ),
         .O(\pb_press_type[0]_i_2_n_0 ));
-  LUT6 #(
-    .INIT(64'h0001111111111111)) 
+  LUT5 #(
+    .INIT(32'h00002AAA)) 
     \pb_press_type[0]_i_3 
-       (.I0(\pb_cnt_reg_n_0_[7] ),
-        .I1(\pb_cnt_reg_n_0_[8] ),
-        .I2(\pb_cnt_reg_n_0_[2] ),
-        .I3(\pb_cnt_reg_n_0_[1] ),
-        .I4(\pb_cnt_reg_n_0_[5] ),
-        .I5(\pb_cnt_reg_n_0_[4] ),
+       (.I0(\pb_press_type[0]_i_5_n_0 ),
+        .I1(\pb_cnt_reg_n_0_[3] ),
+        .I2(\pb_cnt_reg_n_0_[4] ),
+        .I3(\pb_cnt_reg_n_0_[5] ),
+        .I4(\pb_cnt_reg_n_0_[6] ),
         .O(\pb_press_type[0]_i_3_n_0 ));
   LUT4 #(
     .INIT(16'hEAAA)) 
@@ -2296,14 +2380,16 @@ module rotational_encoder
         .I2(\pb_cnt_reg_n_0_[4] ),
         .I3(\pb_cnt_reg_n_0_[3] ),
         .O(\pb_press_type[0]_i_4_n_0 ));
-  LUT3 #(
-    .INIT(8'h7F)) 
+  LUT6 #(
+    .INIT(64'h0001111111111111)) 
     \pb_press_type[0]_i_5 
        (.I0(\pb_cnt_reg_n_0_[7] ),
         .I1(\pb_cnt_reg_n_0_[8] ),
-        .I2(\pb_cnt_reg_n_0_[9] ),
+        .I2(\pb_cnt_reg_n_0_[2] ),
+        .I3(\pb_cnt_reg_n_0_[1] ),
+        .I4(\pb_cnt_reg_n_0_[5] ),
+        .I5(\pb_cnt_reg_n_0_[4] ),
         .O(\pb_press_type[0]_i_5_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair22" *) 
   LUT4 #(
     .INIT(16'h0F40)) 
     \pb_press_type[1]_i_1 
@@ -2415,62 +2501,66 @@ module seven_seg
 endmodule
 
 module spi_flash
-   (FLASH_MOSI_OBUF,
+   (FLASH_MOSI_debug_OBUF,
     spi_flash_ready_w,
-    FLASH_CS_OBUF,
-    uio_out_w,
+    FLASH_CS_debug_OBUF,
+    FLASH_SCLK_debug_OBUF,
     Q,
     CLK,
     btnC_IBUF,
     spi_flash_valid_w,
     spi_luks_sclk_w,
     D,
-    \mem_data_reg[0]_0 );
-  output FLASH_MOSI_OBUF;
+    \address_reg[23]_0 ,
+    .lopt(mosi_reg_lopt_replica_1),
+    lopt_1,
+    .lopt_2(\mem_data_reg[1]_lopt_replica_1 ),
+    .lopt_3(\mem_data_reg[2]_lopt_replica_1 ),
+    .lopt_4(\mem_data_reg[3]_lopt_replica_1 ),
+    .lopt_5(\mem_data_reg[4]_lopt_replica_1 ),
+    .lopt_6(\mem_data_reg[5]_lopt_replica_1 ),
+    .lopt_7(\mem_data_reg[6]_lopt_replica_1 ),
+    .lopt_8(\mem_data_reg[7]_lopt_replica_1 ));
+  output FLASH_MOSI_debug_OBUF;
   output spi_flash_ready_w;
-  output FLASH_CS_OBUF;
-  output [0:0]uio_out_w;
+  output FLASH_CS_debug_OBUF;
+  output FLASH_SCLK_debug_OBUF;
   output [7:0]Q;
   input CLK;
   input btnC_IBUF;
   input spi_flash_valid_w;
   input spi_luks_sclk_w;
-  input [15:0]D;
-  input [0:0]\mem_data_reg[0]_0 ;
+  input [0:0]D;
+  input [15:0]\address_reg[23]_0 ;
+  output lopt_1;
+  output mosi_reg_lopt_replica_1;
+  output \mem_data_reg[1]_lopt_replica_1 ;
+  output \mem_data_reg[2]_lopt_replica_1 ;
+  output \mem_data_reg[3]_lopt_replica_1 ;
+  output \mem_data_reg[4]_lopt_replica_1 ;
+  output \mem_data_reg[5]_lopt_replica_1 ;
+  output \mem_data_reg[6]_lopt_replica_1 ;
+  output \mem_data_reg[7]_lopt_replica_1 ;
 
   wire \<const0> ;
   wire \<const1> ;
   wire CLK;
-  wire [15:0]D;
-  wire FLASH_CS_OBUF;
-  wire FLASH_MOSI_OBUF;
-  wire \FSM_sequential_state[0]_i_1__0_n_0 ;
-  wire \FSM_sequential_state[1]_i_1__0_n_0 ;
+  wire [0:0]D;
+  wire FLASH_CS_debug_OBUF;
+  wire FLASH_MOSI_debug_OBUF;
+  wire FLASH_SCLK_debug_OBUF;
+  wire \FSM_sequential_state[0]_i_1_n_0 ;
+  wire \FSM_sequential_state[0]_i_2_n_0 ;
+  wire \FSM_sequential_state[1]_i_1_n_0 ;
   wire \FSM_sequential_state[1]_i_2_n_0 ;
-  wire \FSM_sequential_state[1]_i_3_n_0 ;
   wire \FSM_sequential_state_reg_n_0_[1] ;
   wire [7:0]Q;
+  wire [23:8]address;
   wire \address[23]_i_1_n_0 ;
-  wire \address_reg_n_0_[10] ;
-  wire \address_reg_n_0_[11] ;
-  wire \address_reg_n_0_[12] ;
-  wire \address_reg_n_0_[13] ;
-  wire \address_reg_n_0_[14] ;
-  wire \address_reg_n_0_[15] ;
-  wire \address_reg_n_0_[16] ;
-  wire \address_reg_n_0_[17] ;
-  wire \address_reg_n_0_[18] ;
-  wire \address_reg_n_0_[19] ;
-  wire \address_reg_n_0_[20] ;
-  wire \address_reg_n_0_[21] ;
-  wire \address_reg_n_0_[22] ;
-  wire \address_reg_n_0_[23] ;
-  wire \address_reg_n_0_[8] ;
-  wire \address_reg_n_0_[9] ;
+  wire [15:0]\address_reg[23]_0 ;
   wire [6:0]bit_counter;
   wire \bit_counter[3]_i_2_n_0 ;
-  wire \bit_counter[3]_i_3_n_0 ;
-  wire \bit_counter[4]_i_1__0_n_0 ;
+  wire \bit_counter[4]_i_1_n_0 ;
   wire \bit_counter[6]_i_1_n_0 ;
   wire \bit_counter[6]_i_3_n_0 ;
   wire \bit_counter[6]_i_4_n_0 ;
@@ -2485,8 +2575,16 @@ module spi_flash
   wire cs_i_1_n_0;
   wire \mem_data[7]_i_1_n_0 ;
   wire \mem_data[7]_i_2_n_0 ;
-  wire [0:0]\mem_data_reg[0]_0 ;
+  wire \mem_data[7]_i_3_n_0 ;
+  wire \mem_data_reg[1]_lopt_replica_1 ;
+  wire \mem_data_reg[2]_lopt_replica_1 ;
+  wire \mem_data_reg[3]_lopt_replica_1 ;
+  wire \mem_data_reg[4]_lopt_replica_1 ;
+  wire \mem_data_reg[5]_lopt_replica_1 ;
+  wire \mem_data_reg[6]_lopt_replica_1 ;
+  wire \mem_data_reg[7]_lopt_replica_1 ;
   wire mem_ready_i_1_n_0;
+  wire mem_ready_i_2_n_0;
   wire mosi_i_1_n_0;
   wire mosi_i_2_n_0;
   wire mosi_i_3_n_0;
@@ -2496,200 +2594,199 @@ module spi_flash
   wire mosi_i_8_n_0;
   wire mosi_i_9_n_0;
   wire mosi_reg_i_7_n_0;
+  wire mosi_reg_lopt_replica_1;
   wire sclk_i_1_n_0;
   wire spi_flash_ready_w;
   wire spi_flash_sclk_w;
   wire spi_flash_valid_w;
   wire spi_luks_sclk_w;
   wire [0:0]state__0;
-  wire [0:0]uio_out_w;
 
+  LUT3 #(
+    .INIT(8'hB8)) 
+    FLASH_SCLK_debug_OBUF_inst_i_1
+       (.I0(spi_luks_sclk_w),
+        .I1(FLASH_CS_debug_OBUF),
+        .I2(spi_flash_sclk_w),
+        .O(FLASH_SCLK_debug_OBUF));
   LUT6 #(
-    .INIT(64'hDBDBCBDB5A5A4A5A)) 
-    \FSM_sequential_state[0]_i_1__0 
-       (.I0(\FSM_sequential_state[1]_i_2_n_0 ),
-        .I1(\FSM_sequential_state_reg_n_0_[1] ),
-        .I2(state__0),
-        .I3(spi_flash_sclk_w),
-        .I4(\FSM_sequential_state[1]_i_3_n_0 ),
-        .I5(spi_flash_valid_w),
-        .O(\FSM_sequential_state[0]_i_1__0_n_0 ));
-  LUT6 #(
-    .INIT(64'hECECFCEC6C6C7C6C)) 
-    \FSM_sequential_state[1]_i_1__0 
-       (.I0(\FSM_sequential_state[1]_i_2_n_0 ),
-        .I1(\FSM_sequential_state_reg_n_0_[1] ),
-        .I2(state__0),
-        .I3(spi_flash_sclk_w),
-        .I4(\FSM_sequential_state[1]_i_3_n_0 ),
-        .I5(spi_flash_valid_w),
-        .O(\FSM_sequential_state[1]_i_1__0_n_0 ));
-  LUT6 #(
-    .INIT(64'h40404040404040FF)) 
-    \FSM_sequential_state[1]_i_2 
+    .INIT(64'h33330033E2E2E2E2)) 
+    \FSM_sequential_state[0]_i_1 
        (.I0(spi_flash_valid_w),
-        .I1(state__0),
-        .I2(\FSM_sequential_state_reg_n_0_[1] ),
-        .I3(\bit_counter_reg_n_0_[3] ),
-        .I4(\bit_counter[3]_i_3_n_0 ),
+        .I1(\FSM_sequential_state_reg_n_0_[1] ),
+        .I2(\FSM_sequential_state[0]_i_2_n_0 ),
+        .I3(spi_flash_sclk_w),
+        .I4(\FSM_sequential_state[1]_i_2_n_0 ),
+        .I5(state__0),
+        .O(\FSM_sequential_state[0]_i_1_n_0 ));
+  LUT6 #(
+    .INIT(64'h0000000000010000)) 
+    \FSM_sequential_state[0]_i_2 
+       (.I0(spi_flash_sclk_w),
+        .I1(\bit_counter_reg_n_0_[1] ),
+        .I2(\bit_counter_reg_n_0_[0] ),
+        .I3(\bit_counter_reg_n_0_[2] ),
+        .I4(\bit_counter_reg_n_0_[3] ),
         .I5(\mem_data[7]_i_2_n_0 ),
-        .O(\FSM_sequential_state[1]_i_2_n_0 ));
+        .O(\FSM_sequential_state[0]_i_2_n_0 ));
   LUT4 #(
-    .INIT(16'hFFFE)) 
-    \FSM_sequential_state[1]_i_3 
-       (.I0(\bit_counter_reg_n_0_[6] ),
-        .I1(\bit_counter_reg_n_0_[5] ),
-        .I2(\bit_counter_reg_n_0_[4] ),
-        .I3(\bit_counter[6]_i_4_n_0 ),
-        .O(\FSM_sequential_state[1]_i_3_n_0 ));
-  (* FSM_ENCODED_STATES = "SEND_CMD:01,READ_DATA:10,IDLE:00,DATA_READY:11" *) 
+    .INIT(16'h04F0)) 
+    \FSM_sequential_state[1]_i_1 
+       (.I0(\FSM_sequential_state[1]_i_2_n_0 ),
+        .I1(spi_flash_sclk_w),
+        .I2(\FSM_sequential_state_reg_n_0_[1] ),
+        .I3(state__0),
+        .O(\FSM_sequential_state[1]_i_1_n_0 ));
+  LUT5 #(
+    .INIT(32'hFFFFFFFE)) 
+    \FSM_sequential_state[1]_i_2 
+       (.I0(\mem_data[7]_i_2_n_0 ),
+        .I1(\bit_counter_reg_n_0_[2] ),
+        .I2(\bit_counter_reg_n_0_[0] ),
+        .I3(\bit_counter_reg_n_0_[1] ),
+        .I4(\bit_counter_reg_n_0_[3] ),
+        .O(\FSM_sequential_state[1]_i_2_n_0 ));
+  (* FSM_ENCODED_STATES = "IDLE:00,SEND_CMD:01,READ_DATA:10,DATA_READY:11" *) 
   FDCE #(
     .INIT(1'b0)) 
     \FSM_sequential_state_reg[0] 
        (.C(CLK),
         .CE(\<const1> ),
         .CLR(btnC_IBUF),
-        .D(\FSM_sequential_state[0]_i_1__0_n_0 ),
+        .D(\FSM_sequential_state[0]_i_1_n_0 ),
         .Q(state__0));
-  (* FSM_ENCODED_STATES = "SEND_CMD:01,READ_DATA:10,IDLE:00,DATA_READY:11" *) 
+  (* FSM_ENCODED_STATES = "IDLE:00,SEND_CMD:01,READ_DATA:10,DATA_READY:11" *) 
   FDCE #(
     .INIT(1'b0)) 
     \FSM_sequential_state_reg[1] 
        (.C(CLK),
         .CE(\<const1> ),
         .CLR(btnC_IBUF),
-        .D(\FSM_sequential_state[1]_i_1__0_n_0 ),
+        .D(\FSM_sequential_state[1]_i_1_n_0 ),
         .Q(\FSM_sequential_state_reg_n_0_[1] ));
   GND GND
        (.G(\<const0> ));
-  LUT3 #(
-    .INIT(8'hB8)) 
-    STARTUPE2_inst_i_1
-       (.I0(spi_luks_sclk_w),
-        .I1(FLASH_CS_OBUF),
-        .I2(spi_flash_sclk_w),
-        .O(uio_out_w));
   VCC VCC
        (.P(\<const1> ));
   LUT4 #(
     .INIT(16'h0010)) 
     \address[23]_i_1 
-       (.I0(\FSM_sequential_state_reg_n_0_[1] ),
-        .I1(state__0),
+       (.I0(state__0),
+        .I1(\FSM_sequential_state_reg_n_0_[1] ),
         .I2(spi_flash_valid_w),
         .I3(btnC_IBUF),
         .O(\address[23]_i_1_n_0 ));
   FDRE \address_reg[10] 
        (.C(CLK),
         .CE(\address[23]_i_1_n_0 ),
-        .D(D[2]),
-        .Q(\address_reg_n_0_[10] ),
+        .D(\address_reg[23]_0 [2]),
+        .Q(address[10]),
         .R(\<const0> ));
   FDRE \address_reg[11] 
        (.C(CLK),
         .CE(\address[23]_i_1_n_0 ),
-        .D(D[3]),
-        .Q(\address_reg_n_0_[11] ),
+        .D(\address_reg[23]_0 [3]),
+        .Q(address[11]),
         .R(\<const0> ));
   FDRE \address_reg[12] 
        (.C(CLK),
         .CE(\address[23]_i_1_n_0 ),
-        .D(D[4]),
-        .Q(\address_reg_n_0_[12] ),
+        .D(\address_reg[23]_0 [4]),
+        .Q(address[12]),
         .R(\<const0> ));
   FDRE \address_reg[13] 
        (.C(CLK),
         .CE(\address[23]_i_1_n_0 ),
-        .D(D[5]),
-        .Q(\address_reg_n_0_[13] ),
+        .D(\address_reg[23]_0 [5]),
+        .Q(address[13]),
         .R(\<const0> ));
   FDRE \address_reg[14] 
        (.C(CLK),
         .CE(\address[23]_i_1_n_0 ),
-        .D(D[6]),
-        .Q(\address_reg_n_0_[14] ),
+        .D(\address_reg[23]_0 [6]),
+        .Q(address[14]),
         .R(\<const0> ));
   FDRE \address_reg[15] 
        (.C(CLK),
         .CE(\address[23]_i_1_n_0 ),
-        .D(D[7]),
-        .Q(\address_reg_n_0_[15] ),
+        .D(\address_reg[23]_0 [7]),
+        .Q(address[15]),
         .R(\<const0> ));
   FDRE \address_reg[16] 
        (.C(CLK),
         .CE(\address[23]_i_1_n_0 ),
-        .D(D[8]),
-        .Q(\address_reg_n_0_[16] ),
+        .D(\address_reg[23]_0 [8]),
+        .Q(address[16]),
         .R(\<const0> ));
   FDRE \address_reg[17] 
        (.C(CLK),
         .CE(\address[23]_i_1_n_0 ),
-        .D(D[9]),
-        .Q(\address_reg_n_0_[17] ),
+        .D(\address_reg[23]_0 [9]),
+        .Q(address[17]),
         .R(\<const0> ));
   FDRE \address_reg[18] 
        (.C(CLK),
         .CE(\address[23]_i_1_n_0 ),
-        .D(D[10]),
-        .Q(\address_reg_n_0_[18] ),
+        .D(\address_reg[23]_0 [10]),
+        .Q(address[18]),
         .R(\<const0> ));
   FDRE \address_reg[19] 
        (.C(CLK),
         .CE(\address[23]_i_1_n_0 ),
-        .D(D[11]),
-        .Q(\address_reg_n_0_[19] ),
+        .D(\address_reg[23]_0 [11]),
+        .Q(address[19]),
         .R(\<const0> ));
   FDRE \address_reg[20] 
        (.C(CLK),
         .CE(\address[23]_i_1_n_0 ),
-        .D(D[12]),
-        .Q(\address_reg_n_0_[20] ),
+        .D(\address_reg[23]_0 [12]),
+        .Q(address[20]),
         .R(\<const0> ));
   FDRE \address_reg[21] 
        (.C(CLK),
         .CE(\address[23]_i_1_n_0 ),
-        .D(D[13]),
-        .Q(\address_reg_n_0_[21] ),
+        .D(\address_reg[23]_0 [13]),
+        .Q(address[21]),
         .R(\<const0> ));
   FDRE \address_reg[22] 
        (.C(CLK),
         .CE(\address[23]_i_1_n_0 ),
-        .D(D[14]),
-        .Q(\address_reg_n_0_[22] ),
+        .D(\address_reg[23]_0 [14]),
+        .Q(address[22]),
         .R(\<const0> ));
   FDRE \address_reg[23] 
        (.C(CLK),
         .CE(\address[23]_i_1_n_0 ),
-        .D(D[15]),
-        .Q(\address_reg_n_0_[23] ),
+        .D(\address_reg[23]_0 [15]),
+        .Q(address[23]),
         .R(\<const0> ));
   FDRE \address_reg[8] 
        (.C(CLK),
         .CE(\address[23]_i_1_n_0 ),
-        .D(D[0]),
-        .Q(\address_reg_n_0_[8] ),
+        .D(\address_reg[23]_0 [0]),
+        .Q(address[8]),
         .R(\<const0> ));
   FDRE \address_reg[9] 
        (.C(CLK),
         .CE(\address[23]_i_1_n_0 ),
-        .D(D[1]),
-        .Q(\address_reg_n_0_[9] ),
+        .D(\address_reg[23]_0 [1]),
+        .Q(address[9]),
         .R(\<const0> ));
   (* SOFT_HLUTNM = "soft_lutpair27" *) 
   LUT4 #(
-    .INIT(16'h03AF)) 
+    .INIT(16'h03BB)) 
     \bit_counter[0]_i_1 
-       (.I0(\FSM_sequential_state[1]_i_3_n_0 ),
-        .I1(\FSM_sequential_state_reg_n_0_[1] ),
-        .I2(state__0),
+       (.I0(\FSM_sequential_state[1]_i_2_n_0 ),
+        .I1(state__0),
+        .I2(\FSM_sequential_state_reg_n_0_[1] ),
         .I3(\bit_counter_reg_n_0_[0] ),
         .O(bit_counter[0]));
   (* SOFT_HLUTNM = "soft_lutpair27" *) 
   LUT5 #(
-    .INIT(32'h40045FF5)) 
+    .INIT(32'h20023FF3)) 
     \bit_counter[1]_i_1 
-       (.I0(\FSM_sequential_state_reg_n_0_[1] ),
-        .I1(\FSM_sequential_state[1]_i_3_n_0 ),
+       (.I0(\FSM_sequential_state[1]_i_2_n_0 ),
+        .I1(\FSM_sequential_state_reg_n_0_[1] ),
         .I2(\bit_counter_reg_n_0_[0] ),
         .I3(\bit_counter_reg_n_0_[1] ),
         .I4(state__0),
@@ -2698,46 +2795,42 @@ module spi_flash
     .INIT(64'h4CC000045FFFF555)) 
     \bit_counter[2]_i_1 
        (.I0(\FSM_sequential_state_reg_n_0_[1] ),
-        .I1(\FSM_sequential_state[1]_i_3_n_0 ),
+        .I1(\FSM_sequential_state[1]_i_2_n_0 ),
         .I2(\bit_counter_reg_n_0_[1] ),
         .I3(\bit_counter_reg_n_0_[0] ),
         .I4(\bit_counter_reg_n_0_[2] ),
         .I5(state__0),
         .O(bit_counter[2]));
   LUT6 #(
-    .INIT(64'h5D0000D55DD55DD5)) 
+    .INIT(64'h28888888AAAAAAAA)) 
     \bit_counter[3]_i_1 
-       (.I0(state__0),
-        .I1(\FSM_sequential_state[1]_i_3_n_0 ),
-        .I2(\bit_counter[3]_i_2_n_0 ),
-        .I3(\bit_counter_reg_n_0_[3] ),
-        .I4(\bit_counter[3]_i_3_n_0 ),
+       (.I0(\bit_counter[3]_i_2_n_0 ),
+        .I1(\bit_counter_reg_n_0_[3] ),
+        .I2(\bit_counter_reg_n_0_[2] ),
+        .I3(\bit_counter_reg_n_0_[1] ),
+        .I4(\bit_counter_reg_n_0_[0] ),
         .I5(\FSM_sequential_state_reg_n_0_[1] ),
         .O(bit_counter[3]));
-  LUT3 #(
-    .INIT(8'h01)) 
+  LUT6 #(
+    .INIT(64'hAAA9AAA8FFFFFFFF)) 
     \bit_counter[3]_i_2 
-       (.I0(\bit_counter_reg_n_0_[2] ),
-        .I1(\bit_counter_reg_n_0_[0] ),
-        .I2(\bit_counter_reg_n_0_[1] ),
-        .O(\bit_counter[3]_i_2_n_0 ));
-  LUT3 #(
-    .INIT(8'h7F)) 
-    \bit_counter[3]_i_3 
-       (.I0(\bit_counter_reg_n_0_[0] ),
+       (.I0(\bit_counter_reg_n_0_[3] ),
         .I1(\bit_counter_reg_n_0_[1] ),
-        .I2(\bit_counter_reg_n_0_[2] ),
-        .O(\bit_counter[3]_i_3_n_0 ));
+        .I2(\bit_counter_reg_n_0_[0] ),
+        .I3(\bit_counter_reg_n_0_[2] ),
+        .I4(\mem_data[7]_i_2_n_0 ),
+        .I5(state__0),
+        .O(\bit_counter[3]_i_2_n_0 ));
   LUT6 #(
     .INIT(64'h5500005455555555)) 
-    \bit_counter[4]_i_1__0 
+    \bit_counter[4]_i_1 
        (.I0(\FSM_sequential_state_reg_n_0_[1] ),
-        .I1(\bit_counter_reg_n_0_[5] ),
-        .I2(\bit_counter_reg_n_0_[6] ),
+        .I1(\bit_counter_reg_n_0_[6] ),
+        .I2(\bit_counter_reg_n_0_[5] ),
         .I3(\bit_counter[6]_i_4_n_0 ),
         .I4(\bit_counter_reg_n_0_[4] ),
         .I5(state__0),
-        .O(\bit_counter[4]_i_1__0_n_0 ));
+        .O(\bit_counter[4]_i_1_n_0 ));
   (* SOFT_HLUTNM = "soft_lutpair26" *) 
   LUT5 #(
     .INIT(32'hAAA00008)) 
@@ -2749,13 +2842,13 @@ module spi_flash
         .I4(\bit_counter_reg_n_0_[5] ),
         .O(bit_counter[5]));
   LUT6 #(
-    .INIT(64'h000000005D5F5D55)) 
+    .INIT(64'h000000001F1C1310)) 
     \bit_counter[6]_i_1 
        (.I0(\bit_counter[6]_i_3_n_0 ),
-        .I1(spi_flash_sclk_w),
+        .I1(state__0),
         .I2(\FSM_sequential_state_reg_n_0_[1] ),
-        .I3(state__0),
-        .I4(spi_flash_valid_w),
+        .I3(spi_flash_valid_w),
+        .I4(spi_flash_sclk_w),
         .I5(btnC_IBUF),
         .O(\bit_counter[6]_i_1_n_0 ));
   (* SOFT_HLUTNM = "soft_lutpair26" *) 
@@ -2768,11 +2861,14 @@ module spi_flash
         .I3(\bit_counter_reg_n_0_[5] ),
         .I4(\bit_counter_reg_n_0_[6] ),
         .O(bit_counter[6]));
-  LUT2 #(
-    .INIT(4'hE)) 
+  LUT5 #(
+    .INIT(32'hFFFFFFFE)) 
     \bit_counter[6]_i_3 
-       (.I0(\bit_counter_reg_n_0_[3] ),
-        .I1(\mem_data[7]_i_2_n_0 ),
+       (.I0(spi_flash_sclk_w),
+        .I1(\bit_counter_reg_n_0_[4] ),
+        .I2(\bit_counter_reg_n_0_[6] ),
+        .I3(\bit_counter_reg_n_0_[5] ),
+        .I4(\bit_counter_reg_n_0_[3] ),
         .O(\bit_counter[6]_i_3_n_0 ));
   LUT4 #(
     .INIT(16'hFFFE)) 
@@ -2819,7 +2915,7 @@ module spi_flash
     \bit_counter_reg[4] 
        (.C(CLK),
         .CE(\bit_counter[6]_i_1_n_0 ),
-        .D(\bit_counter[4]_i_1__0_n_0 ),
+        .D(\bit_counter[4]_i_1_n_0 ),
         .Q(\bit_counter_reg_n_0_[4] ),
         .R(\<const0> ));
   FDRE #(
@@ -2839,40 +2935,48 @@ module spi_flash
         .Q(\bit_counter_reg_n_0_[6] ),
         .R(\<const0> ));
   LUT4 #(
-    .INIT(16'hFD40)) 
+    .INIT(16'hFDC0)) 
     cs_i_1
        (.I0(spi_flash_valid_w),
-        .I1(state__0),
-        .I2(\FSM_sequential_state_reg_n_0_[1] ),
-        .I3(FLASH_CS_OBUF),
+        .I1(\FSM_sequential_state_reg_n_0_[1] ),
+        .I2(state__0),
+        .I3(FLASH_CS_debug_OBUF),
         .O(cs_i_1_n_0));
   FDPE cs_reg
        (.C(CLK),
         .CE(\<const1> ),
         .D(cs_i_1_n_0),
         .PRE(btnC_IBUF),
-        .Q(FLASH_CS_OBUF));
-  LUT2 #(
-    .INIT(4'h1)) 
-    \mem_data[7]_i_1 
-       (.I0(\mem_data[7]_i_2_n_0 ),
-        .I1(\bit_counter_reg_n_0_[3] ),
-        .O(\mem_data[7]_i_1_n_0 ));
+        .Q(FLASH_CS_debug_OBUF));
   LUT6 #(
-    .INIT(64'hFFFFFFFFFFFEFFFF)) 
+    .INIT(64'h0000011100000000)) 
+    \mem_data[7]_i_1 
+       (.I0(spi_flash_sclk_w),
+        .I1(\mem_data[7]_i_2_n_0 ),
+        .I2(\bit_counter_reg_n_0_[3] ),
+        .I3(\mem_data[7]_i_3_n_0 ),
+        .I4(state__0),
+        .I5(\FSM_sequential_state_reg_n_0_[1] ),
+        .O(\mem_data[7]_i_1_n_0 ));
+  LUT3 #(
+    .INIT(8'hFE)) 
     \mem_data[7]_i_2 
-       (.I0(\bit_counter_reg_n_0_[6] ),
-        .I1(\bit_counter_reg_n_0_[5] ),
-        .I2(\bit_counter_reg_n_0_[4] ),
-        .I3(state__0),
-        .I4(\FSM_sequential_state_reg_n_0_[1] ),
-        .I5(spi_flash_sclk_w),
+       (.I0(\bit_counter_reg_n_0_[4] ),
+        .I1(\bit_counter_reg_n_0_[6] ),
+        .I2(\bit_counter_reg_n_0_[5] ),
         .O(\mem_data[7]_i_2_n_0 ));
+  LUT3 #(
+    .INIT(8'hFE)) 
+    \mem_data[7]_i_3 
+       (.I0(\bit_counter_reg_n_0_[2] ),
+        .I1(\bit_counter_reg_n_0_[0] ),
+        .I2(\bit_counter_reg_n_0_[1] ),
+        .O(\mem_data[7]_i_3_n_0 ));
   FDCE \mem_data_reg[0] 
        (.C(CLK),
         .CE(\mem_data[7]_i_1_n_0 ),
         .CLR(btnC_IBUF),
-        .D(\mem_data_reg[0]_0 ),
+        .D(D),
         .Q(Q[0]));
   FDCE \mem_data_reg[1] 
        (.C(CLK),
@@ -2880,152 +2984,242 @@ module spi_flash
         .CLR(btnC_IBUF),
         .D(Q[0]),
         .Q(Q[1]));
+  (* OPT_INSERTED_REPDRIVER *) 
+  (* OPT_MODIFIED = "SWEEP" *) 
+  FDCE #(
+    .INIT(1'b0)) 
+    \mem_data_reg[1]_lopt_replica 
+       (.C(CLK),
+        .CE(\mem_data[7]_i_1_n_0 ),
+        .CLR(btnC_IBUF),
+        .D(Q[0]),
+        .Q(\mem_data_reg[1]_lopt_replica_1 ));
   FDCE \mem_data_reg[2] 
        (.C(CLK),
         .CE(\mem_data[7]_i_1_n_0 ),
         .CLR(btnC_IBUF),
         .D(Q[1]),
         .Q(Q[2]));
+  (* OPT_INSERTED_REPDRIVER *) 
+  (* OPT_MODIFIED = "SWEEP" *) 
+  FDCE #(
+    .INIT(1'b0)) 
+    \mem_data_reg[2]_lopt_replica 
+       (.C(CLK),
+        .CE(\mem_data[7]_i_1_n_0 ),
+        .CLR(btnC_IBUF),
+        .D(Q[1]),
+        .Q(\mem_data_reg[2]_lopt_replica_1 ));
   FDCE \mem_data_reg[3] 
        (.C(CLK),
         .CE(\mem_data[7]_i_1_n_0 ),
         .CLR(btnC_IBUF),
         .D(Q[2]),
         .Q(Q[3]));
+  (* OPT_INSERTED_REPDRIVER *) 
+  (* OPT_MODIFIED = "SWEEP" *) 
+  FDCE #(
+    .INIT(1'b0)) 
+    \mem_data_reg[3]_lopt_replica 
+       (.C(CLK),
+        .CE(\mem_data[7]_i_1_n_0 ),
+        .CLR(btnC_IBUF),
+        .D(Q[2]),
+        .Q(\mem_data_reg[3]_lopt_replica_1 ));
   FDCE \mem_data_reg[4] 
        (.C(CLK),
         .CE(\mem_data[7]_i_1_n_0 ),
         .CLR(btnC_IBUF),
         .D(Q[3]),
         .Q(Q[4]));
+  (* OPT_INSERTED_REPDRIVER *) 
+  (* OPT_MODIFIED = "SWEEP" *) 
+  FDCE #(
+    .INIT(1'b0)) 
+    \mem_data_reg[4]_lopt_replica 
+       (.C(CLK),
+        .CE(\mem_data[7]_i_1_n_0 ),
+        .CLR(btnC_IBUF),
+        .D(Q[3]),
+        .Q(\mem_data_reg[4]_lopt_replica_1 ));
   FDCE \mem_data_reg[5] 
        (.C(CLK),
         .CE(\mem_data[7]_i_1_n_0 ),
         .CLR(btnC_IBUF),
         .D(Q[4]),
         .Q(Q[5]));
+  (* OPT_INSERTED_REPDRIVER *) 
+  (* OPT_MODIFIED = "SWEEP" *) 
+  FDCE #(
+    .INIT(1'b0)) 
+    \mem_data_reg[5]_lopt_replica 
+       (.C(CLK),
+        .CE(\mem_data[7]_i_1_n_0 ),
+        .CLR(btnC_IBUF),
+        .D(Q[4]),
+        .Q(\mem_data_reg[5]_lopt_replica_1 ));
   FDCE \mem_data_reg[6] 
        (.C(CLK),
         .CE(\mem_data[7]_i_1_n_0 ),
         .CLR(btnC_IBUF),
         .D(Q[5]),
         .Q(Q[6]));
+  (* OPT_INSERTED_REPDRIVER *) 
+  (* OPT_MODIFIED = "SWEEP" *) 
+  FDCE #(
+    .INIT(1'b0)) 
+    \mem_data_reg[6]_lopt_replica 
+       (.C(CLK),
+        .CE(\mem_data[7]_i_1_n_0 ),
+        .CLR(btnC_IBUF),
+        .D(Q[5]),
+        .Q(\mem_data_reg[6]_lopt_replica_1 ));
   FDCE \mem_data_reg[7] 
        (.C(CLK),
         .CE(\mem_data[7]_i_1_n_0 ),
         .CLR(btnC_IBUF),
         .D(Q[6]),
         .Q(Q[7]));
-  LUT4 #(
-    .INIT(16'hBFB0)) 
+  (* OPT_INSERTED_REPDRIVER *) 
+  (* OPT_MODIFIED = "SWEEP" *) 
+  FDCE #(
+    .INIT(1'b0)) 
+    \mem_data_reg[7]_lopt_replica 
+       (.C(CLK),
+        .CE(\mem_data[7]_i_1_n_0 ),
+        .CLR(btnC_IBUF),
+        .D(Q[6]),
+        .Q(\mem_data_reg[7]_lopt_replica_1 ));
+  LUT6 #(
+    .INIT(64'hFEFE000000100000)) 
     mem_ready_i_1
-       (.I0(spi_flash_valid_w),
-        .I1(state__0),
-        .I2(\FSM_sequential_state[1]_i_2_n_0 ),
-        .I3(spi_flash_ready_w),
+       (.I0(spi_flash_sclk_w),
+        .I1(\mem_data[7]_i_2_n_0 ),
+        .I2(\bit_counter_reg_n_0_[3] ),
+        .I3(\mem_data[7]_i_3_n_0 ),
+        .I4(mem_ready_i_2_n_0),
+        .I5(spi_flash_ready_w),
         .O(mem_ready_i_1_n_0));
+  LUT2 #(
+    .INIT(4'h2)) 
+    mem_ready_i_2
+       (.I0(\FSM_sequential_state_reg_n_0_[1] ),
+        .I1(state__0),
+        .O(mem_ready_i_2_n_0));
   FDCE mem_ready_reg
        (.C(CLK),
         .CE(\<const1> ),
         .CLR(btnC_IBUF),
         .D(mem_ready_i_1_n_0),
         .Q(spi_flash_ready_w));
-  LUT3 #(
-    .INIT(8'h08)) 
+  LUT4 #(
+    .INIT(16'h00E2)) 
     mosi_i_1
-       (.I0(spi_flash_sclk_w),
+       (.I0(spi_flash_valid_w),
         .I1(state__0),
-        .I2(\FSM_sequential_state_reg_n_0_[1] ),
+        .I2(spi_flash_sclk_w),
+        .I3(\FSM_sequential_state_reg_n_0_[1] ),
         .O(mosi_i_1_n_0));
-  LUT6 #(
-    .INIT(64'hFFEA002A002A002A)) 
+  LUT5 #(
+    .INIT(32'hF1010000)) 
     mosi_i_2
-       (.I0(mosi_i_3_n_0),
-        .I1(\bit_counter_reg_n_0_[3] ),
-        .I2(\bit_counter_reg_n_0_[4] ),
+       (.I0(\bit_counter_reg_n_0_[2] ),
+        .I1(\bit_counter_reg_n_0_[1] ),
+        .I2(mosi_i_3_n_0),
         .I3(mosi_i_4_n_0),
-        .I4(\bit_counter_reg_n_0_[2] ),
-        .I5(\bit_counter_reg_n_0_[1] ),
+        .I4(state__0),
         .O(mosi_i_2_n_0));
-  LUT6 #(
-    .INIT(64'hFFE200FF00E20000)) 
+  LUT4 #(
+    .INIT(16'h0103)) 
     mosi_i_3
+       (.I0(\bit_counter_reg_n_0_[3] ),
+        .I1(\bit_counter_reg_n_0_[5] ),
+        .I2(\bit_counter_reg_n_0_[6] ),
+        .I3(\bit_counter_reg_n_0_[4] ),
+        .O(mosi_i_3_n_0));
+  LUT6 #(
+    .INIT(64'hB8FFB800B800B800)) 
+    mosi_i_4
        (.I0(mosi_i_5_n_0),
         .I1(\bit_counter_reg_n_0_[2] ),
         .I2(mosi_i_6_n_0),
         .I3(\bit_counter_reg_n_0_[4] ),
-        .I4(\bit_counter_reg_n_0_[3] ),
-        .I5(mosi_reg_i_7_n_0),
-        .O(mosi_i_3_n_0));
-  LUT2 #(
-    .INIT(4'hE)) 
-    mosi_i_4
-       (.I0(\bit_counter_reg_n_0_[6] ),
-        .I1(\bit_counter_reg_n_0_[5] ),
+        .I4(mosi_reg_i_7_n_0),
+        .I5(\bit_counter_reg_n_0_[3] ),
         .O(mosi_i_4_n_0));
   LUT6 #(
     .INIT(64'hAFA0CFCFAFA0C0C0)) 
     mosi_i_5
-       (.I0(\address_reg_n_0_[12] ),
-        .I1(\address_reg_n_0_[13] ),
+       (.I0(address[23]),
+        .I1(address[22]),
         .I2(\bit_counter_reg_n_0_[1] ),
-        .I3(\address_reg_n_0_[14] ),
+        .I3(address[21]),
         .I4(\bit_counter_reg_n_0_[0] ),
-        .I5(\address_reg_n_0_[15] ),
+        .I5(address[20]),
         .O(mosi_i_5_n_0));
   LUT6 #(
     .INIT(64'hAFA0CFCFAFA0C0C0)) 
     mosi_i_6
-       (.I0(\address_reg_n_0_[8] ),
-        .I1(\address_reg_n_0_[9] ),
+       (.I0(address[19]),
+        .I1(address[18]),
         .I2(\bit_counter_reg_n_0_[1] ),
-        .I3(\address_reg_n_0_[10] ),
+        .I3(address[17]),
         .I4(\bit_counter_reg_n_0_[0] ),
-        .I5(\address_reg_n_0_[11] ),
+        .I5(address[16]),
         .O(mosi_i_6_n_0));
   LUT6 #(
     .INIT(64'hAFA0CFCFAFA0C0C0)) 
     mosi_i_8
-       (.I0(\address_reg_n_0_[20] ),
-        .I1(\address_reg_n_0_[21] ),
+       (.I0(address[11]),
+        .I1(address[10]),
         .I2(\bit_counter_reg_n_0_[1] ),
-        .I3(\address_reg_n_0_[22] ),
+        .I3(address[9]),
         .I4(\bit_counter_reg_n_0_[0] ),
-        .I5(\address_reg_n_0_[23] ),
+        .I5(address[8]),
         .O(mosi_i_8_n_0));
   LUT6 #(
     .INIT(64'hAFA0CFCFAFA0C0C0)) 
     mosi_i_9
-       (.I0(\address_reg_n_0_[16] ),
-        .I1(\address_reg_n_0_[17] ),
+       (.I0(address[15]),
+        .I1(address[14]),
         .I2(\bit_counter_reg_n_0_[1] ),
-        .I3(\address_reg_n_0_[18] ),
+        .I3(address[13]),
         .I4(\bit_counter_reg_n_0_[0] ),
-        .I5(\address_reg_n_0_[19] ),
+        .I5(address[12]),
         .O(mosi_i_9_n_0));
   FDCE mosi_reg
        (.C(CLK),
         .CE(mosi_i_1_n_0),
         .CLR(btnC_IBUF),
         .D(mosi_i_2_n_0),
-        .Q(FLASH_MOSI_OBUF));
+        .Q(FLASH_MOSI_debug_OBUF));
   MUXF7 mosi_reg_i_7
        (.I0(mosi_i_8_n_0),
         .I1(mosi_i_9_n_0),
         .O(mosi_reg_i_7_n_0),
         .S(\bit_counter_reg_n_0_[2] ));
+  (* OPT_INSERTED_REPDRIVER *) 
+  (* OPT_MODIFIED = "SWEEP" *) 
+  FDCE #(
+    .INIT(1'b0)) 
+    mosi_reg_lopt_replica
+       (.C(CLK),
+        .CE(mosi_i_1_n_0),
+        .CLR(btnC_IBUF),
+        .D(mosi_i_2_n_0),
+        .Q(mosi_reg_lopt_replica_1));
   LUT3 #(
-    .INIT(8'h96)) 
+    .INIT(8'hD7)) 
     sclk_i_1
-       (.I0(state__0),
+       (.I0(spi_flash_sclk_w),
         .I1(\FSM_sequential_state_reg_n_0_[1] ),
-        .I2(spi_flash_sclk_w),
+        .I2(state__0),
         .O(sclk_i_1_n_0));
-  FDCE sclk_reg
+  FDPE sclk_reg
        (.C(CLK),
         .CE(\<const1> ),
-        .CLR(btnC_IBUF),
         .D(sclk_i_1_n_0),
+        .PRE(btnC_IBUF),
         .Q(spi_flash_sclk_w));
 endmodule
 
@@ -3043,22 +3237,18 @@ module spi_sensor
 
   wire \<const1> ;
   wire CLK;
-  wire \FSM_sequential_state[0]_i_1_n_0 ;
-  wire \FSM_sequential_state[1]_i_1_n_0 ;
+  wire \FSM_sequential_state[0]_i_1__0_n_0 ;
+  wire \FSM_sequential_state[1]_i_1__0_n_0 ;
   wire \FSM_sequential_state[2]_i_1_n_0 ;
   wire \FSM_sequential_state[2]_i_2_n_0 ;
   wire \FSM_sequential_state[2]_i_3_n_0 ;
   wire \FSM_sequential_state[2]_i_4_n_0 ;
   wire \FSM_sequential_state[2]_i_5_n_0 ;
-  wire \FSM_sequential_state[2]_i_6_n_0 ;
-  wire \FSM_sequential_state[2]_i_7_n_0 ;
-  wire \FSM_sequential_state[2]_i_8_n_0 ;
-  wire \FSM_sequential_state[2]_i_9_n_0 ;
-  wire bit_counter;
   wire \bit_counter[0]_i_1__0_n_0 ;
   wire \bit_counter[1]_i_1__0_n_0 ;
   wire \bit_counter[2]_i_1__0_n_0 ;
   wire \bit_counter[3]_i_1__0_n_0 ;
+  wire \bit_counter[4]_i_1__0_n_0 ;
   wire \bit_counter[4]_i_2_n_0 ;
   wire \bit_counter[4]_i_3_n_0 ;
   wire \bit_counter[4]_i_4_n_0 ;
@@ -3069,109 +3259,79 @@ module spi_sensor
   wire \bit_counter_reg_n_0_[4] ;
   wire btnC_IBUF;
   wire mem_ready_i_1__0_n_0;
-  wire mem_ready_i_2_n_0;
-  wire mem_ready_i_3_n_0;
+  wire mem_ready_i_2__0_n_0;
   wire sclk_i_1__0_n_0;
+  wire sclk_i_2_n_0;
   wire spi_luks_ready_w;
   wire spi_luks_sclk_w;
   wire spi_luks_valid_w;
   wire [2:0]state__0;
 
-  (* SOFT_HLUTNM = "soft_lutpair35" *) 
+  (* SOFT_HLUTNM = "soft_lutpair34" *) 
   LUT5 #(
-    .INIT(32'h00FF4F00)) 
-    \FSM_sequential_state[0]_i_1 
-       (.I0(state__0[1]),
-        .I1(spi_luks_valid_w),
+    .INIT(32'h22330D0C)) 
+    \FSM_sequential_state[0]_i_1__0 
+       (.I0(\FSM_sequential_state[2]_i_2_n_0 ),
+        .I1(\FSM_sequential_state[2]_i_3_n_0 ),
         .I2(state__0[2]),
-        .I3(\FSM_sequential_state[2]_i_2_n_0 ),
-        .I4(state__0[0]),
-        .O(\FSM_sequential_state[0]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair36" *) 
-  LUT4 #(
-    .INIT(16'h1F40)) 
-    \FSM_sequential_state[1]_i_1 
-       (.I0(state__0[2]),
-        .I1(state__0[0]),
-        .I2(\FSM_sequential_state[2]_i_2_n_0 ),
         .I3(state__0[1]),
-        .O(\FSM_sequential_state[1]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair35" *) 
+        .I4(state__0[0]),
+        .O(\FSM_sequential_state[0]_i_1__0_n_0 ));
+  (* SOFT_HLUTNM = "soft_lutpair34" *) 
   LUT5 #(
-    .INIT(32'h10FF8800)) 
+    .INIT(32'h220C2F00)) 
+    \FSM_sequential_state[1]_i_1__0 
+       (.I0(\FSM_sequential_state[2]_i_2_n_0 ),
+        .I1(\FSM_sequential_state[2]_i_3_n_0 ),
+        .I2(state__0[2]),
+        .I3(state__0[1]),
+        .I4(state__0[0]),
+        .O(\FSM_sequential_state[1]_i_1__0_n_0 ));
+  LUT6 #(
+    .INIT(64'h2D3020F02D302030)) 
     \FSM_sequential_state[2]_i_1 
-       (.I0(state__0[1]),
-        .I1(state__0[0]),
-        .I2(spi_luks_valid_w),
-        .I3(\FSM_sequential_state[2]_i_2_n_0 ),
-        .I4(state__0[2]),
+       (.I0(\FSM_sequential_state[2]_i_2_n_0 ),
+        .I1(\FSM_sequential_state[2]_i_3_n_0 ),
+        .I2(state__0[2]),
+        .I3(state__0[1]),
+        .I4(state__0[0]),
+        .I5(spi_luks_valid_w),
         .O(\FSM_sequential_state[2]_i_1_n_0 ));
   LUT6 #(
-    .INIT(64'hFF00FDFFFFFFFDFD)) 
+    .INIT(64'hFEFFFFFFFFFFFFF7)) 
     \FSM_sequential_state[2]_i_2 
-       (.I0(\FSM_sequential_state[2]_i_3_n_0 ),
-        .I1(\FSM_sequential_state[2]_i_4_n_0 ),
-        .I2(\FSM_sequential_state[2]_i_5_n_0 ),
-        .I3(\bit_counter[4]_i_4_n_0 ),
-        .I4(state__0[2]),
-        .I5(spi_luks_valid_w),
+       (.I0(state__0[0]),
+        .I1(spi_luks_sclk_w),
+        .I2(\FSM_sequential_state[2]_i_4_n_0 ),
+        .I3(\bit_counter_reg_n_0_[2] ),
+        .I4(\bit_counter_reg_n_0_[0] ),
+        .I5(\bit_counter_reg_n_0_[1] ),
         .O(\FSM_sequential_state[2]_i_2_n_0 ));
   LUT6 #(
-    .INIT(64'hFDFFFFFFFFFFFFFF)) 
+    .INIT(64'hAAAAAAAAFEAEAEAE)) 
     \FSM_sequential_state[2]_i_3 
-       (.I0(\FSM_sequential_state[2]_i_6_n_0 ),
-        .I1(\bit_counter_reg_n_0_[4] ),
-        .I2(\bit_counter_reg_n_0_[3] ),
-        .I3(spi_luks_sclk_w),
-        .I4(state__0[1]),
-        .I5(state__0[0]),
+       (.I0(state__0[2]),
+        .I1(spi_luks_valid_w),
+        .I2(state__0[0]),
+        .I3(\FSM_sequential_state[2]_i_5_n_0 ),
+        .I4(spi_luks_sclk_w),
+        .I5(state__0[1]),
         .O(\FSM_sequential_state[2]_i_3_n_0 ));
-  LUT6 #(
-    .INIT(64'h0000000000001000)) 
+  LUT2 #(
+    .INIT(4'hE)) 
     \FSM_sequential_state[2]_i_4 
-       (.I0(\bit_counter_reg_n_0_[4] ),
-        .I1(state__0[1]),
-        .I2(\bit_counter_reg_n_0_[3] ),
-        .I3(\bit_counter_reg_n_0_[2] ),
-        .I4(\FSM_sequential_state[2]_i_7_n_0 ),
-        .I5(\FSM_sequential_state[2]_i_8_n_0 ),
+       (.I0(\bit_counter_reg_n_0_[3] ),
+        .I1(\bit_counter_reg_n_0_[4] ),
         .O(\FSM_sequential_state[2]_i_4_n_0 ));
   LUT5 #(
     .INIT(32'h00000080)) 
     \FSM_sequential_state[2]_i_5 
-       (.I0(state__0[1]),
-        .I1(\bit_counter_reg_n_0_[2] ),
-        .I2(\bit_counter_reg_n_0_[0] ),
-        .I3(\bit_counter_reg_n_0_[1] ),
-        .I4(\FSM_sequential_state[2]_i_9_n_0 ),
+       (.I0(\bit_counter_reg_n_0_[3] ),
+        .I1(\bit_counter_reg_n_0_[1] ),
+        .I2(\bit_counter_reg_n_0_[2] ),
+        .I3(\bit_counter_reg_n_0_[0] ),
+        .I4(\bit_counter_reg_n_0_[4] ),
         .O(\FSM_sequential_state[2]_i_5_n_0 ));
-  LUT3 #(
-    .INIT(8'h01)) 
-    \FSM_sequential_state[2]_i_6 
-       (.I0(\bit_counter_reg_n_0_[2] ),
-        .I1(\bit_counter_reg_n_0_[1] ),
-        .I2(\bit_counter_reg_n_0_[0] ),
-        .O(\FSM_sequential_state[2]_i_6_n_0 ));
-  LUT2 #(
-    .INIT(4'hE)) 
-    \FSM_sequential_state[2]_i_7 
-       (.I0(\bit_counter_reg_n_0_[0] ),
-        .I1(\bit_counter_reg_n_0_[1] ),
-        .O(\FSM_sequential_state[2]_i_7_n_0 ));
-  LUT2 #(
-    .INIT(4'h7)) 
-    \FSM_sequential_state[2]_i_8 
-       (.I0(spi_luks_sclk_w),
-        .I1(state__0[0]),
-        .O(\FSM_sequential_state[2]_i_8_n_0 ));
-  LUT4 #(
-    .INIT(16'hFFFE)) 
-    \FSM_sequential_state[2]_i_9 
-       (.I0(state__0[0]),
-        .I1(spi_luks_sclk_w),
-        .I2(\bit_counter_reg_n_0_[4] ),
-        .I3(\bit_counter_reg_n_0_[3] ),
-        .O(\FSM_sequential_state[2]_i_9_n_0 ));
   (* FSM_ENCODED_STATES = "START_CONVERSION:001,READ_ADC:010,TRAILING_ZEROES:011,DATA_READY:100,IDLE:000,iSTATE:101" *) 
   FDCE #(
     .INIT(1'b0)) 
@@ -3179,7 +3339,7 @@ module spi_sensor
        (.C(CLK),
         .CE(\<const1> ),
         .CLR(btnC_IBUF),
-        .D(\FSM_sequential_state[0]_i_1_n_0 ),
+        .D(\FSM_sequential_state[0]_i_1__0_n_0 ),
         .Q(state__0[0]));
   (* FSM_ENCODED_STATES = "START_CONVERSION:001,READ_ADC:010,TRAILING_ZEROES:011,DATA_READY:100,IDLE:000,iSTATE:101" *) 
   FDCE #(
@@ -3188,7 +3348,7 @@ module spi_sensor
        (.C(CLK),
         .CE(\<const1> ),
         .CLR(btnC_IBUF),
-        .D(\FSM_sequential_state[1]_i_1_n_0 ),
+        .D(\FSM_sequential_state[1]_i_1__0_n_0 ),
         .Q(state__0[1]));
   (* FSM_ENCODED_STATES = "START_CONVERSION:001,READ_ADC:010,TRAILING_ZEROES:011,DATA_READY:100,IDLE:000,iSTATE:101" *) 
   FDCE #(
@@ -3202,214 +3362,239 @@ module spi_sensor
   VCC VCC
        (.P(\<const1> ));
   LUT3 #(
-    .INIT(8'h0E)) 
+    .INIT(8'h1F)) 
     \bit_counter[0]_i_1__0 
        (.I0(state__0[1]),
         .I1(state__0[0]),
         .I2(\bit_counter_reg_n_0_[0] ),
         .O(\bit_counter[0]_i_1__0_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair32" *) 
+  (* SOFT_HLUTNM = "soft_lutpair33" *) 
   LUT4 #(
-    .INIT(16'h999F)) 
+    .INIT(16'hE00E)) 
     \bit_counter[1]_i_1__0 
-       (.I0(\bit_counter_reg_n_0_[0] ),
-        .I1(\bit_counter_reg_n_0_[1] ),
-        .I2(state__0[0]),
-        .I3(state__0[1]),
-        .O(\bit_counter[1]_i_1__0_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair32" *) 
-  LUT5 #(
-    .INIT(32'hF1F1F11F)) 
-    \bit_counter[2]_i_1__0 
-       (.I0(state__0[0]),
-        .I1(state__0[1]),
-        .I2(\bit_counter_reg_n_0_[2] ),
+       (.I0(state__0[1]),
+        .I1(state__0[0]),
+        .I2(\bit_counter_reg_n_0_[0] ),
         .I3(\bit_counter_reg_n_0_[1] ),
-        .I4(\bit_counter_reg_n_0_[0] ),
+        .O(\bit_counter[1]_i_1__0_n_0 ));
+  (* SOFT_HLUTNM = "soft_lutpair33" *) 
+  LUT5 #(
+    .INIT(32'hEEE0000E)) 
+    \bit_counter[2]_i_1__0 
+       (.I0(state__0[1]),
+        .I1(state__0[0]),
+        .I2(\bit_counter_reg_n_0_[1] ),
+        .I3(\bit_counter_reg_n_0_[0] ),
+        .I4(\bit_counter_reg_n_0_[2] ),
         .O(\bit_counter[2]_i_1__0_n_0 ));
   LUT6 #(
-    .INIT(64'hF1F1F1F1F1F1F11F)) 
+    .INIT(64'hEEEEEEE00000000E)) 
     \bit_counter[3]_i_1__0 
-       (.I0(state__0[0]),
-        .I1(state__0[1]),
-        .I2(\bit_counter_reg_n_0_[3] ),
+       (.I0(state__0[1]),
+        .I1(state__0[0]),
+        .I2(\bit_counter_reg_n_0_[2] ),
         .I3(\bit_counter_reg_n_0_[0] ),
         .I4(\bit_counter_reg_n_0_[1] ),
-        .I5(\bit_counter_reg_n_0_[2] ),
+        .I5(\bit_counter_reg_n_0_[3] ),
         .O(\bit_counter[3]_i_1__0_n_0 ));
-  LUT5 #(
-    .INIT(32'h0000E22E)) 
-    \bit_counter[4]_i_1 
-       (.I0(\bit_counter[4]_i_3_n_0 ),
-        .I1(state__0[1]),
-        .I2(state__0[0]),
-        .I3(spi_luks_sclk_w),
-        .I4(state__0[2]),
-        .O(bit_counter));
   LUT6 #(
-    .INIT(64'hAAAAAAA800000002)) 
+    .INIT(64'h4040040450501504)) 
+    \bit_counter[4]_i_1__0 
+       (.I0(state__0[2]),
+        .I1(state__0[1]),
+        .I2(spi_luks_sclk_w),
+        .I3(spi_luks_valid_w),
+        .I4(state__0[0]),
+        .I5(\bit_counter[4]_i_3_n_0 ),
+        .O(\bit_counter[4]_i_1__0_n_0 ));
+  LUT6 #(
+    .INIT(64'hFFFFFFFFFF00FE01)) 
     \bit_counter[4]_i_2 
-       (.I0(\bit_counter[4]_i_4_n_0 ),
+       (.I0(\bit_counter_reg_n_0_[1] ),
         .I1(\bit_counter_reg_n_0_[0] ),
-        .I2(\bit_counter_reg_n_0_[1] ),
-        .I3(\bit_counter_reg_n_0_[2] ),
+        .I2(\bit_counter_reg_n_0_[2] ),
+        .I3(\bit_counter_reg_n_0_[4] ),
         .I4(\bit_counter_reg_n_0_[3] ),
-        .I5(\bit_counter_reg_n_0_[4] ),
+        .I5(\bit_counter[4]_i_4_n_0 ),
         .O(\bit_counter[4]_i_2_n_0 ));
   LUT6 #(
-    .INIT(64'hACACAC0CAC0CAC0C)) 
+    .INIT(64'h000000007F007F7F)) 
     \bit_counter[4]_i_3 
-       (.I0(spi_luks_sclk_w),
-        .I1(spi_luks_valid_w),
-        .I2(state__0[0]),
-        .I3(\bit_counter_reg_n_0_[4] ),
-        .I4(\bit_counter_reg_n_0_[2] ),
-        .I5(\bit_counter_reg_n_0_[3] ),
+       (.I0(\bit_counter_reg_n_0_[3] ),
+        .I1(\bit_counter_reg_n_0_[1] ),
+        .I2(\bit_counter_reg_n_0_[2] ),
+        .I3(state__0[0]),
+        .I4(spi_luks_valid_w),
+        .I5(\bit_counter_reg_n_0_[4] ),
         .O(\bit_counter[4]_i_3_n_0 ));
   LUT2 #(
-    .INIT(4'hE)) 
+    .INIT(4'h1)) 
     \bit_counter[4]_i_4 
        (.I0(state__0[0]),
         .I1(state__0[1]),
         .O(\bit_counter[4]_i_4_n_0 ));
   FDCE \bit_counter_reg[0] 
        (.C(CLK),
-        .CE(bit_counter),
+        .CE(\bit_counter[4]_i_1__0_n_0 ),
         .CLR(btnC_IBUF),
         .D(\bit_counter[0]_i_1__0_n_0 ),
         .Q(\bit_counter_reg_n_0_[0] ));
   FDCE \bit_counter_reg[1] 
        (.C(CLK),
-        .CE(bit_counter),
+        .CE(\bit_counter[4]_i_1__0_n_0 ),
         .CLR(btnC_IBUF),
         .D(\bit_counter[1]_i_1__0_n_0 ),
         .Q(\bit_counter_reg_n_0_[1] ));
   FDCE \bit_counter_reg[2] 
        (.C(CLK),
-        .CE(bit_counter),
+        .CE(\bit_counter[4]_i_1__0_n_0 ),
         .CLR(btnC_IBUF),
         .D(\bit_counter[2]_i_1__0_n_0 ),
         .Q(\bit_counter_reg_n_0_[2] ));
   FDCE \bit_counter_reg[3] 
        (.C(CLK),
-        .CE(bit_counter),
+        .CE(\bit_counter[4]_i_1__0_n_0 ),
         .CLR(btnC_IBUF),
         .D(\bit_counter[3]_i_1__0_n_0 ),
         .Q(\bit_counter_reg_n_0_[3] ));
   FDCE \bit_counter_reg[4] 
        (.C(CLK),
-        .CE(bit_counter),
+        .CE(\bit_counter[4]_i_1__0_n_0 ),
         .CLR(btnC_IBUF),
         .D(\bit_counter[4]_i_2_n_0 ),
         .Q(\bit_counter_reg_n_0_[4] ));
   LUT5 #(
-    .INIT(32'hE2FFE200)) 
+    .INIT(32'hACFFAC00)) 
     mem_ready_i_1__0
-       (.I0(spi_luks_valid_w),
-        .I1(state__0[0]),
-        .I2(spi_luks_sclk_w),
-        .I3(mem_ready_i_2_n_0),
+       (.I0(spi_luks_sclk_w),
+        .I1(spi_luks_valid_w),
+        .I2(state__0[0]),
+        .I3(mem_ready_i_2__0_n_0),
         .I4(spi_luks_ready_w),
         .O(mem_ready_i_1__0_n_0));
-  LUT5 #(
-    .INIT(32'h03000050)) 
-    mem_ready_i_2
-       (.I0(spi_luks_valid_w),
-        .I1(mem_ready_i_3_n_0),
-        .I2(state__0[2]),
-        .I3(state__0[1]),
-        .I4(state__0[0]),
-        .O(mem_ready_i_2_n_0));
   LUT6 #(
-    .INIT(64'hFFFFFFFFFFFFFFFD)) 
-    mem_ready_i_3
-       (.I0(spi_luks_sclk_w),
-        .I1(\bit_counter_reg_n_0_[3] ),
-        .I2(\bit_counter_reg_n_0_[4] ),
-        .I3(\bit_counter_reg_n_0_[0] ),
-        .I4(\bit_counter_reg_n_0_[1] ),
-        .I5(\bit_counter_reg_n_0_[2] ),
-        .O(mem_ready_i_3_n_0));
+    .INIT(64'h0005300000050000)) 
+    mem_ready_i_2__0
+       (.I0(spi_luks_valid_w),
+        .I1(sclk_i_2_n_0),
+        .I2(state__0[0]),
+        .I3(state__0[1]),
+        .I4(state__0[2]),
+        .I5(spi_luks_sclk_w),
+        .O(mem_ready_i_2__0_n_0));
   FDCE mem_ready_reg
        (.C(CLK),
         .CE(\<const1> ),
         .CLR(btnC_IBUF),
         .D(mem_ready_i_1__0_n_0),
         .Q(spi_luks_ready_w));
-  (* SOFT_HLUTNM = "soft_lutpair36" *) 
-  LUT4 #(
-    .INIT(16'hAB54)) 
+  LUT5 #(
+    .INIT(32'hFF4303FF)) 
     sclk_i_1__0
-       (.I0(state__0[2]),
-        .I1(state__0[0]),
-        .I2(state__0[1]),
-        .I3(spi_luks_sclk_w),
+       (.I0(sclk_i_2_n_0),
+        .I1(state__0[1]),
+        .I2(state__0[0]),
+        .I3(state__0[2]),
+        .I4(spi_luks_sclk_w),
         .O(sclk_i_1__0_n_0));
-  FDCE sclk_reg
+  LUT5 #(
+    .INIT(32'hFFFFFFFE)) 
+    sclk_i_2
+       (.I0(\bit_counter_reg_n_0_[1] ),
+        .I1(\bit_counter_reg_n_0_[0] ),
+        .I2(\bit_counter_reg_n_0_[2] ),
+        .I3(\bit_counter_reg_n_0_[4] ),
+        .I4(\bit_counter_reg_n_0_[3] ),
+        .O(sclk_i_2_n_0));
+  FDPE sclk_reg
        (.C(CLK),
         .CE(\<const1> ),
-        .CLR(btnC_IBUF),
         .D(sclk_i_1__0_n_0),
+        .PRE(btnC_IBUF),
         .Q(spi_luks_sclk_w));
 endmodule
 
 module tt_um_csit_luks
-   (FLASH_MOSI_OBUF,
-    FLASH_CS_OBUF,
+   (FLASH_MOSI_debug_OBUF,
+    FLASH_CS_debug_OBUF,
     an_OBUF,
+    Q,
     seg_OBUF,
     dp_OBUF,
-    uio_out_w,
+    FLASH_SCLK_debug_OBUF,
     A_IBUF,
     CLK,
     btnC_IBUF,
     B_IBUF,
     PB_IBUF,
-    D);
-  output FLASH_MOSI_OBUF;
-  output FLASH_CS_OBUF;
+    D,
+    lopt,
+    lopt_1,
+    lopt_2,
+    lopt_3,
+    lopt_4,
+    lopt_5,
+    lopt_6,
+    lopt_7,
+    lopt_8);
+  output FLASH_MOSI_debug_OBUF;
+  output FLASH_CS_debug_OBUF;
   output [3:0]an_OBUF;
+  output [7:0]Q;
   output [6:0]seg_OBUF;
   output dp_OBUF;
-  output [0:0]uio_out_w;
+  output FLASH_SCLK_debug_OBUF;
   input A_IBUF;
   input CLK;
   input btnC_IBUF;
   input B_IBUF;
   input PB_IBUF;
   input [0:0]D;
+  output lopt;
+  output lopt_1;
+  output lopt_2;
+  output lopt_3;
+  output lopt_4;
+  output lopt_5;
+  output lopt_6;
+  output lopt_7;
+  output lopt_8;
 
   wire A_IBUF;
   wire B_IBUF;
   wire CLK;
   wire [0:0]D;
-  wire FLASH_CS_OBUF;
-  wire FLASH_MOSI_OBUF;
+  wire FLASH_CS_debug_OBUF;
+  wire FLASH_MOSI_debug_OBUF;
+  wire FLASH_SCLK_debug_OBUF;
   wire PB_IBUF;
+  wire [7:0]Q;
   wire [3:0]an_OBUF;
   wire btnC_IBUF;
-  wire [3:0]data2;
   wire dp_OBUF;
   wire [3:0]enc_w;
   wire [23:8]fd_address;
   wire fsm_instance_n_0;
   wire fsm_instance_n_1;
+  wire lopt;
+  wire lopt_2;
+  wire lopt_3;
+  wire lopt_4;
+  wire lopt_5;
+  wire lopt_6;
+  wire lopt_7;
+  wire lopt_8;
   wire [1:0]multiplexing_counter;
   wire [1:0]pb_press_type_w;
   wire rotational_encoder_instance_n_6;
   wire rotational_encoder_instance_n_7;
   wire rotational_encoder_instance_n_8;
   wire [6:0]seg_OBUF;
-  wire spi_flash_instance_n_10;
-  wire spi_flash_instance_n_11;
-  wire spi_flash_instance_n_8;
-  wire spi_flash_instance_n_9;
   wire spi_flash_ready_w;
   wire spi_flash_valid_w;
   wire spi_luks_ready_w;
   wire spi_luks_sclk_w;
   wire spi_luks_valid_w;
-  wire [0:0]uio_out_w;
 
   fsm fsm_instance
        (.CLK(CLK),
@@ -3417,7 +3602,7 @@ module tt_um_csit_luks
         .btnC_IBUF(btnC_IBUF),
         .\current_state_reg[1]_0 (rotational_encoder_instance_n_6),
         .\current_state_reg[1]_1 (rotational_encoder_instance_n_8),
-        .\display_out_reg[3]_0 ({data2,spi_flash_instance_n_8,spi_flash_instance_n_9,spi_flash_instance_n_10,spi_flash_instance_n_11}),
+        .\display_out_reg[3]_0 (Q),
         .\display_out_reg[3]_1 (enc_w),
         .dp_OBUF(dp_OBUF),
         .dp_OBUF_inst_i_1_0(multiplexing_counter),
@@ -3449,16 +3634,24 @@ module tt_um_csit_luks
         .btnC_IBUF(btnC_IBUF));
   spi_flash spi_flash_instance
        (.CLK(CLK),
-        .D(fd_address),
-        .FLASH_CS_OBUF(FLASH_CS_OBUF),
-        .FLASH_MOSI_OBUF(FLASH_MOSI_OBUF),
-        .Q({data2,spi_flash_instance_n_8,spi_flash_instance_n_9,spi_flash_instance_n_10,spi_flash_instance_n_11}),
+        .D(D),
+        .FLASH_CS_debug_OBUF(FLASH_CS_debug_OBUF),
+        .FLASH_MOSI_debug_OBUF(FLASH_MOSI_debug_OBUF),
+        .FLASH_SCLK_debug_OBUF(FLASH_SCLK_debug_OBUF),
+        .Q(Q),
+        .\address_reg[23]_0 (fd_address),
         .btnC_IBUF(btnC_IBUF),
-        .\mem_data_reg[0]_0 (D),
+        .lopt(lopt),
+        .lopt_2(lopt_2),
+        .lopt_3(lopt_3),
+        .lopt_4(lopt_4),
+        .lopt_5(lopt_5),
+        .lopt_6(lopt_6),
+        .lopt_7(lopt_7),
+        .lopt_8(lopt_8),
         .spi_flash_ready_w(spi_flash_ready_w),
         .spi_flash_valid_w(spi_flash_valid_w),
-        .spi_luks_sclk_w(spi_luks_sclk_w),
-        .uio_out_w(uio_out_w));
+        .spi_luks_sclk_w(spi_luks_sclk_w));
   spi_sensor spi_sensor_instance
        (.CLK(CLK),
         .btnC_IBUF(btnC_IBUF),
