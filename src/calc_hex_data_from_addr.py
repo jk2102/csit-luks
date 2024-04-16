@@ -26,6 +26,6 @@ def calculate_data_value(address):
     return byte_sum % 0xFF
 
 # Example usage
-address = 0xEFB00  # Example address
+address = 0xCB6AB  # Example address
 data_value = calculate_data_value(address)
 print(f"Data value for address {address:06X} is {data_value:02X}")

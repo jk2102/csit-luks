@@ -11,6 +11,7 @@ PROJECT_SOURCES += seven_seg/seven_seg.v
 PROJECT_SOURCES += fsm/fsm.v
 PROJECT_SOURCES += spi_flash/spi_flash.v
 PROJECT_SOURCES += spi_sensor/spi_sensor.v
+PROJECT_SOURCES += spi_flash/spiflash.v
 
 ifneq ($(GATES),yes)
 
