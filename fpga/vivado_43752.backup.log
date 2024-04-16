@@ -1,0 +1,26 @@
+#-----------------------------------------------------------
+# Vivado v2020.2 (64-bit)
+# SW Build 3064766 on Wed Nov 18 09:12:45 MST 2020
+# IP Build 3064653 on Wed Nov 18 14:17:31 MST 2020
+# Start of session at: Mon Apr 15 14:47:56 2024
+# Process ID: 43752
+# Current directory: C:/Users/juric/OneDrive/Dokumenti/tt06-csit-luks/fpga
+# Command line: vivado.exe -mode batch -source fpga.tcl
+# Log file: C:/Users/juric/OneDrive/Dokumenti/tt06-csit-luks/fpga/vivado.log
+# Journal file: C:/Users/juric/OneDrive/Dokumenti/tt06-csit-luks/fpga\vivado.jou
+#-----------------------------------------------------------
+source fpga.tcl
+# set_param general.maxThreads 8
+# set outputDir ./fpga_output             
+# file mkdir $outputDir
+# read_verilog  [ glob ../src/rotational_encoder/rotational_encoder.v ]
+# read_verilog  [ glob ../src/seven_seg/seven_seg.v ]
+# read_verilog  [ glob ../src/fsm/fsm_auto.v ]
+# read_verilog  [ glob ../src/spi_flash/spi_flash.v ]
+# read_verilog  [ glob ../src/spi_sensor/spi_sensor.v ]
+# read_verilog  [ glob ../src/tt_um_csit_luks.v ]
+# read_verilog  [ glob ../src/fpga/fpga_top_lvl.v ]
+# read_xdc ./fpga.xdc
+# synth_design -top fpga_top_lvl -part xc7a35tcpg236-1 -flatten rebuilt -define DEBUG
+ERROR: [Common 17-170] Unknown option '-define', please type 'synth_design -help' for usage info.
+INFO: [Common 17-206] Exiting Vivado at Mon Apr 15 14:47:58 2024...

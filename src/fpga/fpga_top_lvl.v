@@ -22,6 +22,12 @@ module fpga_top_lvl (
     output          FLASH_MOSI,
     input           FLASH_MISO,
 
+    // SPI sensor
+    output          LUKS_CS,
+    output          LUKS_SCLK,
+    input           LUKS_MISO,
+
+
     // debug port
     output          FLASH_SCLK_debug,
     output          FLASH_CS_debug,
@@ -58,7 +64,12 @@ module fpga_top_lvl (
     assign ui_in_w[0] = A;
     assign ui_in_w[1] = B;
     assign ui_in_w[2] = PB;
-    assign ui_in_w[7:4] = 5'b0;
+    assign ui_in_w[7:5] = 5'b0;
+
+    // Sensor SPI
+    assign LUKS_CS = uio_out_w[6];
+    assign LUKS_SCLK = uio_out_w[4];
+    assign ui_in_w[4] = LUKS_MISO;
 
     // IO port
     assign uio_in_w = 8'b0;    

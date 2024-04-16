@@ -16,7 +16,7 @@ file mkdir $outputDir
 
 read_verilog  [ glob ../src/rotational_encoder/rotational_encoder.v ]
 read_verilog  [ glob ../src/seven_seg/seven_seg.v ]
-read_verilog  [ glob ../src/fsm/fsm_auto.v ]
+read_verilog  [ glob ../src/fsm/fsm.v ]
 read_verilog  [ glob ../src/spi_flash/spi_flash.v ]
 read_verilog  [ glob ../src/spi_sensor/spi_sensor.v ]
 read_verilog  [ glob ../src/tt_um_csit_luks.v ]
@@ -27,7 +27,7 @@ read_xdc ./fpga.xdc
 #
 # STEP#2: run synthesis, report utilization and timing estimates, write checkpoint design
 #
-synth_design -top fpga_top_lvl -part xc7a35tcpg236-1 -flatten rebuilt -define DEBUG
+synth_design -top fpga_top_lvl -part xc7a35tcpg236-1 -flatten rebuilt -verilog_define DEBUG
 write_checkpoint -force $outputDir/post_synth
 report_timing_summary -file $outputDir/post_synth_timing_summary.rpt
 report_power -file $outputDir/post_synth_power.rpt

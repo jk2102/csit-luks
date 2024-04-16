@@ -111,8 +111,8 @@ module tt_um_csit_luks_tb;
         #3000 $finish;
     end
 
-    always @(posedge uio_out[4]) begin
-        ui_in[4] <= $random;
+    always @(negedge uio_out[4]) begin
+        ui_in[4] <= 1;
     end
 
     // Optional: Monitoring signals

@@ -1,4 +1,4 @@
-set_property SRC_FILE_INFO {cfile:C:/Users/juric/OneDrive/Dokumenti/csit-luks/tt06-csit-luks/fpga/fpga.xdc rfile:../fpga.xdc id:1} [current_design]
+set_property SRC_FILE_INFO {cfile:C:/Users/juric/OneDrive/Dokumenti/tt06-csit-luks/fpga/fpga.xdc rfile:../fpga.xdc id:1} [current_design]
 set_property src_info {type:XDC file:1 line:7 export:INPUT save:INPUT read:READ} [current_design]
 set_property -dict { PACKAGE_PIN W5   IOSTANDARD LVCMOS33 } [get_ports clk]
 set_property src_info {type:XDC file:1 line:31 export:INPUT save:INPUT read:READ} [current_design]
@@ -59,6 +59,12 @@ set_property src_info {type:XDC file:1 line:97 export:INPUT save:INPUT read:READ
 set_property -dict { PACKAGE_PIN N17   IOSTANDARD LVCMOS33 } [get_ports {FLASH_MOSI_debug}];#Sch name = JC3
 set_property src_info {type:XDC file:1 line:98 export:INPUT save:INPUT read:READ} [current_design]
 set_property -dict { PACKAGE_PIN P18   IOSTANDARD LVCMOS33 } [get_ports {FLASH_MISO_debug}];#Sch name = JC4
+set_property src_info {type:XDC file:1 line:99 export:INPUT save:INPUT read:READ} [current_design]
+set_property -dict { PACKAGE_PIN L17   IOSTANDARD LVCMOS33 } [get_ports {LUKS_CS}];#Sch name = JC7
+set_property src_info {type:XDC file:1 line:100 export:INPUT save:INPUT read:READ} [current_design]
+set_property -dict { PACKAGE_PIN M19   IOSTANDARD LVCMOS33 } [get_ports {LUKS_SCLK}];#Sch name = JC8
+set_property src_info {type:XDC file:1 line:101 export:INPUT save:INPUT read:READ} [current_design]
+set_property -dict { PACKAGE_PIN P17   IOSTANDARD LVCMOS33 } [get_ports {LUKS_MISO}];#Sch name = JC9
 set_property src_info {type:XDC file:1 line:145 export:INPUT save:INPUT read:READ} [current_design]
 set_property -dict { PACKAGE_PIN D18   IOSTANDARD LVCMOS33 } [get_ports {FLASH_MOSI}]
 set_property src_info {type:XDC file:1 line:146 export:INPUT save:INPUT read:READ} [current_design]

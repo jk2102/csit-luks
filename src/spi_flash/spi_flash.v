@@ -104,10 +104,10 @@ module spi_flash (
                 end
                 
                 DATA_READY: begin
-                    //if (!mem_valid) begin
-                        mem_ready <= 0; // Reset ready signal after acknowledgment
+                    if (!mem_valid) begin
+                        mem_ready <= 0; // Ready signal after acknowledgment
                         state <= IDLE;
-                    //end
+                    end
                     sclk <= 1;
                     cs <= 1; // Deselect the flash memory
                 end

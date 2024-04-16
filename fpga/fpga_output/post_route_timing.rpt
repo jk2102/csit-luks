@@ -1,52 +1,50 @@
-Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
----------------------------------------------------------------------------------------------------------------------------------------------
-| Tool Version : Vivado v.2023.2 (win64) Build 4029153 Fri Oct 13 20:14:34 MDT 2023
-| Date         : Mon Apr 15 12:34:28 2024
-| Host         : JKUNDRATALAPTOP running 64-bit major release  (build 9200)
+Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+--------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2020.2 (win64) Build 3064766 Wed Nov 18 09:12:45 MST 2020
+| Date         : Mon Apr 15 15:33:48 2024
+| Host         : radna_stanica running 64-bit major release  (build 9200)
 | Command      : report_timing -sort_by group -max_paths 100 -path_type summary -file ./fpga_output/post_route_timing.rpt
 | Design       : fpga_top_lvl
 | Device       : 7a35t-cpg236
 | Speed File   : -1  PRODUCTION 1.23 2018-06-13
-| Design State : Routed
----------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
 
 Timing Report
 
 Startpoint                     Endpoint                       Slack(ns)     
 ----------------------------------------------------------------------------
-counter_reg[4]/C               counter_reg[5]/R               5.825         
-counter_reg[4]/C               counter_reg[6]/R               5.825         
-counter_reg[4]/C               counter_reg[7]/R               5.825         
-counter_reg[4]/C               counter_reg[8]/R               5.825         
-counter_reg[4]/C               counter_reg[13]/R              5.851         
-counter_reg[4]/C               counter_reg[14]/R              5.851         
-counter_reg[4]/C               counter_reg[15]/R              5.851         
-counter_reg[4]/C               counter_reg[10]/R              5.886         
-counter_reg[4]/C               counter_reg[11]/R              5.886         
-counter_reg[4]/C               counter_reg[12]/R              5.886         
-counter_reg[4]/C               counter_reg[9]/R               5.886         
-counter_reg[4]/C               counter_reg[0]/R               5.923         
-counter_reg[4]/C               counter_reg[1]/R               5.941         
-counter_reg[4]/C               counter_reg[2]/R               5.941         
-counter_reg[4]/C               counter_reg[3]/R               5.941         
-counter_reg[4]/C               counter_reg[4]/R               5.941         
-counter_reg[4]/C               clk_1kHz_reg/D                 6.396         
-counter_reg[2]/C               counter_reg[14]/D              7.705         
-counter_reg[2]/C               counter_reg[15]/D              7.800         
-counter_reg[2]/C               counter_reg[13]/D              7.816         
-counter_reg[2]/C               counter_reg[10]/D              7.819         
-counter_reg[2]/C               counter_reg[12]/D              7.840         
-counter_reg[2]/C               counter_reg[11]/D              7.914         
-counter_reg[2]/C               counter_reg[9]/D               7.930         
-counter_reg[2]/C               counter_reg[6]/D               7.932         
-counter_reg[2]/C               counter_reg[8]/D               7.953         
-counter_reg[2]/C               counter_reg[7]/D               8.027         
-counter_reg[2]/C               counter_reg[5]/D               8.043         
-counter_reg[2]/C               counter_reg[4]/D               8.201         
-counter_reg[2]/C               counter_reg[3]/D               8.261         
-counter_reg[1]/C               counter_reg[2]/D               8.501         
-counter_reg[0]/C               counter_reg[1]/D               8.659         
-counter_reg[0]/C               counter_reg[0]/D               8.899         
+counter_reg[12]/C              counter_reg[1]/R               6.580         
+counter_reg[12]/C              counter_reg[2]/R               6.580         
+counter_reg[12]/C              counter_reg[3]/R               6.580         
+counter_reg[12]/C              counter_reg[4]/R               6.580         
+counter_reg[12]/C              counter_reg[13]/R              6.596         
+counter_reg[12]/C              counter_reg[14]/R              6.596         
+counter_reg[12]/C              counter_reg[15]/R              6.596         
+counter_reg[12]/C              counter_reg[10]/R              6.707         
+counter_reg[12]/C              counter_reg[11]/R              6.707         
+counter_reg[12]/C              counter_reg[12]/R              6.707         
+counter_reg[12]/C              counter_reg[9]/R               6.707         
+counter_reg[12]/C              counter_reg[5]/R               6.765         
+counter_reg[12]/C              counter_reg[6]/R               6.765         
+counter_reg[12]/C              counter_reg[7]/R               6.765         
+counter_reg[12]/C              counter_reg[8]/R               6.765         
+counter_reg[12]/C              clk_1kHz_reg/D                 6.962         
+counter_reg[0]/C               counter_reg[14]/D              7.758         
+counter_reg[0]/C               counter_reg[15]/D              7.853         
+counter_reg[0]/C               counter_reg[13]/D              7.869         
+counter_reg[0]/C               counter_reg[10]/D              7.871         
+counter_reg[0]/C               counter_reg[12]/D              7.892         
+counter_reg[0]/C               counter_reg[11]/D              7.966         
+counter_reg[0]/C               counter_reg[9]/D               7.982         
+counter_reg[0]/C               counter_reg[6]/D               7.985         
+counter_reg[0]/C               counter_reg[8]/D               8.006         
+counter_reg[0]/C               counter_reg[7]/D               8.080         
+counter_reg[0]/C               counter_reg[5]/D               8.096         
+counter_reg[0]/C               counter_reg[4]/D               8.260         
+counter_reg[0]/C               counter_reg[2]/D               8.304         
+counter_reg[0]/C               counter_reg[3]/D               8.318         
+counter_reg[0]/C               counter_reg[1]/D               8.420         
+counter_reg[0]/C               counter_reg[0]/D               8.881         
 
 
 

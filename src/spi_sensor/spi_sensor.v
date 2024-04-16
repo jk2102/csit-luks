@@ -70,12 +70,12 @@ module spi_sensor (
                 
                 READ_ADC: begin
                     sclk <= ~sclk; // Toggle clock to start conversion
-                    if(!sclk) begin // Read on falling edge
-                        if(bit_counter > 6) begin // Read during the 8 data bits
+                    if(!sclk) begin // Read on rising edge
+                        if(bit_counter > 5) begin // Read during the 8 data bits
                             mem_data <= {mem_data[6:0], miso};
                         end
                         bit_counter <= bit_counter - 1;
-                        if(bit_counter == 7) state <= TRAILING_ZEROES; // Move to trailing zeroes after data bits
+                        if(bit_counter == 6) state <= TRAILING_ZEROES; // Move to trailing zeroes after data bits
                     end
                 end
                 
