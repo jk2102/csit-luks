@@ -28,7 +28,7 @@ async def test_adder(dut):
 
   # Test default seven seg display  
   for i in range(10):
-    await Edge(dut.uio_out[3:0])
+    await Edge(dut.uio_out)
     if dut.uio_out[3:0] == 0xD:
       assert dut.uo_out.value == 0xA4
     if dut.uio_out[3:0] == 0xB:
