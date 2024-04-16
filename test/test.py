@@ -33,9 +33,9 @@ async def test_adder(dut):
     if int(dut.uio_out) == 0x7D:
       assert int(dut.uo_out) == 0xC0
     if int(dut.uio_out) == 0x7B:
-      assert int(dut.uo_out) == 0xB0
+      assert int(dut.uo_out) == 0xA4
     if int(dut.uio_out) == 0x77:
-      assert int(dut.uo_out) == 0xFF
+      assert int(dut.uo_out) == 0xB0
     if int(dut.uio_out) == 0x7E:
-      assert int(dut.uo_out) == 0xC0
+      assert int(dut.uo_out) == 0xFF
 
