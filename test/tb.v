@@ -7,7 +7,7 @@ module tb ();
 
   // Dump the signals to a VCD file. You can view it with gtkwave.
   initial begin
-    $dumpfile("dump.vcd");
+    $dumpfile("tb.vcd");
     $dumpvars(0, tb);
     #1;
   end
@@ -41,73 +41,73 @@ module tb ();
       .rst_n   (rstn)      // not reset
   );
 
-// Clock generation
-always #5 clk = ~clk;
+// // Clock generation
+// always #5 clk = ~clk;
 
-initial begin
-  // Initialize Inputs
-    clk = 0;
-    rstn = 0;
-    ui_in[1:0] = 2'b00;     // Encoder initial state  
-    ui_in[2]  = 1'b1;       // Pushbutton initial state  
+// initial begin
+//   // Initialize Inputs
+//     clk = 0;
+//     rstn = 0;
+//     ui_in[1:0] = 2'b00;     // Encoder initial state  
+//     ui_in[2]  = 1'b1;       // Pushbutton initial state  
 
-  // Reset the system
-    #100;
-    rstn = 1;
+//   // Reset the system
+//     #100;
+//     rstn = 1;
 
-  /*
-    CW	
-      CH	A	0	1	1	0	0			
-      CH	B	0	0	1	1	0
-    _______________________________
-    CCW
-      CH	A	0	0	1	1	0		
-      CH	B	0	1	1	0	0
-    _______________________________	
-  */
-    #10; ui_in[1:0] = 2'b00; 
-    #10; ui_in[1:0] = 2'b01;  
-    #10; ui_in[1:0] = 2'b11; 
-    #10; ui_in[1:0] = 2'b10;  
-    #10; ui_in[1:0] = 2'b00;  
-    #10; ui_in[1:0] = 2'b01;  
-    #10; ui_in[1:0] = 2'b11; 
-    #10; ui_in[1:0] = 2'b10;  
-    #10; ui_in[1:0] = 2'b00;  
-    #10; ui_in[1:0] = 2'b01;
+//   /*
+//     CW	
+//       CH	A	0	1	1	0	0			
+//       CH	B	0	0	1	1	0
+//     _______________________________
+//     CCW
+//       CH	A	0	0	1	1	0		
+//       CH	B	0	1	1	0	0
+//     _______________________________	
+//   */
+//     #10; ui_in[1:0] = 2'b00; 
+//     #10; ui_in[1:0] = 2'b01;  
+//     #10; ui_in[1:0] = 2'b11; 
+//     #10; ui_in[1:0] = 2'b10;  
+//     #10; ui_in[1:0] = 2'b00;  
+//     #10; ui_in[1:0] = 2'b01;  
+//     #10; ui_in[1:0] = 2'b11; 
+//     #10; ui_in[1:0] = 2'b10;  
+//     #10; ui_in[1:0] = 2'b00;  
+//     #10; ui_in[1:0] = 2'b01;
 
-    #10;   ui_in[2] = 2'b0;   // Pushbutton pressed
-    #500; ui_in[2] = 2'b1;   // Pushbutton released
+//     #10;   ui_in[2] = 2'b0;   // Pushbutton pressed
+//     #500; ui_in[2] = 2'b1;   // Pushbutton released
 
-    #10; ui_in[1:0] = 2'b00; 
-    #10; ui_in[1:0] = 2'b10; 
-    #10; ui_in[1:0] = 2'b11;
-    #10; ui_in[1:0] = 2'b01;
-    #10; ui_in[1:0] = 2'b00; 
-    #10; ui_in[1:0] = 2'b10; 
-    #10; ui_in[1:0] = 2'b11;
-    #10; ui_in[1:0] = 2'b01;
-    #10; ui_in[1:0] = 2'b00; 
-    #10; ui_in[1:0] = 2'b10; 
-    #10; ui_in[1:0] = 2'b11;
-    #10; ui_in[1:0] = 2'b01;
-    #10; ui_in[1:0] = 2'b00; 
-    #10; ui_in[1:0] = 2'b10; 
-    #10; ui_in[1:0] = 2'b11;
-    #10; ui_in[1:0] = 2'b01;
-    #10; ui_in[1:0] = 2'b00; 
-    #10; ui_in[1:0] = 2'b10; 
+//     #10; ui_in[1:0] = 2'b00; 
+//     #10; ui_in[1:0] = 2'b10; 
+//     #10; ui_in[1:0] = 2'b11;
+//     #10; ui_in[1:0] = 2'b01;
+//     #10; ui_in[1:0] = 2'b00; 
+//     #10; ui_in[1:0] = 2'b10; 
+//     #10; ui_in[1:0] = 2'b11;
+//     #10; ui_in[1:0] = 2'b01;
+//     #10; ui_in[1:0] = 2'b00; 
+//     #10; ui_in[1:0] = 2'b10; 
+//     #10; ui_in[1:0] = 2'b11;
+//     #10; ui_in[1:0] = 2'b01;
+//     #10; ui_in[1:0] = 2'b00; 
+//     #10; ui_in[1:0] = 2'b10; 
+//     #10; ui_in[1:0] = 2'b11;
+//     #10; ui_in[1:0] = 2'b01;
+//     #10; ui_in[1:0] = 2'b00; 
+//     #10; ui_in[1:0] = 2'b10; 
   
-    #10;   ui_in[2] = 2'b0;   // Pushbutton pressed
-    #1000; ui_in[2] = 2'b1;   // Pushbutton released
+//     #10;   ui_in[2] = 2'b0;   // Pushbutton pressed
+//     #1000; ui_in[2] = 2'b1;   // Pushbutton released
                    
     
-    $finish;
-end
+//     $finish;
+// end
 
-// Monitor changes
-initial begin
-    $monitor("Time = %d, Reset = %b", $time, rstn);
-end
+// // Monitor changes
+// initial begin
+//     $monitor("Time = %d, Reset = %b", $time, rstn);
+// end
 
 endmodule
