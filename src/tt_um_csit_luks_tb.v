@@ -56,6 +56,7 @@ module tt_um_csit_luks_tb;
         // Enable the module
         #20 ena = 1;
         
+        #100;
         // Example test sequence
         // Drive inputs and monitor outputs here...
 
