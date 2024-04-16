@@ -19,7 +19,7 @@ async def test_adder(dut):
   dut.ui_in.value = 0
   dut.uio_in.value = 0
   dut.rst_n.value = 0
-  await ClockCycles(dut.clk, 10)
+  await ClockCycles(dut.clk, 30)
   dut.rst_n.value = 1
 
   # Set the input values, wait five clock cycle, and check the output
@@ -29,12 +29,12 @@ async def test_adder(dut):
   # Test default seven seg display  
   for i in range(10):
     await Edge(dut.uio_out)
-    if dut.uio_out == 0x7D:
-      assert dut.uo_out.value == 0xA4
-    if dut.uio_out == 0x7B:
-      assert dut.uo_out.value == 0xB0
-    if dut.uio_out == 0x77:
-      assert dut.uo_out.value == 0xFF
-    if dut.uio_out == 0x7E:
-      assert dut.uo_out.value == 0xC0
+    if int(dut.uio_out) == 0x7D:
+      assert int(dut.uo_out) == 0xA4
+    if int(dut.uio_out) == 0x7B:
+      assert int(dut.uo_out) == 0xB0
+    if int(dut.uio_out) == 0x77:
+      assert int(dut.uo_out) == 0xFF
+    if int(dut.uio_out) == 0x7E:
+      assert int(dut.uo_out) == 0xC0
 
