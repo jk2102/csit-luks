@@ -3,7 +3,7 @@
 
 import cocotb
 from cocotb.clock import Clock
-from cocotb.triggers import ClockCycles
+from cocotb.triggers import ClockCycles, Edge
 
 @cocotb.test()
 async def test_adder(dut):
@@ -22,11 +22,19 @@ async def test_adder(dut):
   await ClockCycles(dut.clk, 10)
   dut.rst_n.value = 1
 
-  # Set the input values, wait one clock cycle, and check the output
+  # Set the input values, wait five clock cycle, and check the output
   dut._log.info("Test")
-  dut.ui_in.value = 20
-  dut.uio_in.value = 30
+  await ClockCycles(dut.clk, 5)
 
-  await ClockCycles(dut.clk, 1)
+  # Test default seven seg display  
+  for i in range(10):
+    await Edge(dut.uio_out[3:0])
+    if dut.uio_out[3:0] == 0xD:
+      assert dut.uo_out.value == 0xA4
+    if dut.uio_out[3:0] == 0xB:
+      assert dut.uo_out.value == 0xB0
+    if dut.uio_out[3:0] == 0x7:
+      assert dut.uo_out.value == 0xFF
+    if dut.uio_out[3:0] == 0xE:
+      assert dut.uo_out.value == 0xC0
 
-  assert dut.uo_out.value == 50
