@@ -41,19 +41,30 @@ module tb ();
      .rst_n   (rst_n)      // not reset
   );
 
-  wire spi_flash_miso_w;
+  wire spi_flash_miso, spi_sensor_miso;
 
   spiflash u_spiflash(
     .csb    (uio_out[5]),
     .clk    (uio_out[4]),
     .io0    (uio_out[7]), // MOSI
-    .io1    (spi_flash_miso_w), // MISO
+    .io1    (spi_flash_miso), // MISO
     .io2    (),
     .io3    ()
 );
 
 
-    always @(*) ui_in[3]  = spi_flash_miso_w;
+  
+
+  // SPI Sensor signals
+  wire spi_sensor_sclk    = uio_out[4];
+  wire spi_sensor_ss      = uio_out[6];
+  always @(*) ui_in[4]    = spi_sensor_miso; 
+
+  // SPI Flash signals
+  wire spi_flash_sclk     = uio_out[4];
+  wire spi_flash_ss       = uio_out[5];
+  wire spi_flash_mosi     = uio_out[7];
+  always @(*) ui_in[3]  = spi_flash_miso;
 
 // // Clock generation
 // always #5 clk = ~clk;

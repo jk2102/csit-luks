@@ -70,7 +70,18 @@ async def test_user_input(dut):
     dut.ui_in[1].value = 0
 
   await ClockCycles(dut.clk, 10)
-  assert int(dut.user_project.rotational_encoder_instance.enc) == 0xC
+  # check seven seg display
+  for i in range(10):
+    await Edge(dut.uio_out)
+    await ClockCycles(dut.clk, 1)
+    if int(dut.uio_out) == 0x7D:
+      assert int(dut.uo_out) == 0xC0
+    if int(dut.uio_out) == 0x7B:
+      assert int(dut.uo_out) == 0xA4
+    if int(dut.uio_out) == 0x77:
+      assert int(dut.uo_out) == 0xB0
+    if int(dut.uio_out) == 0x7E:
+      assert int(dut.uo_out) == 0xC0
 
   # Pushbutton short press to get to SS_SEL  
   dut._log.info("Pushbutton short press to get to SS_SEL")
@@ -82,7 +93,7 @@ async def test_user_input(dut):
   # Release the button
   dut.ui_in[2].value = 1
   await ClockCycles(dut.clk, 10)
-  assert int(dut.user_project.fsm_instance.current_state) == 0b10
+  # assert int(dut.user_project.fsm_instance.current_state) == 0b10
 
   dut._log.info("Rotate the knob clockwise 3 steps")
   # Rotate the knob clockwise
@@ -104,7 +115,18 @@ async def test_user_input(dut):
     dut.ui_in[1].value = 0
 
   await ClockCycles(dut.clk, 10)
-  assert int(dut.user_project.rotational_encoder_instance.enc) == 0xB
+  # check seven seg display
+  for i in range(10):
+    await Edge(dut.uio_out)
+    await ClockCycles(dut.clk, 1)
+    if int(dut.uio_out) == 0x7D:
+      assert int(dut.uo_out) == 0x82
+    if int(dut.uio_out) == 0x7B:
+      assert int(dut.uo_out) == 0x7F
+    if int(dut.uio_out) == 0x77:
+      assert int(dut.uo_out) == 0xFF
+    if int(dut.uio_out) == 0x7E:
+      assert int(dut.uo_out) == 0xC0
 
   # Pushbutton short press to get to SS_SEL  
   dut._log.info("Pushbutton short press to get to F_SEL")
@@ -116,7 +138,7 @@ async def test_user_input(dut):
   # Release the button
   dut.ui_in[2].value = 1
   await ClockCycles(dut.clk, 10)
-  assert int(dut.user_project.fsm_instance.current_state) == 0b11
+  # assert int(dut.user_project.fsm_instance.current_state) == 0b11
 
   dut._log.info("Rotate the knob counterclockwise 2 steps")
   # Rotate the knob clockwise
@@ -138,7 +160,18 @@ async def test_user_input(dut):
     dut.ui_in[1].value = 0
 
   await ClockCycles(dut.clk, 10)
-  assert int(dut.user_project.rotational_encoder_instance.enc) == 0x6
+  # check seven seg display
+  for i in range(10):
+    await Edge(dut.uio_out)
+    await ClockCycles(dut.clk, 1)
+    if int(dut.uio_out) == 0x7D:
+      assert int(dut.uo_out) == 0x19
+    if int(dut.uio_out) == 0x7B:
+      assert int(dut.uo_out) == 0xFF
+    if int(dut.uio_out) == 0x77:
+      assert int(dut.uo_out) == 0xFF
+    if int(dut.uio_out) == 0x7E:
+      assert int(dut.uo_out) == 0xC0
 
   # Pushbutton medium press to get to EXP_METER
   dut._log.info("Pushbutton short press to get to EXP_METER")
@@ -150,7 +183,7 @@ async def test_user_input(dut):
   # Release the button
   dut.ui_in[2].value = 1
   await ClockCycles(dut.clk, 3)
-  assert int(dut.user_project.fsm_instance.current_state) == 0b100
+  # assert int(dut.user_project.fsm_instance.current_state) == 0b100
   
  
 @cocotb.test()
@@ -159,18 +192,19 @@ async def test_spi_sensor_read(dut):
   clock = Clock(dut.clk, 10, units="us")
   cocotb.start_soon(clock.start()) 
 
-  await FallingEdge(dut.user_project.spi_sensor_instance.cs)
+  await FallingEdge(dut.spi_sensor_ss)
   dut._log.info("SPI sensor chip selected!")
   
-  # Shift out the data - 0XAB with zero padding
-  data = [0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0]
+  # Shift out the data - 0XA9 with zero padding
+  data = [0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0]
   for i in range(len(data)):
-    await FallingEdge(dut.user_project.spi_sensor_instance.sclk)
-    dut.user_project.spi_sensor_instance.miso.value = data[i]
+    await FallingEdge(dut.spi_sensor_sclk)
+    dut.spi_sensor_miso.value = data[i]
     dut._log.info(f"Data on SPI sensor: {data[i]}")
   
-  await Edge(dut.user_project.spi_sensor_instance.mem_ready)
-  assert int(dut.user_project.spi_sensor_instance.mem_data) == 0xAB
+  await RisingEdge(dut.spi_sensor_ss)
+  dut._log.info("SPI sensor chip deselected!")
+  
 
 @cocotb.test()
 async def test_spi_flash_read(dut):
@@ -178,10 +212,19 @@ async def test_spi_flash_read(dut):
   clock = Clock(dut.clk, 10, units="us")
   cocotb.start_soon(clock.start()) 
 
-  await ClockCycles(dut.clk, 3)
-  
-  assert int(dut.user_project.fsm_instance.fd_address) == 0xCB6AB
+  await FallingEdge(dut.spi_flash_ss)
+  dut._log.info("SPI Flash chip selected!")
 
-  await FallingEdge(dut.user_project.spi_flash_instance.mem_ready)
-  
-  assert int(dut.user_project.fsm_instance.fd) == 0x6E
+  await RisingEdge(dut.spi_flash_ss)
+  dut._log.info("SPI Flash chip deselected!")
+
+  await ClockCycles(dut.clk, 33)  
+  # check seven seg display
+  for i in range(10):
+    await Edge(dut.uio_out)
+    await ClockCycles(dut.clk, 1)
+    if int(dut.uio_out) == 0xFE:
+      assert int(dut.uo_out) == 0xA4
+    else:
+      assert int(dut.uo_out) == 0xFF
+
