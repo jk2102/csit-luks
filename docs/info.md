@@ -9,21 +9,12 @@ You can also include images in this folder and reference them in the markdown. E
 
 ## How it works
 
-Explain how your project works
-Explain how your project works
-Explain how your project works
-Explain how your project works
+This project implements a luxmeter.
 
 ## How to test
 
-Explain how to use your project
-Explain how to use your project
-Explain how to use your project
-Explain how to use your project
+This project uses a user interface consisting of a rotational encoder and four-digit seven-segment display.
 
 ## External hardware
 
-List external hardware used in your project (e.g. PMOD, LED display, etc), if any
-List external hardware used in your project (e.g. PMOD, LED display, etc), if any
-List external hardware used in your project (e.g. PMOD, LED display, etc), if any
-List external hardware used in your project (e.g. PMOD, LED display, etc), if any
+External hardware comprises of a rotational encoder, a four-digit seven-segment display, SPI luxmeter and SPI flash.

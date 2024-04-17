@@ -88,8 +88,7 @@ async def test_user_input(dut):
   # Press the button
   dut.ui_in[2].value = 0
   # Wait for counter to reach short press
-  while int(dut.user_project.rotational_encoder_instance.pb_cnt) < 0x64:
-    await Edge(dut.user_project.rotational_encoder_instance.pb_cnt)
+  await ClockCycles(dut.clk, 0x64)
   # Release the button
   dut.ui_in[2].value = 1
   await ClockCycles(dut.clk, 10)
@@ -133,8 +132,7 @@ async def test_user_input(dut):
   # Press the button
   dut.ui_in[2].value = 0
   # Wait for counter to reach short press
-  while int(dut.user_project.rotational_encoder_instance.pb_cnt) < 0x64:
-    await Edge(dut.user_project.rotational_encoder_instance.pb_cnt)
+  await ClockCycles(dut.clk, 0x64)
   # Release the button
   dut.ui_in[2].value = 1
   await ClockCycles(dut.clk, 10)
@@ -178,8 +176,7 @@ async def test_user_input(dut):
   # Press the button
   dut.ui_in[2].value = 0
   # Wait for counter to reach short press
-  while int(dut.user_project.rotational_encoder_instance.pb_cnt) < 0x190:
-    await Edge(dut.user_project.rotational_encoder_instance.pb_cnt)
+  await ClockCycles(dut.clk, 0x190)
   # Release the button
   dut.ui_in[2].value = 1
   await ClockCycles(dut.clk, 3)
